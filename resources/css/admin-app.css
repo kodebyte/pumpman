@@ -1,0 +1,9 @@
+/* Hanya load Font Figtree untuk Admin */
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Admin specific styles (jika ada) */
+[x-cloak] { display: none !important; }
