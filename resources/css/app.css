@@ -5,13 +5,38 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Utilities Frontend */
-@layer utilities {
-    .scrollbar-hide::-webkit-scrollbar {
-        display: none;
-    }
-    .scrollbar-hide {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
+/* Efek Glass modern */
+#sticky-header {
+    /* Pastikan backdrop filter jalan di Safari/Chrome */
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
 }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Glassmorphism Header */
+#sticky-header {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+/* Hero Animations */
+.slide { transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+.slide-active { opacity: 1; z-index: 10; }
+.slide-hidden { opacity: 0; z-index: 0; pointer-events: none; }
+
+/* Text Reveal Animation */
+.slide-content > * { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+.slide-active .slide-content > *:nth-child(1) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+.slide-active .slide-content > *:nth-child(2) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+.slide-active .slide-content > *:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+.slide-active .slide-content > *:nth-child(4) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+
+/* Mega Menu Animation */
+#mega-menu-content { transition: all 0.3s ease-in-out; transform: translateY(10px); opacity: 0; visibility: hidden; }
+#mega-menu-trigger:hover #mega-menu-content, #mega-menu-content:hover { transform: translateY(0); opacity: 1; visibility: visible; }

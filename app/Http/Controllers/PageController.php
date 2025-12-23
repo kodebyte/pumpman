@@ -1,39 +1,48 @@
 <?php
 
-namespace App\Http\Controllers\Front;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Store; // Asumsi kita akan pakai ini untuk 'Find Store'
-use Illuminate\Http\Request;
+use App\Http\Requests\Web\Contact\StoreContactRequest;
+use App\Models\ContactMessage;
+use App\Models\Setting;
 
 class PageController extends Controller
 {
     public function about()
     {
-        return view('front.pages.about');
+        return view('web.pages.main.about');
     }
 
     public function contact()
     {
-        return view('front.pages.contact');
+        $contact = Setting::where('key', 'like', 'contact_%')
+                        ->pluck('value', 'key');
+
+        return view('web.pages.main.contact', compact('contact'));
     }
 
-    public function support()
+    public function storeContact(
+        StoreContactRequest $request
+    )
     {
-        // Bisa diarahkan ke FAQ atau halaman support umum
-        return view('front.pages.support');
+        unset($request['g-recaptcha-response']);
+
+        ContactMessage::create($request->validated());
+
+        return back()
+                ->with('success', 'Pesan Anda telah terkirim! Tim kami akan segera menghubungi Anda.');
     }
 
-    public function warranty()
+    public function warrantyClaim()
     {
         // Halaman penjelasan E-Warranty
-        return view('front.pages.warranty');
+        return view('web.pages.warranty.claim');
     }
 
-    public function storeLocator()
+    public function checkWarrantyClaimStatus()
     {
-        // Contoh jika nanti mau ambil data toko dari DB
-        // $stores = Store::all();
-        return view('front.pages.store-locator');
+        // Halaman penjelasan E-Warranty
+        return view('web.pages.warranty.check');
     }
 }

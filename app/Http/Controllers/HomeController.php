@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\HeroBanner;
+use App\Models\Post;
 use App\Models\Product;
+use App\Models\ProductHighlight;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,17 +17,37 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        // 1. Ambil Produk Unggulan (Featured)
-        // Pastikan Anda sudah membuat scope atau filter di model, atau query manual seperti ini:
-        $featuredProducts = Product::where('is_active', true)
-                            ->where('is_featured', true)
-                            ->latest()
-                            ->take(4)
-                            ->get();
+        $banners = HeroBanner::activeAndScheduled()
+                    ->orderBy('order', 'asc')
+                    ->get();
 
-        // 2. Ambil data lain jika perlu (misal: Banner slider dari DB)
-        // $banners = Banner::active()->get();
+        $featuredCategories = Category::Active()
+                                ->featured()
+                                ->sortByOrder()
+                                ->take(4) // Kita butuh tepat 4 item untuk grid ini
+                                ->get();
 
-        return view('web.pages.main.home', compact('featuredProducts'));
+        $featuredProducts = Product::with(['category', 'images'])
+                                ->where('is_active', true)
+                                ->where('is_featured', true)
+                                ->latest()
+                                ->take(8)
+                                ->get();
+
+        $latestPosts = Post::published()
+                        ->latest('published_at')
+                        ->take(3)
+                        ->get();
+
+        $productHighlight = ProductHighlight::isActive()
+                                ->latest()->first();
+
+        return view('web.pages.main.home', compact(
+            'banners', 
+            'featuredCategories',
+            'featuredProducts', 
+            'latestPosts',
+            'productHighlight'
+        ));
     }
 }

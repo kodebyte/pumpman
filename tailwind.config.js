@@ -13,35 +13,22 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                // 1. Font Default / Admin (Figtree)
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-                
-                // 2. Font Khusus Frontend (Inter)
-                // Kita beri nama 'brand' atau 'inter'
                 brand: ['Inter', 'sans-serif'],
             },
             // WARNA CUSTOM
             colors: {
-                aiwaRed: '#E60012',
-                charcoal: '#1a1a1a',
-                softGray: '#F8F9FA'
-            },
-            // ANIMASI CUSTOM
-            animation: {
-                'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                'marquee': 'marquee 25s linear infinite',
-                'fade-in-up': 'fadeInUp 1s ease-out forwards',
-            },
-            // KEYFRAMES
-            keyframes: {
-                marquee: {
-                    '0%': { transform: 'translateX(0%)' },
-                    '100%': { transform: 'translateX(-100%)' },
-                },
-                fadeInUp: {
-                    '0%': { opacity: '0', transform: 'translateY(20px)' },
-                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                brand: {
+                    dark: '#009a7b',    
+                    primary: '#009a7b', 
+                    soft: '#e8f5e9',    
+                    accent: '#F59E0B',  
+                    gray: '#F8FAFC',    
+                    input: '#F1F5F9',   
                 }
+            },
+            boxShadow: {
+                'glow': '0 0 20px rgba(0, 154, 123, 0.5)',
             }
         },
     },

@@ -27,7 +27,6 @@ class CareerController extends Controller
         ]);
 
         $perPage = request('limit', 15);
-        
         $careers = $this->careerRepo->getAll($params, $perPage);
         
         return view('admin.pages.career.index', compact('careers', 'perPage'));
