@@ -7,8 +7,7 @@ use App\Contracts\FaqRepositoryInterface;
 use App\Services\FaqService;
 use App\Http\Requests\Admin\Faq\StoreFaqRequest;
 use App\Http\Requests\Admin\Faq\UpdateFaqRequest;
-use Illuminate\Support\Facades\Log;
-use Exception;
+use App\Models\Faq;
 
 class FaqController extends Controller
 {
@@ -24,13 +23,20 @@ class FaqController extends Controller
     public function index()
     {
         // 1. Tangkap parameter filter & sort
-        $params = request()->only(['search', 'is_active', 'sort', 'direction']);
+        $params = request()->only([
+            'search', 
+            'is_active', 
+            'sort', 
+            'direction'
+        ]);
+
         $perPage = request('limit', 15);
-        
-        // 2. Ambil data dari Repository
         $faqs = $this->faqRepo->getAll($params, $perPage);
         
-        return view('admin.pages.faq.index', compact('faqs', 'perPage'));
+        return view('admin.pages.faq.index', compact(
+            'faqs', 
+            'perPage'
+        ));
     }
 
     /**
@@ -38,7 +44,6 @@ class FaqController extends Controller
      */
     public function create()
     {
-        // Kita butuh list Kategori (Parent) untuk dropdown "Assign to Category"
         $categories = $this->faqRepo->getCategoriesList();
         
         return view('admin.pages.faq.create', compact('categories'));
@@ -47,81 +52,85 @@ class FaqController extends Controller
     /**
      * Menyimpan data baru.
      */
-    public function store(StoreFaqRequest $request)
+    public function store(
+        StoreFaqRequest $request
+    )
     {
         try {
-            $this->faqService->create($request->validated());
-            
-            return to_route('admin.faqs.index')
-                    ->with('success', 'FAQ created successfully');
-        } catch (Exception $e) {
-            Log::error('Create FAQ error: ' . $e->getMessage());
+            $this->faqService->create(
+                $request->validated()
+            );
+        } catch (\Exception $e) {
+            \Log::error('Create FAQ error: ' . $e->getMessage());
             
             return back()->withInput()
                     ->with('error', 'Failed to create FAQ. Please try again.');
         }
+
+        return to_route('admin.faqs.index')
+                ->with('success', 'FAQ created successfully');
     }
 
    /**
      * Menampilkan form edit.
      */
-    public function edit(string $id)
+    public function edit(
+        Faq $faq
+    )
     {
-        // 1. Konversi ID ke integer agar aman
-        $faqId = (int) $id;
-
-        // 2. Ambil data FAQ (Akan otomatis 404 jika tidak ditemukan)
-        // Kita tidak pakai try-catch disini agar jika error, Laravel menampilkan detailnya.
-        $faq = $this->faqRepo->findById($faqId);
-        
-        // 3. Ambil list kategori untuk dropdown parent
         $allCategories = $this->faqRepo->getCategoriesList();
 
-        // 4. Filter: Hapus diri sendiri dari list kategori (agar tidak jadi parent buat diri sendiri)
-        $categories = $allCategories->filter(function ($cat) use ($faqId) {
-            return $cat->id !== $faqId;
+        $categories = $allCategories->filter(function ($cat) use ($faq) {
+            return $cat->id !== $faq->id;
         });
 
-        return view('admin.pages.faq.edit', compact('faq', 'categories'));
+        return view('admin.pages.faq.edit', compact(
+            'faq', 
+            'categories'
+        ));
     }
 
     /**
      * Memperbarui data.
      */
-    public function update(UpdateFaqRequest $request, string $id)
+    public function update(
+        UpdateFaqRequest $request, 
+        Faq $faq
+    )
     {
         try {
-            $this->faqService->update($id, $request->validated());
+            $this->faqService->update(
+                $faq->id, 
+                $request->validated()
+            );
+        } catch (\Exception $e) {
+            \Log::error('Update FAQ error: ' . $e->getMessage());
             
-            return to_route('admin.faqs.index')
-                ->with('success', 'FAQ updated successfully');
-
-        } catch (Exception $e) {
-            Log::error('Update FAQ error: ' . $e->getMessage());
-            
-            return back()
-                ->withInput()
-                ->with('error', 'Failed to update FAQ.');
+            return back()->withInput()
+                    ->with('error', 'Failed to update FAQ.');
         }
+
+        return to_route('admin.faqs.index')
+                ->with('success', 'FAQ updated successfully');
     }
 
     /**
      * Menghapus data.
      */
-    public function destroy(string $id)
+    public function destroy(
+        Faq $faq
+    )
     {
         try {
-            // Peringatan: Jika Kategori dihapus, semua anaknya (pertanyaan) 
-            // akan ikut terhapus karena 'onDelete cascade' di migration.
-            $this->faqService->delete($id);
+            $this->faqService->delete($faq->id);
+        } catch (\Exception $e) {
+            \Log::error('Delete FAQ error: ' . $e->getMessage());
             
-            return to_route('admin.faqs.index')
-                ->with('success', 'FAQ deleted successfully');
-
-        } catch (Exception $e) {
-            Log::error('Delete FAQ error: ' . $e->getMessage());
-            
-            return back()->with('error', 'Failed to delete FAQ.');
+            return back()
+                    ->with('error', 'Failed to delete FAQ.');
         }
+
+        return to_route('admin.faqs.index')
+                ->with('success', 'FAQ deleted successfully');
     }
 }

@@ -7,8 +7,8 @@ use App\Contracts\CareerRepositoryInterface;
 use App\Services\CareerService;
 use App\Http\Requests\Admin\Career\StoreCareerRequest;
 use App\Http\Requests\Admin\Career\UpdateCareerRequest;
+use App\Models\Career;
 use Illuminate\Support\Facades\Log;
-use Exception;
 
 class CareerController extends Controller
 {
@@ -19,8 +19,14 @@ class CareerController extends Controller
 
     public function index()
     {
-        $params = request()->only(['search', 'is_active', 'sort', 'direction']);
-        $perPage = request('limit', 10);
+        $params = request()->only([
+            'search', 
+            'is_active', 
+            'sort', 
+            'direction'
+        ]);
+
+        $perPage = request('limit', 15);
         
         $careers = $this->careerRepo->getAll($params, $perPage);
         
@@ -32,41 +38,67 @@ class CareerController extends Controller
         return view('admin.pages.career.create');
     }
 
-    public function store(StoreCareerRequest $request)
+    public function store(
+        StoreCareerRequest $request
+    )
     {
         try {
-            $this->careerService->create($request->validated());
-            return to_route('admin.careers.index')->with('success', 'Career created successfully');
-        } catch (Exception $e) {
+            $this->careerService->create(
+                $request->validated()
+            );
+        } catch (\Exception $e) {
             Log::error('Create career error: ' . $e->getMessage());
-            return back()->withInput()->with('error', 'Failed to create career.');
+
+            return back()->withInput()
+                     ->with('error', 'Failed to create career.');
         }
+
+        return to_route('admin.careers.index')
+                ->with('success', 'Career created successfully');
     }
 
-    public function edit(string $id)
+    public function edit(
+        Career $career
+    )
     {
-        $career = $this->careerRepo->findById($id);
         return view('admin.pages.career.edit', compact('career'));
     }
 
-    public function update(UpdateCareerRequest $request, string $id)
+    public function update(
+        UpdateCareerRequest $request, 
+        Career $career
+    )
     {
         try {
-            $this->careerService->update($id, $request->validated());
-            return to_route('admin.careers.index')->with('success', 'Career updated successfully');
-        } catch (Exception $e) {
+            $this->careerService->update(
+                $career->id, 
+                $request->validated()
+            );
+        } catch (\Exception $e) {
             Log::error('Update career error: ' . $e->getMessage());
-            return back()->withInput()->with('error', 'Failed to update career.');
+
+            return back()->withInput()
+                    ->with('error', 'Failed to update career.');
         }
+
+        return to_route('admin.careers.index')
+                ->with('success', 'Career updated successfully');
     }
 
-    public function destroy(string $id)
+    public function destroy(
+        Career $career
+    )
     {
         try {
-            $this->careerService->delete($id);
-            return to_route('admin.careers.index')->with('success', 'Career deleted successfully');
-        } catch (Exception $e) {
-            return back()->with('error', 'Failed to delete career.');
+            $this->careerService->delete($career->id);
+            
+            return to_route('admin.careers.index')
+                    ->with('success', 'Career deleted successfully');
+        } catch (\Exception $e) {
+            \Log::error('Error deleting career message: ' . $e->getMessage());
+
+            return back()
+                    ->with('error', 'Failed to delete career.');
         }
     }
 }

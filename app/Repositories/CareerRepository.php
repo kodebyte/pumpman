@@ -34,7 +34,14 @@ class CareerRepository implements CareerRepositoryInterface
         $sortColumn = $params['sort'] ?? 'order';
         $sortDirection = $params['direction'] ?? 'asc';
         
-        $allowedSorts = ['location', 'type', 'closing_date', 'is_active', 'order', 'created_at'];
+        $allowedSorts = [
+            'location', 
+            'type', 
+            'closing_date', 
+            'is_active', 
+            'order', 
+            'created_at'
+        ];
 
         if (in_array($sortColumn, $allowedSorts)) {
             $query->orderBy($sortColumn, $sortDirection)->orderBy('id', 'asc');

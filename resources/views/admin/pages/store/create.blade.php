@@ -1,22 +1,28 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="Add Store">
+
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('Add New Store') }}</h2>
-                <div class="mt-2"><x-admin.breadcrumb :links="['Stores' => route('admin.stores.index'), 'Create' => '#']" /></div>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Add Store
+                </h2>
+                <div class="mt-2">
+                    <x-admin.breadcrumb :links="[
+                        'Stores' => route('admin.stores.index'), 
+                        'Create' => '#'
+                    ]" />
+                </div>
             </div>
         </div>
     </x-slot>
 
     <div class="pb-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <form action="{{ route('admin.stores.store') }}" method="POST">
                 @csrf
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    
                     <div class="lg:col-span-2 space-y-6">
-                        
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
                             <div class="flex items-center gap-2 mb-4 border-b pb-2">
                                 <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
@@ -25,13 +31,13 @@
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="md:col-span-2">
-                                    <x-admin.input-label for="name" :value="__('Store Name')" />
-                                    <x-admin.text-input name="name" :value="old('name')" required placeholder="e.g. Aiwa Jakarta" class="font-semibold text-lg" />
+                                    <x-admin.input-label for="name" value="Store Name" />
+                                    <x-admin.text-input name="name" :value="old('name')" required class="font-semibold text-lg" />
                                     <x-admin.input-error :messages="$errors->get('name')" />
                                 </div>
                                 
                                 <div>
-                                    <x-admin.input-label for="type" :value="__('Store Type')" />
+                                    <x-admin.input-label for="type" value="Store Type" />
                                     <select name="type" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm bg-gray-50">
                                         <option value="retail">Retail / Reseller</option>
                                         <option value="distributor">Official Distributor</option>
@@ -41,12 +47,12 @@
                                 </div>
 
                                 <div>
-                                    <x-admin.input-label for="phone" :value="__('Phone / WhatsApp')" />
+                                    <x-admin.input-label for="phone" value="Phone / WhatsApp" />
                                     <div class="relative mt-1">
                                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                             <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                                         </div>
-                                        <x-admin.text-input name="phone" :value="old('phone')" class="pl-10" placeholder="e.g. 0812..." />
+                                        <x-admin.text-input name="phone" :value="old('phone')" class="pl-10" />
                                     </div>
                                     <x-admin.input-error :messages="$errors->get('phone')" />
                                 </div>
@@ -61,25 +67,25 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="md:col-span-2">
-                                    <x-admin.input-label for="address" :value="__('Full Address')" />
+                                    <x-admin.input-label for="address" value="Full Address" />
                                     <textarea name="address" rows="3" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm" placeholder="Street name, number, etc.">{{ old('address') }}</textarea>
                                     <x-admin.input-error :messages="$errors->get('address')" />
                                 </div>
                                 
                                 <div>
-                                    <x-admin.input-label for="city" :value="__('City')" />
-                                    <x-admin.text-input name="city" :value="old('city')" required placeholder="e.g. Jakarta Barat" />
+                                    <x-admin.input-label for="city" value="City" />
+                                    <x-admin.text-input name="city" :value="old('city')" />
                                     <x-admin.input-error :messages="$errors->get('city')" />
                                 </div>
                                 
                                 <div>
-                                    <x-admin.input-label for="postal_code" :value="__('Postal Code (Optional)')" />
-                                    <x-admin.text-input name="postal_code" :value="old('postal_code')" placeholder="e.g. 11470" />
+                                    <x-admin.input-label for="postal_code" value="Postal Code (Optional)" />
+                                    <x-admin.text-input name="postal_code" :value="old('postal_code')" />
                                 </div>
 
                                 <div>
-                                    <x-admin.input-label for="province" :value="__('Province (Optional)')" />
-                                    <x-admin.text-input name="province" :value="old('province')" placeholder="e.g. DKI Jakarta" />
+                                    <x-admin.input-label for="province" value="Province (Optional)" />
+                                    <x-admin.text-input name="province" :value="old('province')" />
                                 </div>
                             </div>
                         </div>
@@ -92,19 +98,19 @@
                             
                             <div class="space-y-4">
                                 <div>
-                                    <x-admin.input-label for="gmaps_link" :value="__('Google Maps Link')" />
-                                    <x-admin.text-input name="gmaps_link" :value="old('gmaps_link')" placeholder="https://maps.app.goo.gl/..." class="text-xs" />
+                                    <x-admin.input-label for="gmaps_link" value="Google Maps Link" />
+                                    <x-admin.text-input name="gmaps_link" :value="old('gmaps_link')" class="text-xs" />
                                     <x-admin.input-error :messages="$errors->get('gmaps_link')" />
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-6">
                                     <div>
-                                        <x-admin.input-label for="latitude" :value="__('Latitude')" />
-                                        <x-admin.text-input name="latitude" :value="old('latitude')" placeholder="-6.200000" />
+                                        <x-admin.input-label for="latitude" value="Latitude" />
+                                        <x-admin.text-input name="latitude" :value="old('latitude')" />
                                     </div>
                                     <div>
-                                        <x-admin.input-label for="longitude" :value="__('Longitude')" />
-                                        <x-admin.text-input name="longitude" :value="old('longitude')" placeholder="106.816666" />
+                                        <x-admin.input-label for="longitude" value="Longitude" />
+                                        <x-admin.text-input name="longitude" :value="old('longitude')" />
                                     </div>
                                 </div>
 
@@ -117,26 +123,24 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="space-y-6">
-                        
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6 sticky top-6">
                             <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Publishing</h3>
                             
                             <div class="space-y-4">
                                 <div>
-                                    <x-admin.input-label for="is_active" :value="__('Status')" />
+                                    <x-admin.input-label for="is_active" value="Status" />
                                     <select name="is_active" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">
-                                        <option value="1">Active (Visible)</option>
-                                        <option value="0">Inactive (Hidden)</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
                                     </select>
                                     <x-admin.input-error :messages="$errors->get('is_active')" />
                                 </div>
 
                                 <div>
-                                    <x-admin.input-label for="order" :value="__('Sort Order')" />
+                                    <x-admin.input-label for="order" value="Sort Order" />
                                     <x-admin.text-input type="number" name="order" :value="old('order', 0)" />
                                     <x-admin.input-error :messages="$errors->get('order')" />
                                 </div>
@@ -147,10 +151,10 @@
                                 <a href="{{ route('admin.stores.index') }}" class="text-center text-sm text-gray-600 hover:text-gray-900 underline">Cancel</a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    
 </x-admin.app-layout>

@@ -33,7 +33,7 @@ class UpdatePostRequest extends FormRequest
             'content.id' => ['nullable', 'string'],
 
             'thumbnail' => ['nullable', 'image', 'max:2048'],
-            'type' => ['required', 'in:news,article,promo'],
+            'post_type_id' => ['required', 'exists:post_types,id'],
             'is_active' => ['boolean'],
             'published_at' => ['nullable', 'date'],
         ];

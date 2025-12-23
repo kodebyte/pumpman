@@ -13,7 +13,7 @@ class PostRepository implements PostRepositoryInterface
 
     public function getAll(array $params = [], int $perPage = 10)
     {
-        $query = $this->post->newQuery()->with('author');
+        $query = $this->post->newQuery()->with(['author', 'type']);
 
         // Search di dalam JSON
         if (!empty($params['search'])) {
@@ -32,19 +32,31 @@ class PostRepository implements PostRepositoryInterface
             $query->where('is_active', $params['is_active']);
         }
 
+        // Filter Logic
+        if (isset($params['post_type_id']) && $params['post_type_id']) {
+            $query->where('post_type_id', $params['post_type_id']);
+        }
+
         return $query->latest('published_at')
                      ->cursorPaginate($perPage)
                      ->withQueryString();
     }
 
-    // ... method findById, create, update, delete standar (copy dari repository lain) ...
-    
-    public function findById(int $id) { return $this->post->findOrFail($id); }
-    public function create(array $data) { return $this->post->create($data); }
+    public function findById(int $id) { 
+        return $this->post->findOrFail($id); 
+    }
+
+    public function create(array $data) { 
+        return $this->post->create($data); 
+    }
+
     public function update(int $id, array $data) { 
         $post = $this->findById($id);
         $post->update($data);
         return $post;
     }
-    public function delete(int $id) { return $this->findById($id)->delete(); }
+
+    public function delete(int $id) { 
+        return $this->findById($id)->delete(); 
+    }
 }

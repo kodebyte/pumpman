@@ -1,9 +1,10 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="Edit Store">
+
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Edit Store') }}: {{ $store->name }}
+                    Edit Store: {{ $store->name }}
                 </h2>
                 <div class="mt-2">
                     <x-admin.breadcrumb :links="[
@@ -16,15 +17,13 @@
     </x-slot>
 
     <div class="pb-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <form action="{{ route('admin.stores.update', $store->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    
                     <div class="lg:col-span-2 space-y-6">
-                        
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
                             <div class="flex items-center gap-2 mb-4 border-b pb-2">
                                 <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
@@ -33,13 +32,13 @@
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="md:col-span-2">
-                                    <x-admin.input-label for="name" :value="__('Store Name')" />
+                                    <x-admin.input-label for="name" value="Store Name" />
                                     <x-admin.text-input name="name" :value="old('name', $store->name)" required class="font-semibold text-lg" />
                                     <x-admin.input-error :messages="$errors->get('name')" />
                                 </div>
                                 
                                 <div>
-                                    <x-admin.input-label for="type" :value="__('Store Type')" />
+                                    <x-admin.input-label for="type" value="Store Type" />
                                     <select name="type" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm bg-gray-50">
                                         <option value="retail" {{ old('type', $store->type) == 'retail' ? 'selected' : '' }}>Retail / Reseller</option>
                                         <option value="distributor" {{ old('type', $store->type) == 'distributor' ? 'selected' : '' }}>Official Distributor</option>
@@ -49,7 +48,7 @@
                                 </div>
 
                                 <div>
-                                    <x-admin.input-label for="phone" :value="__('Phone / WhatsApp')" />
+                                    <x-admin.input-label for="phone" value="Phone / WhatsApp" />
                                     <div class="relative mt-1">
                                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                             <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
@@ -69,24 +68,24 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="md:col-span-2">
-                                    <x-admin.input-label for="address" :value="__('Full Address')" />
+                                    <x-admin.input-label for="address" value="Full Address" />
                                     <textarea name="address" rows="3" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">{{ old('address', $store->address) }}</textarea>
                                     <x-admin.input-error :messages="$errors->get('address')" />
                                 </div>
                                 
                                 <div>
-                                    <x-admin.input-label for="city" :value="__('City')" />
+                                    <x-admin.input-label for="city" value="City" />
                                     <x-admin.text-input name="city" :value="old('city', $store->city)" required />
                                     <x-admin.input-error :messages="$errors->get('city')" />
                                 </div>
                                 
                                 <div>
-                                    <x-admin.input-label for="postal_code" :value="__('Postal Code (Optional)')" />
+                                    <x-admin.input-label for="postal_code" value="Postal Code (Optional)" />
                                     <x-admin.text-input name="postal_code" :value="old('postal_code', $store->postal_code)" />
                                 </div>
 
                                 <div>
-                                    <x-admin.input-label for="province" :value="__('Province (Optional)')" />
+                                    <x-admin.input-label for="province" value="Province (Optional)" />
                                     <x-admin.text-input name="province" :value="old('province', $store->province)" />
                                 </div>
                             </div>
@@ -100,19 +99,19 @@
                             
                             <div class="space-y-4">
                                 <div>
-                                    <x-admin.input-label for="gmaps_link" :value="__('Google Maps Link')" />
-                                    <x-admin.text-input name="gmaps_link" :value="old('gmaps_link', $store->gmaps_link)" placeholder="https://goo.gl/maps/..." class="text-sm" />
+                                    <x-admin.input-label for="gmaps_link" value="Google Maps Link" />
+                                    <x-admin.text-input name="gmaps_link" :value="old('gmaps_link', $store->gmaps_link)" class="text-sm" />
                                     <x-admin.input-error :messages="$errors->get('gmaps_link')" />
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
-                                        <x-admin.input-label for="latitude" :value="__('Latitude')" />
-                                        <x-admin.text-input name="latitude" :value="old('latitude', $store->latitude)" placeholder="-6.200000" />
+                                        <x-admin.input-label for="latitude" value="Latitude" />
+                                        <x-admin.text-input name="latitude" :value="old('latitude', $store->latitude)" />
                                     </div>
                                     <div>
-                                        <x-admin.input-label for="longitude" :value="__('Longitude')" />
-                                        <x-admin.text-input name="longitude" :value="old('longitude', $store->longitude)" placeholder="106.816666" />
+                                        <x-admin.input-label for="longitude" value="Longitude" />
+                                        <x-admin.text-input name="longitude" :value="old('longitude', $store->longitude)" />
                                     </div>
                                 </div>
 
@@ -125,7 +124,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="space-y-6">
@@ -135,16 +133,16 @@
                             
                             <div class="space-y-4">
                                 <div>
-                                    <x-admin.input-label for="is_active" :value="__('Status')" />
+                                    <x-admin.input-label for="is_active" value="Status" />
                                     <select name="is_active" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">
-                                        <option value="1" {{ old('is_active', $store->is_active) == true ? 'selected' : '' }}>Active (Visible)</option>
-                                        <option value="0" {{ old('is_active', $store->is_active) == false ? 'selected' : '' }}>Inactive (Hidden)</option>
+                                        <option value="1" {{ old('is_active', $store->is_active) == true ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ old('is_active', $store->is_active) == false ? 'selected' : '' }}>Inactive</option>
                                     </select>
                                     <x-admin.input-error :messages="$errors->get('is_active')" />
                                 </div>
 
                                 <div>
-                                    <x-admin.input-label for="order" :value="__('Sort Order')" />
+                                    <x-admin.input-label for="order" value="Sort Order" />
                                     <x-admin.text-input type="number" name="order" :value="old('order', $store->order)" />
                                     <x-admin.input-error :messages="$errors->get('order')" />
                                 </div>
@@ -152,15 +150,15 @@
 
                             <div class="mt-6 flex flex-col gap-3">
                                 <x-admin.primary-button class="justify-center bg-gray-800 hover:bg-gray-700">
-                                    {{ __('Update Store') }}
+                                    Update Store
                                 </x-admin.primary-button>
                                 <a href="{{ route('admin.stores.index') }}" class="text-center text-sm text-gray-600 hover:text-gray-900 underline">Cancel</a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
 </x-admin.app-layout>

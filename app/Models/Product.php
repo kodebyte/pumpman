@@ -12,6 +12,8 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes, HasTranslation;
 
+    public $translatable = ['name', 'description', 'short_description'];
+
     /**
      * Menggunakan Guarded ['id'] agar lebih fleksibel terhadap perubahan kolom,
      * keamanan ditangani oleh Form Request Validation.
@@ -32,6 +34,7 @@ class Product extends Model
         'is_featured' => 'boolean',
         'has_variants' => 'boolean',
         'order' => 'integer',
+        'short_description' => 'array', // JSON Multi-bahasa
         'description' => 'array', // JSON Multi-bahasa
     ];
 
@@ -76,63 +79,77 @@ class Product extends Model
      */
     public function getThumbnailAttribute()
     {
-        $primary = $this->images->where('is_primary', true)->first();
-        
-        if ($primary) {
-            return $primary->image_path;
+        $primaryImage = $this->images->where('is_primary', true)->first();
+    
+        if ($primaryImage) {
+            // PENTING: asset() membuat URL menjadi absolut (http://...)
+            return asset('storage/' . $primaryImage->image_path);
         }
 
         // Fallback ke gambar pertama jika tidak ada primary
         $firstImage = $this->images->first();
-        return $firstImage ? $firstImage->image_path : null;
+        
+        if ($firstImage) {
+            return asset('storage/' . $firstImage->image_path);
+        }
+
+        return null; 
     }
 
     /**
      * Hitung Harga Akhir (Setelah dikurangi diskon yang valid).
      * Usage: $product->final_price
      */
-    public function getFinalPriceAttribute()
+    public function getHasDiscountAttribute(): bool
     {
-        $price = $this->price;
-        
-        // 1. Cek validitas diskon dasar
         if (!$this->discount_type || $this->discount_value <= 0) {
-            return $price;
+            return false;
         }
 
-        // 2. Cek Jadwal Promo (Jika diset)
         $now = Carbon::now();
         
-        // Jika belum mulai
-        if ($this->discount_start_date && $now->lt($this->discount_start_date)) {
-            return $price;
-        }
-        
-        // Jika sudah berakhir
-        if ($this->discount_end_date && $now->gt($this->discount_end_date)) {
-            return $price;
-        }
-
-        // 3. Hitung Nominal Diskon
-        if ($this->discount_type === 'percent') {
-            // Rumus Persen
-            $discountAmount = $price * ($this->discount_value / 100);
-            return max(0, $price - $discountAmount);
-        } elseif ($this->discount_type === 'fixed') {
-            // Rumus Potongan Harga Langsung
-            return max(0, $price - $this->discount_value);
-        }
-
-        return $price;
+        // Jika tanggal tidak di-set, anggap diskon berlaku selamanya (opsional, tergantung rule bisnis)
+        // Disini kita asumsikan tanggal harus valid
+        return $this->discount_start_date <= $now && $this->discount_end_date >= $now;
     }
 
     /**
-     * Cek apakah produk ini sedang diskon aktif.
-     * Usage: $product->has_discount (Boolean)
+     * Hitung Harga Akhir (Setelah Diskon)
      */
-    public function getHasDiscountAttribute()
+    public function getMinPriceAttribute()
     {
-        return $this->price > $this->final_price;
+        // 1. Jika tidak punya varian, kembalikan harga final. 
+        // FIX: Tambahkan '?? $this->price' agar jika tidak ada diskon (final_price null), tetap kembali ke harga asli.
+        if (!$this->has_variants || $this->variants->isEmpty()) {
+            return $this->final_price ?? $this->price; 
+        }
+
+        // 2. Jika punya varian, cari harga terendah
+        $minVariantPrice = $this->variants
+            ->where('is_active', true)
+            ->map(function ($variant) {
+                // Jika harga varian kosong, gunakan harga induk
+                return $variant->price ?? $this->price;
+            })
+            ->min();
+
+        // Bandingkan mana lebih murah: varian terendah atau harga induk
+        // FIX: Tambahkan fallback juga di sini
+        return $minVariantPrice ?: ($this->final_price ?? $this->price);
+    }
+
+    public function getPriceLabelHtmlAttribute()
+    {
+        // Helper untuk menampilkan HTML harga yang rapi di Blade
+        $price = $this->min_price;
+        $formatted = 'Rp ' . number_format($price, 0, ',', '.');
+
+        // Jika punya varian, tambahkan teks "Mulai dari"
+        if ($this->has_variants) {
+            return '<span class="text-[10px] text-gray-500 font-normal mr-1">Mulai</span> ' . $formatted;
+        }
+
+        return $formatted;
     }
 
     /**

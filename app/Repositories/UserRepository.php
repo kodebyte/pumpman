@@ -33,7 +33,14 @@ class UserRepository implements UserRepositoryInterface
 
         $sortColumn = $params['sort'] ?? 'created_at';
         $sortDirection = $params['direction'] ?? 'desc';
-        $allowedSorts = ['name', 'email', 'created_at', 'is_active', 'company_name'];
+
+        $allowedSorts = [
+            'name', 
+            'email', 
+            'created_at', 
+            'is_active', 
+            'company_name'
+        ];
 
         if (in_array($sortColumn, $allowedSorts)) {
             $query->orderBy($sortColumn, $sortDirection)->orderBy('id', 'asc');

@@ -13,12 +13,21 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->unsignedInteger('province_id')->nullable();
+            $table->unsignedInteger('city_id')->nullable();
+
+             // Relasi (Opsional tapi bagus untuk data integrity)
+            $table->foreign('province_id')->references('id')->on('provinces')->nullOnDelete();
+            $table->foreign('city_id')->references('id')->on('cities')->nullOnDelete();
+            
             $table->string('email')->unique();
-            $table->string('phone')->nullable();
-            $table->string('company_name')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            $table->string('name');
+            $table->string('phone')->nullable();
+            $table->text('address')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->boolean('is_active')->default(true); 
             $table->timestamp('last_login_at')->nullable();
             $table->string('last_login_ip', 45)->nullable();

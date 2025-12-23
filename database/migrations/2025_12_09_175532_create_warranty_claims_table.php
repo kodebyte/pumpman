@@ -18,7 +18,7 @@ return new class extends Migration
             // Relasi
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            
+
             // Info Barang
             $table->string('serial_number')->nullable();
             $table->date('purchase_date');
@@ -30,6 +30,7 @@ return new class extends Migration
             $table->json('evidence_photos')->nullable(); // Array path foto
             
             // Info Kontak & Pengiriman
+            $table->string('customer_email');
             $table->string('customer_name');
             $table->string('customer_phone');
             $table->text('shipping_address');

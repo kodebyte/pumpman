@@ -40,7 +40,14 @@ class ProductRepository implements ProductRepositoryInterface
         // 4. Sorting
         $sortColumn = $params['sort'] ?? 'created_at';
         $sortDirection = $params['direction'] ?? 'desc';
-        $allowedSorts = ['name', 'price', 'stock', 'is_active', 'created_at'];
+        
+        $allowedSorts = [
+            'name', 
+            'price', 
+            'stock', 
+            'is_active', 
+            'created_at'
+        ];
 
         if (in_array($sortColumn, $allowedSorts)) {
             $query->orderBy($sortColumn, $sortDirection)->orderBy('id', 'asc');

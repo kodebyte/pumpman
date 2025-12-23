@@ -20,13 +20,19 @@ class HeroBannerController extends Controller
     public function index(): View
     {
         $params = request()->only([
-            'search', 'is_active', 'sort', 'direction'
+            'search', 
+            'is_active', 
+            'sort', 
+            'direction'
         ]);
 
         $perPage = request('limit', 15);
         $banners = $this->bannerRepo->getAll($params, $perPage);
         
-        return view('admin.pages.banner.index', compact('banners', 'perPage'));
+        return view('admin.pages.banner.index', compact(
+            'banners', 
+            'perPage'
+        ));
     }
 
     public function create(): View
@@ -44,7 +50,6 @@ class HeroBannerController extends Controller
             );
         } catch (\Exception $e) {
             \Log::error('Error creating banner: ' . $e->getMessage());
-            \Log::error($e->getTraceAsString());
 
             return back()->withInput() // Form tidak kosong lagi
                     ->with('error', 'Failed to create banner. Please check your inputs or try again.');
@@ -75,13 +80,13 @@ class HeroBannerController extends Controller
             );
         } catch (\Exception $e) {
             \Log::error('Error update banner: ' . $e->getMessage());
-            \Log::error($e->getTraceAsString());
 
             return back()->withInput() 
                     ->with('error', 'Failed to update banner. Please try again.');
         }
 
-        return to_route('admin.banners.index')->with('success', 'Banner updated successfully');
+        return to_route('admin.banners.index')
+                ->with('success', 'Banner updated successfully');
     }
 
     public function destroy(
@@ -92,11 +97,12 @@ class HeroBannerController extends Controller
             $this->bannerService->delete($id);
         } catch (\Exception $e) {
             \Log::error('Error delete banner: ' . $e->getMessage());
-            \Log::error($e->getTraceAsString());
 
-            return back()->with('error', 'Failed to delete category. It might be linked to other data.');
+            return back()
+                    ->with('error', 'Failed to delete category. It might be linked to other data.');
         }
 
-        return to_route('admin.banners.index')->with('success', 'Banner deleted successfully');
+        return to_route('admin.banners.index')
+                ->with('success', 'Banner deleted successfully');
     }
 }

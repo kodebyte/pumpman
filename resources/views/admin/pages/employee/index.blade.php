@@ -1,32 +1,30 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="Employees">
+
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Employees') }}
+                    Employees
                 </h2>
                 <div class="mt-2">
-                    <x-admin.breadcrumb :links="['Employees' => '#']" />
+                    <x-admin.breadcrumb :links="[
+                        'Employees' => '#'
+                    ]" />
                 </div>
             </div>
             
-            <a href="{{ route('admin.employees.create') }}" 
-               class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none transition ease-in-out duration-150">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                </svg>
+            <a href="{{ route('admin.employees.create') }}" class="px-4 py-2 bg-gray-800 rounded-md text-xs text-white uppercase hover:bg-gray-700 transition flex items-center">
+                <x-admin.svg.plus />
                 Add Employee
             </a>
         </div>
     </x-slot>
 
     <div class="pb-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <x-admin.flash-message />
 
             <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 flex flex-col">
-                
                 <div class="p-6 border-b border-gray-100">
                     <form method="GET" action="{{ route('admin.employees.index') }}" class="flex flex-col md:flex-row gap-4">
                         <input type="hidden" name="sort" value="{{ request('sort') }}">
@@ -61,10 +59,10 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-100 border border-transparent rounded-lg font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-200 transition">Search</button>
+                        <button type="submit" class="px-4 py-2 bg-gray-100 rounded-lg text-xs font-semibold uppercase hover:bg-gray-200">Search</button>
 
                         @if(request()->hasAny(['search', 'role_id', 'is_active', 'sort']))
-                            <a href="{{ route('admin.employees.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg font-semibold text-xs text-red-500 uppercase tracking-widest hover:bg-red-50 transition">Clear</a>
+                            <a href="{{ route('admin.employees.index') }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-xs font-semibold text-red-500 uppercase hover:bg-red-50">Clear</a>
                         @endif
                     </form>
                 </div>
@@ -128,11 +126,11 @@
                         <div class="flex-1 flex justify-start">
                             {{ $employees->appends(request()->all())->links() }}
                         </div>
-
                         <x-admin.limit-selector :per-page="$perPage ?? 15" />
                     </div>
                 @endif
             </div>
         </div>
     </div>
+    
 </x-admin.app-layout>

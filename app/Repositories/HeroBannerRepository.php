@@ -51,15 +51,15 @@ class HeroBannerRepository implements HeroBannerRepositoryInterface
         $now = now();
         
         return $this->heroBanner->newQuery()
-            ->where('is_active', true)
-            ->where(function ($q) use ($now) {
-                $q->whereNull('start_date')->orWhere('start_date', '<=', $now);
-            })
-            ->where(function ($q) use ($now) {
-                $q->whereNull('end_date')->orWhere('end_date', '>=', $now);
-            })
-            ->orderBy('order', 'asc')
-            ->get();
+                ->where('is_active', true)
+                ->where(function ($q) use ($now) {
+                    $q->whereNull('start_date')->orWhere('start_date', '<=', $now);
+                })
+                ->where(function ($q) use ($now) {
+                    $q->whereNull('end_date')->orWhere('end_date', '>=', $now);
+                })
+                ->orderBy('order', 'asc')
+                ->get();
     }
 
     public function findById(int $id)

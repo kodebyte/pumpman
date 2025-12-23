@@ -41,7 +41,7 @@ class StorePostRequest extends FormRequest
             'meta_description.id' => ['nullable', 'string', 'max:160'],
 
             'thumbnail' => ['required', 'image', 'max:2048'],
-            'type' => ['required', 'in:news,article,promo'],
+            'post_type_id' => ['required', 'exists:post_types,id'],
             'is_active' => ['boolean'],
             'published_at' => ['nullable', 'date'],
         ];

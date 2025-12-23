@@ -70,26 +70,6 @@
             initEditor('#content_en');
             initEditor('#content_id');
         });
-
-        // 2. ALPINE.JS LOGIC
-        // document.addEventListener('alpine:init', () => {
-        //     Alpine.data('productForm', (config) => ({
-        //         // State Init
-        //         activeTab: config.initialTab || 'general',
-        //         discountType: config.discountType || '',
-        //         hasVariants: config.hasVariants || false,
-        //         variants: config.variants || [{id: null, name: '', price: '', stock: '', sku: ''}],
-                
-        //         // Image State
-        //         imgPreviews: [],
-        //         imagesToDelete: [],
-
-        //         // --- [BARU] Download/File State ---
-        //         downloadsToDelete: [],
-
-        //         // --- METHODS ---
-        //     }));
-        // });
     </script>
 
     <style>

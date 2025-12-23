@@ -1,9 +1,10 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="Edit Marketplace">
+
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Edit Marketplace') }}: {{ $marketplace->name }}
+                    Edit Marketplace: {{ $marketplace->name }}
                 </h2>
                 <div class="mt-2">
                     <x-admin.breadcrumb :links="[
@@ -27,16 +28,13 @@
             }
         }
     }">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <form action="{{ route('admin.marketplaces.update', $marketplace->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    
                     <div class="lg:col-span-2 space-y-6">
-                        
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
                             <div class="flex items-center gap-2 mb-4 border-b pb-2">
                                 <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -44,18 +42,16 @@
                             </div>
                             
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                
                                 <div class="md:col-span-3">
-                                    <x-admin.input-label for="name" :value="__('Platform Name')" />
+                                    <x-admin.input-label for="name" value="Platform Name" />
                                     <x-admin.text-input name="name" :value="old('name', $marketplace->name)" required class="w-full text-lg font-semibold" />
                                     <x-admin.input-error :messages="$errors->get('name')" />
                                 </div>
                                 
                                 <div class="md:col-span-3">
-                                    <x-admin.input-label for="icon" :value="__('Logo / Icon')" />
+                                    <x-admin.input-label for="icon" value="Logo / Icon" />
                                     
                                     <div class="mt-2 relative group cursor-pointer border-2 border-dashed border-gray-300 rounded-lg p-2 hover:bg-gray-50 transition h-40 flex flex-col items-center justify-center overflow-hidden" onclick="document.getElementById('icon').click()">
-                                        
                                         <template x-if="!imgPreview">
                                             @if($marketplace->icon)
                                                 <img src="{{ asset('storage/' . $marketplace->icon) }}" class="w-20 h-20 object-contain rounded">
@@ -72,30 +68,29 @@
                                         <input id="icon" type="file" name="icon" class="hidden" accept="image/*" @change="previewImage">
                                     </div>
                                     <p class="text-xs text-gray-500 mt-1">Leave blank to keep current icon.</p>
+                                    <p class="text-xs text-gray-500 mt-1">Recommended: Square icon (e.g., 100x100px).</p>
                                     <x-admin.input-error :messages="$errors->get('icon')" class="mt-2" />
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="space-y-6">
-                        
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6 sticky top-6">
                             <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Control</h3>
                             
                             <div class="space-y-4">
                                 <div>
-                                    <x-admin.input-label for="is_active" :value="__('Visibility')" />
+                                    <x-admin.input-label for="is_active" value="Visibility" />
                                     <select name="is_active" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">
-                                        <option value="1" {{ old('is_active', $marketplace->is_active) == true ? 'selected' : '' }}>Visible (Active)</option>
-                                        <option value="0" {{ old('is_active', $marketplace->is_active) == false ? 'selected' : '' }}>Hidden (Draft)</option>
+                                        <option value="1" {{ old('is_active', $marketplace->is_active) == true ? 'selected' : '' }}>Visible</option>
+                                        <option value="0" {{ old('is_active', $marketplace->is_active) == false ? 'selected' : '' }}>Hidden</option>
                                     </select>
                                     <x-admin.input-error :messages="$errors->get('is_active')" />
                                 </div>
 
                                 <div>
-                                    <x-admin.input-label for="order" :value="__('Sort Order')" />
+                                    <x-admin.input-label for="order" value="Sort Order" />
                                     <x-admin.text-input type="number" name="order" :value="old('order', $marketplace->order)" class="w-full text-sm" />
                                     <p class="text-xs text-gray-500 mt-1">Lower number = higher priority.</p>
                                     <x-admin.input-error :messages="$errors->get('order')" />
@@ -104,15 +99,15 @@
 
                             <div class="mt-6 flex flex-col gap-3">
                                 <x-admin.primary-button class="justify-center bg-gray-800 hover:bg-gray-700">
-                                    {{ __('Update Marketplace') }}
+                                    Update Marketplace
                                 </x-admin.primary-button>
                                 <a href="{{ route('admin.marketplaces.index') }}" class="text-center text-sm text-gray-600 hover:text-gray-900 underline">Cancel</a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
 </x-admin.app-layout>

@@ -7,6 +7,8 @@ use App\Contracts\PostRepositoryInterface;
 use App\Services\PostService;
 use App\Http\Requests\Admin\Post\StorePostRequest;
 use App\Http\Requests\Admin\Post\UpdatePostRequest;
+use App\Models\Post;
+use App\Models\PostType;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
@@ -21,7 +23,7 @@ class PostController extends Controller
     {
         $params = request()->only([
             'search', 
-            'type', 
+            'post_type_id',
             'is_active', 
             'sort', 
             'direction'
@@ -32,55 +34,84 @@ class PostController extends Controller
             $params, 
             $perPage
         );
+
+        $types = PostType::where('is_active', true)->get();
         
-        return view('admin.pages.post.index', compact('posts', 'perPage'));
+        return view('admin.pages.post.index', compact('posts', 'perPage', 'types'));
     }
 
     public function create()
     {
-        return view('admin.pages.post.create');
+        $types = PostType::where('is_active', true)
+                    ->get();
+
+        return view('admin.pages.post.create', compact('types'));
     }
 
-    public function store(StorePostRequest $request)
+    public function store(
+        StorePostRequest $request
+    )
     {
         try {
-            $this->postService
-                ->create($request
-                ->validated());
-
-            return to_route('admin.posts.index')
-                    ->with('success', 'Post created successfully');
+            $this->postService->create(
+                $request->validated()
+            );
         } catch (Exception $e) {
             Log::error('Create post error: ' . $e->getMessage());
+
             return back()->withInput()
                     ->with('error', 'Failed to create post.');
         }
+
+        return to_route('admin.posts.index')
+                ->with('success', 'Post created successfully');
     }
 
-    public function edit(string $id)
+    public function edit(
+        Post $post
+    )
     {
-        $post = $this->postRepo->findById($id);
-        return view('admin.pages.post.edit', compact('post'));
+        $types = PostType::where('is_active', true)
+                    ->get();
+        
+        return view('admin.pages.post.edit', compact('post', 'types'));
     }
 
-    public function update(UpdatePostRequest $request, string $id)
+    public function update(
+        UpdatePostRequest $request, 
+        Post $post
+    )
     {
         try {
-            $this->postService->update($id, $request->validated());
-            return to_route('admin.posts.index')->with('success', 'Post updated successfully');
+            $this->postService->update(
+                $post->id, 
+                $request->validated()
+            );
         } catch (Exception $e) {
             Log::error('Update post error: ' . $e->getMessage());
-            return back()->withInput()->with('error', 'Failed to update post.');
+
+            return back()->withInput()
+                    ->with('error', 'Failed to update post.');
         }
+
+        return to_route('admin.posts.index')
+                ->with('success', 'Post updated successfully');
     }
 
-    public function destroy(string $id)
+    public function destroy(
+        Post $post
+    )
     {
         try {
-            $this->postService->delete($id);
-            return to_route('admin.posts.index')->with('success', 'Post deleted successfully');
+            $this->postService->delete($post->id);
         } catch (Exception $e) {
-            return back()->with('error', 'Failed to delete post.');
+            Log::error('Delete post error: ' . $e->getMessage());
+
+            return back()
+                    ->with('error', 'Failed to delete post.');
         }
+
+        return to_route('admin.posts.index')
+                ->with('success', 'Post deleted successfully');
     }
 }

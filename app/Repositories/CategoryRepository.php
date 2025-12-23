@@ -21,7 +21,7 @@ class CategoryRepository implements CategoryRepositoryInterface
             $search = $params['search'];
             $query->where(function($q) use ($search) {
                 $q->where('name->en', 'like', '%' . $search . '%')
-                ->orWhere('name->id', 'like', '%' . $search . '%');
+                    ->orWhere('name->id', 'like', '%' . $search . '%');
             });
         }
 

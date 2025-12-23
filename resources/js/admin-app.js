@@ -61,9 +61,6 @@ document.addEventListener('alpine:init', () => {
         isDownloadDeleted(id) {
             return this.downloadsToDelete.includes(id);
         },
-
-        handleFileSelect(e) { /* ... */ },
-        removeNewImage(index) { /* ... */ }
     }));
 });
 

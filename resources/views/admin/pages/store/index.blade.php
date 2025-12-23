@@ -1,19 +1,27 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="Store Locator">
+
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('Store Locator') }}</h2>
-                <div class="mt-2"><x-admin.breadcrumb :links="['Stores' => '#']" /></div>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Store Locator
+                </h2>
+                <div class="mt-2">
+                    <x-admin.breadcrumb :links="[
+                        'Stores' => '#'
+                    ]" />
+                </div>
             </div>
-            <a href="{{ route('admin.stores.create') }}" class="px-4 py-2 bg-gray-800 rounded-md text-xs text-white uppercase hover:bg-gray-700 transition flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+
+            <a href="{{ route('admin.stores.create') }}" class="px-4 py-2 bg-gray-800 rounded-md text-xs text-white uppercase hover:bg-gray-700 transition flex items-center">
+                <x-admin.svg.plus />
                 Add Store
             </a>
         </div>
     </x-slot>
 
     <div class="pb-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <x-admin.flash-message />
 
             <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 flex flex-col">
@@ -44,10 +52,10 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="px-4 py-2 bg-gray-100 rounded-lg text-xs uppercase font-bold hover:bg-gray-200">Search</button>
+                        <button type="submit" class="px-4 py-2 bg-gray-100 rounded-lg text-xs font-semibold uppercase hover:bg-gray-200">Search</button>
                         
                         @if(request()->hasAny(['search', 'type', 'is_active', 'sort']))
-                            <a href="{{ route('admin.stores.index') }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-xs font-semibold text-red-500 uppercase hover:bg-red-50 flex items-center justify-center">Clear</a>
+                            <a href="{{ route('admin.stores.index') }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-xs font-semibold text-red-500 uppercase hover:bg-red-50">Clear</a>
                         @endif
                     </form>
                 </div>
@@ -139,4 +147,5 @@
             </div>
         </div>
     </div>
+    
 </x-admin.app-layout>

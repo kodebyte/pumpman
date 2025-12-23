@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             
             // Informasi Dasar
+            $table->string('sku')->nullable(); 
             $table->string('name');
             $table->string('slug')->unique();
             $table->json('description')->nullable();
@@ -23,6 +24,7 @@ return new class extends Migration
             
             // Harga & Fisik
             $table->decimal('price', 15, 2)->default(0);   // Harga Dasar
+            $table->integer('stock')->default(0);
             $table->integer('weight')->default(1000);      // Berat (Gram)
             
             // Logika Diskon (Promo)

@@ -7,3 +7,21 @@
 
 /* Admin specific styles (jika ada) */
 [x-cloak] { display: none !important; }
+
+/* Sembunyikan scrollbar default atau perkecil ukurannya */
+.flex-1.overflow-y-auto::-webkit-scrollbar {
+    width: 4px;
+}
+
+.flex-1.overflow-y-auto::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.flex-1.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #e2e8f0; /* warna gray-200 */
+    border-radius: 10px;
+}
+
+.flex-1.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: #cbd5e1; /* warna gray-300 */   
+}

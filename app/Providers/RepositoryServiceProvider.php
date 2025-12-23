@@ -2,34 +2,6 @@
 
 namespace App\Providers;
 
-use App\Contracts\CareerRepositoryInterface;
-use App\Contracts\CategoryRepositoryInterface;
-use App\Contracts\EmployeeRepositoryInterface;
-use App\Contracts\FaqCategoryRepositoryInterface;
-use App\Contracts\FaqRepositoryInterface;
-use App\Contracts\HeroBannerRepositoryInterface;
-use App\Contracts\MarketplaceRepositoryInterface;
-use App\Contracts\NewsletterSubscriberRepositoryInterface;
-use App\Contracts\PostRepositoryInterface;
-use App\Contracts\ProductRepositoryInterface;
-use App\Contracts\SettingRepositoryInterface;
-use App\Contracts\StoreRepositoryInterface;
-use App\Contracts\UserRepositoryInterface;
-use App\Contracts\WarrantyClaimRepositoryInterface;
-use App\Repositories\CareerRepository;
-use App\Repositories\CategoryRepository;
-use App\Repositories\EmployeeRepository;
-use App\Repositories\FaqCategoryRepository;
-use App\Repositories\FaqRepository;
-use App\Repositories\HeroBannerRepository;
-use App\Repositories\MarketplaceRepository;
-use App\Repositories\NewsletterSubscriberRepository;
-use App\Repositories\PostRepository;
-use App\Repositories\ProductRepository;
-use App\Repositories\SettingRepository;
-use App\Repositories\StoreRepository;
-use App\Repositories\UserRepository;
-use App\Repositories\WarrantyClaimRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -40,69 +12,99 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-        EmployeeRepositoryInterface::class, 
-        EmployeeRepository::class
+        \App\Contracts\EmployeeRepositoryInterface::class, 
+        \App\Repositories\EmployeeRepository::class
         );
 
         $this->app->bind(
-        UserRepositoryInterface::class, 
-        UserRepository::class
+        \App\Contracts\UserRepositoryInterface::class, 
+        \App\Repositories\UserRepository::class
         );
 
         $this->app->bind(
-        CategoryRepositoryInterface::class, 
-        CategoryRepository::class
+        \App\Contracts\CategoryRepositoryInterface::class, 
+        \App\Repositories\CategoryRepository::class
         );
 
         $this->app->bind(
-        HeroBannerRepositoryInterface::class, 
-        HeroBannerRepository::class
+        \App\Contracts\HeroBannerRepositoryInterface::class, 
+        \App\Repositories\HeroBannerRepository::class
         );
 
         $this->app->bind(
-        MarketplaceRepositoryInterface::class,
-        MarketplaceRepository::class
+        \App\Contracts\MarketplaceRepositoryInterface::class,
+        \App\Repositories\MarketplaceRepository::class
         );
 
         $this->app->bind(
-        ProductRepositoryInterface::class,
-        ProductRepository::class
+        \App\Contracts\ProductRepositoryInterface::class,
+        \App\Repositories\ProductRepository::class
         );
 
         $this->app->bind(
-        PostRepositoryInterface::class,
-        PostRepository::class
+        \App\Contracts\PostRepositoryInterface::class,
+        \App\Repositories\PostRepository::class
         );
 
         $this->app->bind(
-        StoreRepositoryInterface::class,
-        StoreRepository::class
+        \App\Contracts\StoreRepositoryInterface::class,
+        \App\Repositories\StoreRepository::class
         );
 
         $this->app->bind(
-        CareerRepositoryInterface::class,
-        CareerRepository::class
+        \App\Contracts\CareerRepositoryInterface::class,
+        \App\Repositories\CareerRepository::class
         );
 
         // ...
         $this->app->bind(
-        SettingRepositoryInterface::class,
-        SettingRepository::class
+        \App\Contracts\SettingRepositoryInterface::class,
+        \App\Repositories\SettingRepository::class
         );
 
         $this->app->bind(
-        FaqRepositoryInterface::class,
-        FaqRepository::class
+        \App\Contracts\FaqRepositoryInterface::class,
+        \App\Repositories\FaqRepository::class
         );
 
         $this->app->bind(
-        NewsletterSubscriberRepositoryInterface::class,
-        NewsletterSubscriberRepository::class
+        \App\Contracts\NewsletterSubscriberRepositoryInterface::class,
+        \App\Repositories\NewsletterSubscriberRepository::class
         );
 
         $this->app->bind(
-        WarrantyClaimRepositoryInterface::class,
-        WarrantyClaimRepository::class
+        \App\Contracts\WarrantyClaimRepositoryInterface::class,
+        \App\Repositories\WarrantyClaimRepository::class
+        );
+
+        $this->app->bind(
+        \App\Contracts\PostTypeRepositoryInterface::class,
+        \App\Repositories\PostTypeRepository::class
+        );
+
+        $this->app->bind(
+        \App\Contracts\OrderRepositoryInterface::class,
+        \App\Repositories\OrderRepository::class
+        );
+
+        $this->app->bind(
+        \App\Contracts\CourierRepositoryInterface::class,
+        \App\Repositories\CourierRepository::class
+        );
+
+        $this->app->bind(
+        \App\Contracts\ProductHighlightRepositoryInterface::class,
+        \App\Repositories\ProductHighlightRepository::class
+        );
+
+        $this->app->bind(
+        \App\Contracts\ContactMessageRepositoryInterface::class,
+        \App\Repositories\ContactMessageRepository::class
+        );
+
+        $this->app->bind(
+        \App\Contracts\SeoSettingRepositoryInterface::class,
+        \App\Repositories\SeoSettingRepository::class
         );
     }
 

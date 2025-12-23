@@ -1,9 +1,10 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="General Settings">
+
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('General Settings') }}
+                    General Settings
                 </h2>
                 <div class="mt-2">
                     <x-admin.breadcrumb :links="[
@@ -30,7 +31,7 @@
             }
         }
     }">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <x-admin.flash-message />
             
             <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
@@ -38,31 +39,27 @@
                 @method('PUT')
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    
                     <div class="lg:col-span-2 space-y-6">
-                        
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
                             <div class="flex items-center gap-2 mb-4 border-b pb-2">
-                                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                                 <h3 class="font-bold text-gray-700">Website Identity</h3>
                             </div>
                             
                             <div class="space-y-4">
                                 <div>
-                                    <x-admin.input-label for="site_name" :value="__('Site Name')" />
-                                    <x-admin.text-input name="site_name" :value="$settings['site_name'] ?? ''" class="w-full text-lg font-semibold" placeholder="e.g. Aiwa Indonesia" />
+                                    <x-admin.input-label for="site_name" value="Site Name" />
+                                    <x-admin.text-input name="site_name" :value="$settings['site_name'] ?? ''" class="w-full text-lg font-semibold" />
                                 </div>
                                 
                                 <div>
-                                    <x-admin.input-label for="site_description" :value="__('Meta Description (SEO)')" />
-                                    <textarea name="site_description" rows="3" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm" placeholder="Short description for search engines...">{{ $settings['site_description'] ?? '' }}</textarea>
+                                    <x-admin.input-label for="site_description" value="Meta Description (SEO)" />
+                                    <textarea name="site_description" rows="3" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">{{ $settings['site_description'] ?? '' }}</textarea>
                                 </div>
                             </div>
                         </div>
 
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
                             <div class="flex items-center gap-2 mb-4 border-b pb-2">
-                                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                 <h3 class="font-bold text-gray-700">Brand Visuals</h3>
                             </div>
 
@@ -111,30 +108,89 @@
 
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
                             <div class="flex items-center gap-2 mb-4 border-b pb-2">
-                                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                                 <h3 class="font-bold text-gray-700">Contact Information</h3>
                             </div>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <x-admin.input-label for="contact_email" :value="__('Support Email')" />
-                                    <x-admin.text-input name="contact_email" :value="$settings['contact_email'] ?? ''" class="w-full" placeholder="support@domain.com" />
+                                <div class="md:col-span-2">
+                                    <x-admin.input-label for="contact_company_name" value="Contact Company Name" />
+                                    <x-admin.text-input name="contact_company_name" :value="$settings['contact_company_name'] ?? ''" class="w-full" />
                                 </div>
                                 <div>
-                                    <x-admin.input-label for="contact_phone" :value="__('WhatsApp / Phone')" />
-                                    <x-admin.text-input name="contact_phone" :value="$settings['contact_phone'] ?? ''" class="w-full" placeholder="6281234..." />
+                                    <x-admin.input-label for="contact_email" value="Support Email" />
+                                    <x-admin.text-input name="contact_email" :value="$settings['contact_email'] ?? ''" class="w-full" />
+                                </div>
+                                <div>
+                                    <x-admin.input-label for="contact_phone" value="WhatsApp / Phone" />
+                                    <x-admin.text-input name="contact_phone" :value="$settings['contact_phone'] ?? ''" class="w-full" />
                                 </div>
                                 <div class="md:col-span-2">
-                                    <x-admin.input-label for="contact_address" :value="__('Office Address')" />
+                                    <x-admin.input-label for="contact_address" value="Office Address" />
                                     <textarea name="contact_address" rows="2" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">{{ $settings['contact_address'] ?? '' }}</textarea>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <x-admin.input-label for="contact_business_hours" value="Bussiness Hours" />
+                                    <textarea name="contact_business_hours" rows="2" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">{{ $settings['contact_business_hours'] ?? '' }}</textarea>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
+                            <div class="flex items-center gap-2 mb-4 border-b pb-2">
+                                <h3 class="font-bold text-gray-700">Contact Maps</h3>
+                            </div>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <x-admin.input-label for="contact_maps_embed" value="Maps Embed" />
+                                    <x-admin.text-input name="contact_maps_embed" :value="$settings['contact_maps_embed'] ?? ''" class="w-full" />
+                                </div>
+                                <div >
+                                    <x-admin.input-label for="contact_maps_link" value="Maps Link" />
+                                    <x-admin.text-input name="contact_maps_link" :value="$settings['contact_maps_link'] ?? ''" class="w-full" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
+                            <div class="flex items-center gap-2 mb-4 border-b pb-2">
+                                <h3 class="font-bold text-gray-700">Social Media</h3>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <x-admin.input-label for="social_facebook" value="Facebook URL" />
+                                    <x-admin.text-input name="social_facebook" :value="$settings['social_facebook'] ?? ''" class="w-full text-xs" />
+                                </div>
+                                <div>
+                                    <x-admin.input-label for="social_instagram" value="Instagram URL" />
+                                    <x-admin.text-input name="social_instagram" :value="$settings['social_instagram'] ?? ''" class="w-full text-xs" />
+                                </div>
+                                <div>
+                                    <x-admin.input-label for="social_linkedin" value="LinkedIn URL" />
+                                    <x-admin.text-input name="social_linkedin" :value="$settings['social_linkedin'] ?? ''" class="w-full text-xs" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="space-y-6">
-                        
+                        <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
+                            <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Shipments</h3>
+
+                            <div class="space-y-6">
+                                <div>
+                                    <x-admin.input-label for="flat_shipping_fee" value="Flat Shipping Fee" />
+                                    <x-admin.text-input name="flat_shipping_fee" :value="$settings['flat_shipping_fee'] ?? ''" class="w-full text-xs" />
+                                </div>
+
+                                <div>
+                                    <x-admin.input-label for="tax_rate" value="Tax Rate" />
+                                    <x-admin.text-input name="tax_rate" :value="$settings['tax_rate'] ?? ''" class="w-full text-xs" />
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6 sticky top-6">
                             <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Actions</h3>
                             <div class="flex flex-col gap-3">
@@ -144,29 +200,10 @@
                                 <p class="text-xs text-gray-400 text-center">Last updated: {{ now()->format('d M Y') }}</p>
                             </div>
                         </div>
-
-                        <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
-                            <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Social Media</h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <x-admin.input-label for="social_facebook" :value="__('Facebook URL')" />
-                                    <x-admin.text-input name="social_facebook" :value="$settings['social_facebook'] ?? ''" class="w-full text-xs" placeholder="https://facebook.com/..." />
-                                </div>
-                                <div>
-                                    <x-admin.input-label for="social_instagram" :value="__('Instagram URL')" />
-                                    <x-admin.text-input name="social_instagram" :value="$settings['social_instagram'] ?? ''" class="w-full text-xs" placeholder="https://instagram.com/..." />
-                                </div>
-                                <div>
-                                    <x-admin.input-label for="social_linkedin" :value="__('LinkedIn URL')" />
-                                    <x-admin.text-input name="social_linkedin" :value="$settings['social_linkedin'] ?? ''" class="w-full text-xs" placeholder="https://linkedin.com/..." />
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
-
                 </div>
             </form>
         </div>
     </div>
+
 </x-admin.app-layout>

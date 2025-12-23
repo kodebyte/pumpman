@@ -1,9 +1,10 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="FAQs">
+
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('FAQs') }}
+                    FAQs
                 </h2>
                 <div class="mt-2">
                     <x-admin.breadcrumb :links="[
@@ -12,21 +13,18 @@
                 </div>
             </div>
             
-            <a href="{{ route('admin.faqs.create') }}" 
-               class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none transition ease-in-out duration-150 gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                Add New
+            <a href="{{ route('admin.faqs.create') }}" class="px-4 py-2 bg-gray-800 rounded-md text-xs text-white uppercase hover:bg-gray-700 transition flex items-center">
+                <x-admin.svg.plus />
+                Add Faq
             </a>
         </div>
     </x-slot>
 
     <div class="pb-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <x-admin.flash-message />
 
             <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 flex flex-col">
-                
                 <div class="p-6 border-b border-gray-100">
                     <form method="GET" action="{{ route('admin.faqs.index') }}" class="flex flex-col md:flex-row gap-4">
                         <input type="hidden" name="sort" value="{{ request('sort') }}">
@@ -39,14 +37,6 @@
                                    placeholder="Search questions or categories (ID/EN)...">
                         </div>
                         
-                        {{-- <div class="w-full md:w-40">
-                            <select name="type" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 sm:text-sm" onchange="this.form.submit()">
-                                <option value="">All Types</option>
-                                <option value="category" {{ request('type') == 'category' ? 'selected' : '' }}>Categories Only</option>
-                                <option value="question" {{ request('type') == 'question' ? 'selected' : '' }}>Questions Only</option>
-                            </select>
-                        </div> --}}
-
                         <div class="w-full md:w-40">
                             <select name="is_active" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 sm:text-sm" onchange="this.form.submit()">
                                 <option value="">All Status</option>
@@ -55,10 +45,10 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="px-4 py-2 bg-gray-100 text-gray-800 border border-gray-300 rounded-lg text-xs uppercase font-bold hover:bg-gray-200 transition">Search</button>
+                        <button type="submit" class="px-4 py-2 bg-gray-100 rounded-lg text-xs font-semibold uppercase hover:bg-gray-200">Search</button>
                         
                         @if(request()->hasAny(['search', 'type', 'is_active', 'sort']))
-                            <a href="{{ route('admin.faqs.index') }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-xs font-semibold text-red-500 uppercase hover:bg-red-50 flex items-center justify-center">Clear</a>
+                            <a href="{{ route('admin.faqs.index') }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-xs font-semibold text-red-500 uppercase hover:bg-red-50">Clear</a>
                         @endif
                     </form>
                 </div>
@@ -81,7 +71,6 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse ($faqs as $faq)
                                 <tr class="hover:bg-gray-50 transition {{ !$faq->parent_id ? 'bg-indigo-50/30' : '' }}">
-                                    
                                     <td class="px-6 py-4">
                                         <div class="flex items-start">
                                             @if(!$faq->parent_id)
@@ -153,15 +142,15 @@
                 </div>
                 
                 @if($faqs->hasPages() || $faqs->count() > 0)
-                <div class="bg-white px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div class="flex-1 flex justify-start">
-                        {{ $faqs->appends(request()->all())->links() }}
+                    <div class="bg-white px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex-1 flex justify-start">
+                            {{ $faqs->appends(request()->all())->links() }}
+                        </div>
+                        <x-admin.limit-selector :per-page="$perPage" />
                     </div>
-                    <x-admin.limit-selector :per-page="$perPage" />
-                </div>
                 @endif
-
             </div>
         </div>
     </div>
+    
 </x-admin.app-layout>

@@ -7,8 +7,7 @@ use App\Contracts\StoreRepositoryInterface;
 use App\Services\StoreService;
 use App\Http\Requests\Admin\Store\StoreStoreRequest;
 use App\Http\Requests\Admin\Store\UpdateStoreRequest;
-use Illuminate\Support\Facades\Log;
-use Exception;
+use App\Models\Store;
 
 class StoreController extends Controller
 {
@@ -19,11 +18,21 @@ class StoreController extends Controller
 
     public function index()
     {
-        $params = request()->only(['search', 'type', 'is_active', 'sort', 'direction']);
+        $params = request()->only([
+            'search', 
+            'type', 
+            'is_active', 
+            'sort', 
+            'direction'
+        ]);
+
         $perPage = request('limit', 10);
         $stores = $this->storeRepo->getAll($params, $perPage);
 
-        return view('admin.pages.store.index', compact('stores', 'perPage'));
+        return view('admin.pages.store.index', compact(
+            'stores', 
+            'perPage'
+        ));
     }
 
     public function create()
@@ -32,46 +41,69 @@ class StoreController extends Controller
     }
 
     // Ganti Request dengan StoreStoreRequest
-    public function store(StoreStoreRequest $request)
+    public function store(
+        StoreStoreRequest $request
+    )
     {
         try {
-            // Gunakan validated()
-            $this->storeService->create($request->validated());
-            
-            return to_route('admin.stores.index')->with('success', 'Store created successfully');
-        } catch (Exception $e) {
-            Log::error('Create store error: ' . $e->getMessage());
-            return back()->withInput()->with('error', 'Failed to create store.');
+            $this->storeService->create(
+                $request->validated()
+            );
+        } catch (\Exception $e) {
+            \Log::error('Create store error: ' . $e->getMessage());
+
+            return back()->withInput()
+                    ->with('error', 'Failed to create store.');
         }
+
+        return to_route('admin.stores.index')
+                ->with('success', 'Store created successfully');
     }
 
-    public function edit(string $id)
+    public function edit(
+        Store $store
+    )
     {
-        $store = $this->storeRepo->findById($id);
         return view('admin.pages.store.edit', compact('store'));
     }
 
     // Ganti Request dengan UpdateStoreRequest
-    public function update(UpdateStoreRequest $request, string $id)
+    public function update(
+        UpdateStoreRequest $request, 
+        Store $store
+    )
     {
         try {
             // Gunakan validated()
-            $this->storeService->update($id, $request->validated());
-            
-            return to_route('admin.stores.index')->with('success', 'Store updated successfully');
-        } catch (Exception $e) {
-            Log::error('Update store error: ' . $e->getMessage());
-            return back()->withInput()->with('error', 'Failed to update store.');
+            $this->storeService->update(
+                $store->id, 
+                $request->validated()
+            );
+        } catch (\Exception $e) {
+            \Log::error('Update store error: ' . $e->getMessage());
+
+            return back()->withInput()
+                    ->with('error', 'Failed to update store.');
         }
+
+        return to_route('admin.stores.index')
+                ->with('success', 'Store updated successfully');
     }
 
-    public function destroy(string $id)
+    public function destroy(
+        Store $store
+    )
     {
         try {
-            $this->storeService->delete($id);
-            return to_route('admin.stores.index')->with('success', 'Store deleted successfully');
-        } catch (Exception $e) {
-            return back()->with('error', 'Failed to delete store.');
+            $this->storeService->delete($store->id);
+        } catch (\Exception $e) {
+            \Log::error('Delete product error: ' . $e->getMessage());
+
+            return back()
+                    ->with('error', 'Failed to delete store.');
         }
+
+        return to_route('admin.stores.index')
+                ->with('success', 'Store deleted successfully');
     }
 }

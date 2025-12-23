@@ -22,7 +22,10 @@ class EmployeeController extends Controller
    public function index(): View
     {
         $params = request()->only([
-            'search', 'sort', 'direction', 'role_id'
+            'search', 
+            'sort', 
+            'direction', 
+            'role_id'
         ]);
 
         $perPage = request('limit', 15);
@@ -30,7 +33,11 @@ class EmployeeController extends Controller
 
         $roles = EmployeeRole::all();
 
-        return view('admin.pages.employee.index', compact('employees', 'roles', 'perPage'));
+        return view('admin.pages.employee.index', compact(
+            'employees', 
+            'roles', 
+            'perPage'
+        ));
     }
 
     public function create(): View
@@ -50,7 +57,6 @@ class EmployeeController extends Controller
             );
         } catch (\Exception $e) {
             \Log::error('Error creating employee: ' . $e->getMessage());
-            \Log::error($e->getTraceAsString());
 
             return back()->withInput() // Form tidak kosong lagi
                     ->with('error', 'Failed to create employee. Please check your inputs or try again.');
@@ -71,17 +77,16 @@ class EmployeeController extends Controller
 
     public function update(
         UpdateEmployeeRequest $request, 
-        string $id
+        Employee $employee
     ): RedirectResponse
     {
         try {
              $this->employeeService->update(
-                $id, 
+                $employee->id, 
                 $request->validated()
             );
         } catch (\Exception $e) {
             \Log::error('Error update employee: ' . $e->getMessage());
-            \Log::error($e->getTraceAsString());
 
             return back()->withInput() // Form tidak kosong lagi
                     ->with('error', 'Failed to update employee. Please try again.');
@@ -101,7 +106,6 @@ class EmployeeController extends Controller
             );
         } catch (\Exception $e) {
             \Log::error('Error delete category: ' . $e->getMessage());
-            \Log::error($e->getTraceAsString());
 
             return back()->with('error', 'Failed to delete employee. It might be linked to other data.');
         }

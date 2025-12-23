@@ -21,10 +21,15 @@ class CategoryController extends Controller
     public function index(): View
     {
         $params = request()->only([
-            'search', 'sort', 'direction', 'is_active', 'is_featured'
+            'search', 
+            'sort', 
+            'direction', 
+            'is_active', 
+            'is_featured'
         ]);
         
-        $perPage = request('limit', 10);
+        $perPage = request('limit', default: 15);
+
         $categories = $this->categoryRepo->getAll($params, $perPage);
         
         return view('admin.pages.product.category.index', compact('categories', 'perPage'));
@@ -45,7 +50,6 @@ class CategoryController extends Controller
             );
         } catch (\Exception $e) {
             \Log::error('Error creating category: ' . $e->getMessage());
-            \Log::error($e->getTraceAsString());
 
             return back()->withInput() // Form tidak kosong lagi
                     ->with('error', 'Failed to create category. Please check your inputs or try again.');
@@ -59,24 +63,21 @@ class CategoryController extends Controller
         Category $category
     ): View
     {
-        $category = $this->categoryRepo->findById($category->id);
-        
         return view('admin.pages.product.category.edit', compact('category'));
     }
 
     public function update(
         UpdateCategoryRequest $request, 
-        string $id
+        Category $category
     ): RedirectResponse
     {
         try {
              $this->categoryService->update(
-                $id, 
+                $category->id, 
                 $request->validated()
             );
         } catch (\Exception $e) {
             \Log::error('Error update category: ' . $e->getMessage());
-            \Log::error($e->getTraceAsString());
 
             return back()->withInput() // Form tidak kosong lagi
                     ->with('error', 'Failed to update category. Please try again.');
@@ -96,7 +97,6 @@ class CategoryController extends Controller
             );
         } catch (\Exception $e) {
             \Log::error('Error delete category: ' . $e->getMessage());
-            \Log::error($e->getTraceAsString());
 
             return back()->with('error', 'Failed to delete category. It might be linked to other data.');
         }

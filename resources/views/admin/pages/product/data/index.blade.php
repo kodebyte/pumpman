@@ -1,16 +1,27 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="Products">
+
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('Products') }}</h2>
-                <div class="mt-2"><x-admin.breadcrumb :links="['Products' => '#']" /></div>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Products
+                </h2>
+                <div class="mt-2">
+                    <x-admin.breadcrumb :links="[
+                        'Products' => '#'
+                    ]" />
+                </div>
             </div>
-            <a href="{{ route('admin.products.create') }}" class="px-4 py-2 bg-gray-800 text-white rounded-md text-xs uppercase hover:bg-gray-700 transition">+ Add Product</a>
+
+            <a href="{{ route('admin.products.create') }}" class="px-4 py-2 bg-gray-800 rounded-md text-xs text-white uppercase hover:bg-gray-700 transition flex items-center">
+                <x-admin.svg.plus />
+                Add Product
+            </a>
         </div>
     </x-slot>
 
     <div class="pb-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <x-admin.flash-message />
 
             <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 flex flex-col">
@@ -44,10 +55,10 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="px-4 py-2 bg-gray-100 rounded-lg text-xs uppercase font-bold hover:bg-gray-200">Search</button>
+                        <button type="submit" class="px-4 py-2 bg-gray-100 rounded-lg text-xs font-semibold uppercase hover:bg-gray-200">Search</button>
                         
                         @if(request()->hasAny(['search', 'category_id', 'is_active', 'sort']))
-                            <a href="{{ route('admin.products.index') }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-xs font-semibold text-red-500 uppercase hover:bg-red-50 flex items-center justify-center">Clear</a>
+                            <a href="{{ route('admin.products.index') }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-xs font-semibold text-red-500 uppercase hover:bg-red-50">Clear</a>
                         @endif
                     </form>
                 </div>
@@ -70,7 +81,7 @@
                                         <div class="flex items-start">
                                             <div class="flex-shrink-0 h-12 w-12 border rounded-lg overflow-hidden bg-gray-50">
                                                 @if($product->thumbnail)
-                                                    <img src="{{ asset('storage/' . $product->thumbnail) }}" class="h-full w-full object-cover">
+                                                    <img src="{{ $product->thumbnail }}" class="h-full w-full object-cover">
                                                 @else
                                                     <div class="h-full w-full flex items-center justify-center text-xs text-gray-400">No IMG</div>
                                                 @endif
@@ -125,12 +136,15 @@
                 </div>
                 
                 @if($products->hasPages() || $products->count() > 0)
-                    <div class="bg-white px-6 py-4 border-t border-gray-200 flex justify-between items-center">
-                        <div class="flex-1 flex justify-start">{{ $products->appends(request()->all())->links() }}</div>
+                    <div class="bg-white px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex-1 flex justify-start">
+                            {{ $products->appends(request()->all())->links() }}
+                        </div>
                         <x-admin.limit-selector :per-page="$perPage" />
                     </div>
                 @endif
             </div>
         </div>
     </div>
+
 </x-admin.app-layout>

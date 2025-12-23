@@ -33,8 +33,16 @@ class StoreRepository implements StoreRepositoryInterface
         $sortColumn = $params['sort'] ?? 'order';
         $sortDirection = $params['direction'] ?? 'asc';
         
+        $allowedSorts = [
+            'name', 
+            'city', 
+            'type', 
+            'is_active', 
+            'order'
+        ];
+
         // Allowed sorts
-        if (in_array($sortColumn, ['name', 'city', 'type', 'is_active', 'order'])) {
+        if (in_array($sortColumn, $allowedSorts)) {
             $query->orderBy($sortColumn, $sortDirection)->orderBy('id', 'asc');
         } else {
             $query->orderBy('order', 'asc');
@@ -44,12 +52,25 @@ class StoreRepository implements StoreRepositoryInterface
     }
 
     // ... Standard CRUD methods (findById, create, update, delete) ...
-    public function findById(int $id) { return $this->store->findOrFail($id); }
-    public function create(array $data) { return $this->store->create($data); }
-    public function update(int $id, array $data) { 
+    public function findById(int $id) 
+    { 
+        return $this->store->findOrFail($id); 
+    }
+
+    public function create(array $data) 
+    { 
+        return $this->store->create($data); 
+    }
+
+    public function update(int $id, array $data) 
+    { 
         $store = $this->findById($id);
         $store->update($data);
         return $store;
     }
-    public function delete(int $id) { return $this->findById($id)->delete(); }
+    
+    public function delete(int $id) 
+    { 
+        return $this->findById($id)->delete(); 
+    }
 }

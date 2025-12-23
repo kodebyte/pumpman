@@ -1,19 +1,25 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="Warranty Claims">
+
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('Warranty Claims') }}</h2>
-                <div class="mt-2"><x-admin.breadcrumb :links="['Claims' => '#']" /></div>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Warranty Claims
+                </h2>
+                <div class="mt-2">
+                    <x-admin.breadcrumb :links="[
+                        'Claims' => '#'
+                    ]" />
+                </div>
             </div>
         </div>
     </x-slot>
 
     <div class="pb-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <x-admin.flash-message />
 
             <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 flex flex-col">
-                
                 <div class="p-6 border-b border-gray-100">
                     <form method="GET" action="{{ route('admin.warranty-claims.index') }}" class="flex flex-col md:flex-row gap-4">
                         <div class="flex-1 relative">
@@ -28,12 +34,11 @@
                                 <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
                             </select>
                         </div>
-                        <button type="submit" class="px-4 py-2 bg-gray-100 rounded-lg text-xs uppercase font-bold hover:bg-gray-200">Search</button>
+
+                        <button type="submit" class="px-4 py-2 bg-gray-100 rounded-lg text-xs font-semibold uppercase hover:bg-gray-200">Search</button>
 
                         @if(request()->hasAny(['search', 'status', 'sort']))
-                            <a href="{{ route('admin.warranty-claims.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg font-semibold text-xs text-red-500 uppercase tracking-widest hover:bg-red-50 transition ease-in-out duration-150">
-                                Clear
-                            </a>
+                            <a href="{{ route('admin.warranty-claims.index') }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-xs font-semibold text-red-500 uppercase hover:bg-red-50">Clear</a>
                         @endif
                     </form>
                 </div>
@@ -96,12 +101,16 @@
                     </table>
                 </div>
                 
-                @if($claims->hasPages())
-                <div class="bg-white px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div class="flex-1 flex justify-start">{{ $claims->appends(request()->all())->links() }}</div>
-                </div>
+                @if($claims->hasPages() || $claims->count() > 0)
+                    <div class="bg-white px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex-1 flex justify-start">
+                            {{ $claims->appends(request()->all())->links() }}
+                        </div>
+                        <x-admin.limit-selector :per-page="$perPage" />
+                    </div>
                 @endif
             </div>
         </div>
     </div>
+    
 </x-admin.app-layout>

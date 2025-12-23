@@ -30,4 +30,19 @@ class Post extends Model
     {
         return $this->belongsTo(Employee::class, 'author_id');
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_active', true)
+                     ->where(function($q) {
+                            $q->where('published_at', '<=', now())
+                                ->orWhereNull('published_at'); 
+                    });
+    }
+
+    public function type()
+    {
+        // Nama method 'type' agar mudah dipanggil: $post->type->name
+        return $this->belongsTo(PostType::class, 'post_type_id');
+    }
 }

@@ -16,6 +16,15 @@ class StoreProductRequest extends FormRequest
             // General
             'name' => ['required', 'string', 'max:255'],
             'category_id' => ['required', 'exists:categories,id'],
+
+            'sku' => ['nullable', 'string', 'max:100', 'unique:products,sku'],
+
+            // 3. Validasi Stock (Hanya wajib jika tidak punya varian, tapi nullable aman)
+            'stock' => ['nullable', 'integer', 'min:0'],
+
+            'short_description' => ['array'],
+            'short_description.en' => ['nullable', 'string'],
+            'short_description.id' => ['nullable', 'string'],
             
             'description' => ['array'],
             'description.en' => ['nullable', 'string'],

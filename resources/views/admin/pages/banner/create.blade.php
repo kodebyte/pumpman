@@ -1,9 +1,10 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="Add Banner">
+
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Add New Banner') }}
+                    Add Banner
                 </h2>
                 <div class="mt-2">
                     <x-admin.breadcrumb :links="[
@@ -43,15 +44,12 @@
             return document.getElementsByName('subtitle[id]')[0]?.value || 'Deskripsi banner...';
         }
     }">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <form action="{{ route('admin.banners.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    
                     <div class="lg:col-span-2 space-y-6">
-                        
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
                             <div class="flex items-center gap-2 mb-4 border-b pb-2">
                                 <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -60,7 +58,7 @@
                             
                             <div class="space-y-6">
                                 <div>
-                                    <x-admin.input-label for="background_type" :value="__('Background Type')" />
+                                    <x-admin.input-label for="background_type" value="Background Type" />
                                     <select name="background_type" x-model="bgType" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm bg-gray-50">
                                         <option value="image">Static Image</option>
                                         <option value="video">Video Loop</option>
@@ -71,7 +69,7 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     
                                     <div>
-                                        <x-admin.input-label for="image_desktop" :value="__('Desktop Image (1920x600)')" />
+                                        <x-admin.input-label for="image_desktop" value="Desktop Image (1920x600)" />
                                         
                                         <div class="mt-2 relative group cursor-pointer border-2 border-dashed border-gray-300 rounded-lg p-2 hover:bg-gray-50 transition h-40 flex items-center justify-center overflow-hidden" onclick="document.getElementById('image_desktop').click()">
                                             <template x-if="!imgPreviewDesktop">
@@ -90,7 +88,7 @@
                                     </div>
 
                                     <div>
-                                        <x-admin.input-label for="image_mobile" :value="__('Mobile Image (600x600)')" />
+                                        <x-admin.input-label for="image_mobile" value="Mobile Image (600x600)" />
                                         <div class="mt-2 relative group cursor-pointer border-2 border-dashed border-gray-300 rounded-lg p-2 hover:bg-gray-50 transition h-40 flex items-center justify-center overflow-hidden" onclick="document.getElementById('image_mobile').click()">
                                             <template x-if="!imgPreviewMobile">
                                                 <div class="text-center text-gray-400">
@@ -108,7 +106,7 @@
                                 </div>
                                 
                                 <div x-show="bgType === 'video'" x-transition class="pt-4 border-t border-gray-100">
-                                    <x-admin.input-label for="video" :value="__('Video File (.mp4, Max 20MB)')" />
+                                    <x-admin.input-label for="video" value="Video File (.mp4, Max 2MB)" />
                                     <input type="file" name="video" accept="video/mp4,video/webm" class="block w-full text-sm border border-gray-300 rounded-lg p-2 bg-gray-50 mt-1">
                                     <x-admin.input-error :messages="$errors->get('video')" />
                                 </div>
@@ -116,15 +114,18 @@
                         </div>
 
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
-                            
                             <div class="flex items-center justify-between mb-6 border-b pb-2">
                                 <div class="flex items-center gap-2">
                                     <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2h-1m-1-4l-4-4a1 1 0 00-1.414 0l-4 4a1 1 0 001.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414z"></path></svg>
                                     <h3 class="font-bold text-gray-700">Text Content</h3>
                                 </div>
                                 <div class="flex bg-gray-100 p-1 rounded-lg">
-                                    <button type="button" @click="lang = 'en'" :class="lang === 'en' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'" class="px-3 py-1 text-xs font-bold rounded-md transition-all duration-200">🇺🇸 EN</button>
-                                    <button type="button" @click="lang = 'id'" :class="lang === 'id' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'" class="px-3 py-1 text-xs font-bold rounded-md transition-all duration-200">🇮🇩 ID</button>
+                                    <button type="button" @click="lang = 'en'" :class="lang === 'en' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'" class="px-3 py-1 text-xs font-bold rounded-md transition-all duration-200">
+                                        EN
+                                    </button>
+                                    <button type="button" @click="lang = 'id'" :class="lang === 'id' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'" class="px-3 py-1 text-xs font-bold rounded-md transition-all duration-200">
+                                        ID
+                                    </button>
                                 </div>
                             </div>
 
@@ -132,23 +133,23 @@
                                 <div x-show="lang === 'en'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
                                     <div class="space-y-5">
                                         <div>
-                                            <x-admin.input-label :value="__('Tagline (EN)')" />
-                                            <x-admin.text-input name="tagline[en]" :value="old('tagline.en')" placeholder="e.g. NEW ARRIVAL" class="w-full text-sm" />
+                                            <x-admin.input-label value="Tagline" />
+                                            <x-admin.text-input name="tagline[en]" :value="old('tagline.en')" class="w-full text-sm" />
                                             <x-admin.input-error :messages="$errors->get('tagline.en')" />
                                         </div>
                                         <div>
-                                            <x-admin.input-label :value="__('Title (EN)')" />
-                                            <x-admin.text-input name="title[en]" :value="old('title.en')" placeholder="e.g. AIWA SPEAKER X-SERIES" class="w-full text-lg font-bold" x-on:input="$refresh" />
+                                            <x-admin.input-label value="Title" />
+                                            <x-admin.text-input name="title[en]" :value="old('title.en')" class="w-full text-lg font-bold" x-on:input="$refresh" />
                                             <x-admin.input-error :messages="$errors->get('title.en')" />
                                         </div>
                                         <div>
-                                            <x-admin.input-label :value="__('Subtitle (EN)')" />
-                                            <textarea name="subtitle[en]" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm" rows="3" x-on:input="$refresh" placeholder="Short description in English...">{{ old('subtitle.en') }}</textarea>
+                                            <x-admin.input-label value="Subtitle" />
+                                            <textarea name="subtitle[en]" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm" rows="3" x-on:input="$refresh">{{ old('subtitle.en') }}</textarea>
                                             <x-admin.input-error :messages="$errors->get('subtitle.en')" />
                                         </div>
                                         <div>
-                                            <x-admin.input-label :value="__('Button Text (EN)')" />
-                                            <x-admin.text-input name="cta_text[en]" :value="old('cta_text.en')" placeholder="e.g. Shop Now" class="w-full" />
+                                            <x-admin.input-label value="Button Text" />
+                                            <x-admin.text-input name="cta_text[en]" :value="old('cta_text.en')" class="w-full" />
                                             <x-admin.input-error :messages="$errors->get('cta_text.en')" />
                                         </div>
                                     </div>
@@ -157,23 +158,23 @@
                                 <div x-show="lang === 'id'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                                     <div class="space-y-5">
                                         <div>
-                                            <x-admin.input-label :value="__('Tagline (ID)')" />
-                                            <x-admin.text-input name="tagline[id]" :value="old('tagline.id')" placeholder="cth. PRODUK TERBARU" class="w-full text-sm" />
+                                            <x-admin.input-label value="Tagline" />
+                                            <x-admin.text-input name="tagline[id]" :value="old('tagline.id')" class="w-full text-sm" />
                                             <x-admin.input-error :messages="$errors->get('tagline.id')" />
                                         </div>
                                         <div>
-                                            <x-admin.input-label :value="__('Judul (ID)')" />
-                                            <x-admin.text-input name="title[id]" :value="old('title.id')" placeholder="cth. SPEAKER AIWA SERI-X" class="w-full text-lg font-bold" x-on:input="$refresh" />
+                                            <x-admin.input-label value="Judul" />
+                                            <x-admin.text-input name="title[id]" :value="old('title.id')" class="w-full text-lg font-bold" x-on:input="$refresh" />
                                             <x-admin.input-error :messages="$errors->get('title.id')" />
                                         </div>
                                         <div>
-                                            <x-admin.input-label :value="__('Deskripsi (ID)')" />
-                                            <textarea name="subtitle[id]" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm" rows="3" x-on:input="$refresh" placeholder="Deskripsi singkat dalam Bahasa Indonesia...">{{ old('subtitle.id') }}</textarea>
+                                            <x-admin.input-label value="Sub Judul" />
+                                            <textarea name="subtitle[id]" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm" rows="3" x-on:input="$refresh">{{ old('subtitle.id') }}</textarea>
                                             <x-admin.input-error :messages="$errors->get('subtitle.id')" />
                                         </div>
                                         <div>
-                                            <x-admin.input-label :value="__('Teks Tombol (ID)')" />
-                                            <x-admin.text-input name="cta_text[id]" :value="old('cta_text.id')" placeholder="cth. Beli Sekarang" class="w-full" />
+                                            <x-admin.input-label value="Teks Tombol" />
+                                            <x-admin.text-input name="cta_text[id]" :value="old('cta_text.id')" class="w-full" />
                                             <x-admin.input-error :messages="$errors->get('cta_text.id')" />
                                         </div>
                                     </div>
@@ -188,19 +189,15 @@
                                     <div class="mt-4 inline-block px-4 py-2 bg-white text-gray-900 rounded text-xs font-bold uppercase tracking-wider">Button</div>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
 
                     <div class="space-y-6">
-                        
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6 sticky top-6">
                             <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Publishing</h3>
-                            
                             <div class="space-y-4">
                                 <div>
-                                    <x-admin.input-label for="is_active" :value="__('Status')" />
+                                    <x-admin.input-label for="is_active" value="Status" />
                                     <select name="is_active" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>
@@ -209,25 +206,25 @@
                                 </div>
 
                                 <div>
-                                    <x-admin.input-label for="order" :value="__('Sort Order')" />
+                                    <x-admin.input-label for="order" value="Sort Order" />
                                     <x-admin.text-input type="number" name="order" value="0" class="w-full" />
                                     <x-admin.input-error :messages="$errors->get('order')" />
                                 </div>
 
                                 <div>
-                                    <x-admin.input-label for="start_date" :value="__('Start Date')" />
+                                    <x-admin.input-label for="start_date" value="Start Date" />
                                     <input type="datetime-local" name="start_date" class="block w-full border-gray-300 rounded-lg shadow-sm mt-1 text-sm">
                                 </div>
 
                                 <div>
-                                    <x-admin.input-label for="end_date" :value="__('End Date')" />
+                                    <x-admin.input-label for="end_date" value="End Date" />
                                     <input type="datetime-local" name="end_date" class="block w-full border-gray-300 rounded-lg shadow-sm mt-1 text-sm">
                                 </div>
                             </div>
 
                             <div class="mt-6 flex flex-col gap-3">
                                 <x-admin.primary-button class="justify-center bg-gray-800 hover:bg-gray-700">
-                                    {{ __('Save Banner') }}
+                                    Save Banner
                                 </x-admin.primary-button>
                                 <a href="{{ route('admin.banners.index') }}" class="text-center text-sm text-gray-600 hover:text-gray-900 underline">Cancel</a>
                             </div>
@@ -236,15 +233,15 @@
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
                             <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Target Link</h3>
                             <div>
-                                <x-admin.input-label for="target_url" :value="__('Target URL')" />
-                                <x-admin.text-input name="target_url" placeholder="/products/promo" required class="w-full text-sm" />
+                                <x-admin.input-label for="target_url" value="Target URL" />
+                                <x-admin.text-input name="target_url" required class="w-full text-sm" />
                                 <x-admin.input-error :messages="$errors->get('target_url')" />
                             </div>
                         </div>
-
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
 </x-admin.app-layout>

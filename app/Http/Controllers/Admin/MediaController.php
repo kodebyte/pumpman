@@ -62,6 +62,11 @@ class MediaController extends Controller
             }
         }
 
-        return response()->json(['error' => ['message' => 'No file provided.']], 400);
+        return response()
+                ->json([
+                    'error' => [
+                        'message' => 'No file provided.'
+                    ]
+                ], 400);
     }
 }

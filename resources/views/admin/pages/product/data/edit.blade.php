@@ -1,9 +1,10 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="Edit Product">
+    
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Edit Product') }}: {{ $product->name }}
+                    Edit Product: {{ $product->name }}
                 </h2>
                 <div class="mt-2">
                     <x-admin.breadcrumb :links="[
@@ -13,7 +14,8 @@
                     ]" />
                 </div>
             </div>
-            <a href="#" target="_blank" class="text-sm text-indigo-600 hover:text-indigo-900 font-medium flex items-center bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100 hover:bg-indigo-100 transition">
+
+            <a href="" target="_blank" class="text-sm text-indigo-600 hover:text-indigo-900 font-medium flex items-center bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100 hover:bg-indigo-100 transition">
                 View in Store <span class="ml-1">&rarr;</span>
             </a>
         </div>
@@ -21,6 +23,7 @@
 
     @php
         $initialTab = 'general';
+
         if ($errors->any()) {
             if ($errors->hasAny(['name', 'category_id', 'description.*'])) $initialTab = 'general';
             elseif ($errors->hasAny(['price', 'weight', 'discount_type', 'discount_value'])) $initialTab = 'pricing';
@@ -36,8 +39,7 @@
         hasVariants: {{ old('has_variants', $product->has_variants) ? 'true' : 'false' }},
         variants: {{ old('variants') ? Js::from(old('variants')) : ($product->variants->isNotEmpty() ? Js::from($product->variants) : '[{id: null, name: "", price: "", stock: "", sku: ""}]') }}
     })">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <form action="{{ route('admin.products.update', $product->id) }}" method="POST" enctype="multipart/form-data" novalidate>
                 @csrf
                 @method('PUT')
@@ -50,10 +52,8 @@
                 </template>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    
                     <div class="lg:col-span-2 space-y-6">
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 overflow-hidden">
-                            
                             <div class="border-b border-gray-200 bg-gray-50/50 px-6 pt-4">
                                 <nav class="-mb-px flex space-x-6 overflow-x-auto" aria-label="Tabs">
                                     @php
@@ -92,17 +92,16 @@
                             </div>
 
                             <div class="p-6 sm:p-8 min-h-[500px]">
-                                
                                 <div x-show="activeTab === 'general'" x-transition:enter.duration.300ms>
                                     <div class="space-y-6">
                                         <div>
-                                            <x-admin.input-label for="name" :value="__('Product Name')" />
-                                            <x-admin.text-input name="name" :value="old('name', $product->name)" required placeholder="e.g. Aiwa Bluetooth Speaker X100" class="w-full text-lg font-semibold" />
+                                            <x-admin.input-label for="name" value="Product Name" />
+                                            <x-admin.text-input name="name" :value="old('name', $product->name)" required class="w-full text-lg font-semibold" />
                                             <x-admin.input-error :messages="$errors->get('name')" class="mt-2" />
                                         </div>
 
                                         <div>
-                                            <x-admin.input-label for="category_id" :value="__('Category')" />
+                                            <x-admin.input-label for="category_id" value="Category" />
                                             <select name="category_id" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">
                                                 @foreach($categories as $cat)
                                                     <option value="{{ $cat->id }}" {{ old('category_id', $product->category_id) == $cat->id ? 'selected' : '' }}>
@@ -113,27 +112,42 @@
                                             <x-admin.input-error :messages="$errors->get('category_id')" class="mt-2" />
                                         </div>
 
-                                        <div x-data="{ lang: 'en' }">
-                                            <div class="flex items-center justify-between mb-2">
-                                                <x-admin.input-label :value="__('Full Description')" />
-                                                <div class="flex bg-gray-100 p-1 rounded-lg">
-                                                    <button type="button" @click="lang = 'en'" :class="lang === 'en' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'" class="px-3 py-1 text-xs font-bold rounded transition">🇺🇸 EN</button>
-                                                    <button type="button" @click="lang = 'id'" :class="lang === 'id' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'" class="px-3 py-1 text-xs font-bold rounded transition">🇮🇩 ID</button>
+                                        <div x-data="{ lang: 'en' }" class="bg-gray-50 p-5 rounded-xl border border-gray-100 mt-6">
+                                            <div class="flex items-center justify-between mb-6 border-b border-gray-200 pb-4">
+                                                <h3 class="font-bold text-gray-700 flex items-center gap-2">
+                                                    <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+                                                    Product Descriptions
+                                                </h3>
+                                                <div class="flex bg-white p-1 rounded-lg border border-gray-200 shadow-sm">
+                                                    <button type="button" @click="lang = 'en'" :class="lang === 'en' ? 'bg-indigo-50 text-indigo-700 font-bold shadow-sm' : 'text-gray-500 hover:text-gray-700'" class="px-4 py-1.5 text-xs rounded transition-all">
+                                                        EN
+                                                    </button>
+                                                    <button type="button" @click="lang = 'id'" :class="lang === 'id' ? 'bg-indigo-50 text-indigo-700 font-bold shadow-sm' : 'text-gray-500 hover:text-gray-700'" class="px-4 py-1.5 text-xs rounded transition-all">
+                                                        ID
+                                                    </button>
                                                 </div>
                                             </div>
 
                                             <div x-show="lang === 'en'" x-transition:enter.duration.300ms>
-                                                <div class="mt-1" wire:ignore>
-                                                    <textarea id="description_en" name="description[en]" rows="5" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500">{{ old('description.en', $product->getTranslation('description', 'en') ?? $product->description['en'] ?? '') }}</textarea>
+                                                <div class="mb-6">
+                                                    <x-admin.input-label value="Short Description" class="mb-1" />
+                                                    <textarea name="short_description[en]" rows="3" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 text-sm">{{ old('short_description.en', $product->getTranslation('short_description', 'en') ?? $product->short_description['en'] ?? '') }}</textarea>
                                                 </div>
-                                                <x-admin.input-error :messages="$errors->get('description.en')" class="mt-1" />
+                                                <div wire:ignore>
+                                                    <x-admin.input-label value="Full Description" class="mb-1" />
+                                                    <textarea id="description_en" name="description[en]" rows="8" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500">{{ old('description.en', $product->getTranslation('description', 'en') ?? $product->description['en'] ?? '') }}</textarea>
+                                                </div>
                                             </div>
 
                                             <div x-show="lang === 'id'" x-transition:enter.duration.300ms style="display: none;">
-                                                <div class="mt-1" wire:ignore>
-                                                    <textarea id="description_id" name="description[id]" rows="5" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500">{{ old('description.id', $product->getTranslation('description', 'id') ?? $product->description['id'] ?? '') }}</textarea>
+                                                <div class="mb-6">
+                                                    <x-admin.input-label value="Deskripsi Singkat" class="mb-1" />
+                                                    <textarea name="short_description[id]" rows="3" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 text-sm">{{ old('short_description.id', $product->getTranslation('short_description', 'id') ?? $product->short_description['id'] ?? '') }}</textarea>
                                                 </div>
-                                                <x-admin.input-error :messages="$errors->get('description.id')" class="mt-1" />
+                                                <div wire:ignore>
+                                                    <x-admin.input-label value="Deskripsi Lengkap" class="mb-1" />
+                                                    <textarea id="description_id" name="description[id]" rows="8" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500">{{ old('description.id', $product->getTranslation('description', 'id') ?? $product->description['id'] ?? '') }}</textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -142,14 +156,28 @@
                                 <div x-show="activeTab === 'pricing'" x-transition:enter.duration.300ms style="display: none;">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
-                                            <x-admin.input-label for="price" :value="__('Base Price (Rp)')" />
+                                            <x-admin.input-label for="sku" value="SKU" />
+                                            <x-admin.text-input type="text" name="sku" :value="old('sku', $product->sku)" class="w-full font-mono uppercase" />
+                                            <p class="text-xs text-gray-500 mt-1">Kode unik produk induk.</p>
+                                            <x-admin.input-error :messages="$errors->get('sku')" class="mt-2" />
+                                        </div>
+
+                                        <div x-show="!hasVariants" x-transition>
+                                            <x-admin.input-label for="stock" value="Stock Qty" />
+                                            <x-admin.text-input type="number" name="stock" :value="old('stock', $product->stock)" class="w-full" />
+                                            <p class="text-xs text-gray-500 mt-1">Stok untuk produk single (tanpa varian).</p>
+                                            <x-admin.input-error :messages="$errors->get('stock')" class="mt-2" />
+                                        </div>
+                                        
+                                        <div>
+                                            <x-admin.input-label for="price" value="Base Price (Rp)" />
                                             <x-admin.text-input type="number" name="price" :value="old('price', $product->price)" required class="w-full font-mono text-lg" />
-                                            <p class="text-xs text-gray-500 mt-1">This price will be used if product has no variants.</p>
+                                            <p class="text-xs text-gray-500 mt-1">Harga ini akan digunakan apabila produk tidak memiliki varian.</p>
                                             <x-admin.input-error :messages="$errors->get('price')" class="mt-2" />
                                         </div>
 
                                         <div>
-                                            <x-admin.input-label for="weight" :value="__('Weight (Gram)')" />
+                                            <x-admin.input-label for="weight" value="Weight (Gram)" />
                                             <x-admin.text-input type="number" name="weight" :value="old('weight', $product->weight)" required class="w-full" />
                                             <x-admin.input-error :messages="$errors->get('weight')" class="mt-2" />
                                         </div>
@@ -161,7 +189,7 @@
                                             </h3>
                                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                                 <div>
-                                                    <x-admin.input-label :value="__('Discount Type')" />
+                                                    <x-admin.input-label value="Discount Type" />
                                                     <select name="discount_type" x-model="discountType" class="block w-full border-gray-300 rounded-lg shadow-sm mt-1 text-sm">
                                                         <option value="">None</option>
                                                         <option value="fixed">Fixed Amount (Rp)</option>
@@ -169,17 +197,17 @@
                                                     </select>
                                                 </div>
                                                 <div x-show="discountType !== ''">
-                                                    <x-admin.input-label :value="__('Discount Value')" />
+                                                    <x-admin.input-label value="Discount Value" />
                                                     <x-admin.text-input type="number" name="discount_value" :value="old('discount_value', $product->discount_value)" class="w-full mt-1" />
                                                 </div>
                                                 
                                                 <div x-show="discountType !== ''" class="grid grid-cols-2 gap-2">
                                                     <div>
-                                                        <x-admin.input-label :value="__('Start Date')" />
+                                                        <x-admin.input-label value="Start Date" />
                                                         <input type="date" name="discount_start_date" value="{{ $product->discount_start_date ? $product->discount_start_date->format('Y-m-d') : '' }}" class="block w-full border-gray-300 rounded-lg text-sm mt-1">
                                                     </div>
                                                     <div>
-                                                        <x-admin.input-label :value="__('End Date')" />
+                                                        <x-admin.input-label value="End Date" />
                                                         <input type="date" name="discount_end_date" value="{{ $product->discount_end_date ? $product->discount_end_date->format('Y-m-d') : '' }}" class="block w-full border-gray-300 rounded-lg text-sm mt-1">
                                                     </div>
                                                 </div>
@@ -233,11 +261,10 @@
 
                                         <div>
                                             <h3 class="text-sm font-bold text-gray-700 mb-3">Upload New Images</h3>
-                                            
                                             <div class="border-2 border-dashed border-gray-300 rounded-xl p-10 text-center hover:bg-gray-50 transition relative cursor-pointer group">
                                                 <input type="file" id="images" name="images[]" multiple accept="image/png, image/jpeg, image/webp" 
                                                     class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                                                    @change="handleFileSelect">
+                                                    @change="handleFileSelect" />
                                                 
                                                 <div class="flex flex-col items-center pointer-events-none">
                                                     <div class="p-3 bg-indigo-50 rounded-full mb-3 group-hover:scale-110 transition">
@@ -266,7 +293,7 @@
                                 <div x-show="activeTab === 'variants'" x-transition:enter.duration.300ms style="display: none;">
                                     <div class="flex items-center mb-6 p-4 bg-gray-50 rounded-xl border border-gray-100">
                                         <input type="checkbox" id="has_variants" name="has_variants" value="1" x-model="hasVariants" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 h-5 w-5">
-                                        <label for="has_variants" class="ml-3 block text-sm font-bold text-gray-800">Enable Product Variants</label>
+                                        <label for="has_variants" class="ml-3 block text-sm font-bold text-gray-800">Enable Product Variants (Size, Color, etc.)</label>
                                     </div>
 
                                     <div x-show="!hasVariants" class="text-center py-12 text-gray-500">
@@ -382,13 +409,12 @@
                     </div>
 
                     <div class="space-y-6">
-                        
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6 sticky top-6">
                             <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Publishing</h3>
                             
                             <div class="space-y-4">
                                 <div>
-                                    <x-admin.input-label for="is_active" :value="__('Status')" />
+                                    <x-admin.input-label for="is_active" value="Status" />
                                     <select name="is_active" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">
                                         <option value="1" {{ old('is_active', $product->is_active) == true ? 'selected' : '' }}>Active</option>
                                         <option value="0" {{ old('is_active', $product->is_active) == false ? 'selected' : '' }}>Draft</option>
@@ -396,7 +422,7 @@
                                 </div>
 
                                 <div>
-                                    <x-admin.input-label for="is_featured" :value="__('Featured Product?')" />
+                                    <x-admin.input-label for="is_featured" value="Is Featured" />
                                     <select name="is_featured" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">
                                         <option value="0" {{ old('is_featured', $product->is_featured) == false ? 'selected' : '' }}>No</option>
                                         <option value="1" {{ old('is_featured', $product->is_featured) == true ? 'selected' : '' }}>Yes</option>
@@ -404,7 +430,7 @@
                                 </div>
 
                                 <div>
-                                    <x-admin.input-label for="order" :value="__('Sort Order')" />
+                                    <x-admin.input-label for="order" value="Sort Order" />
                                     <x-admin.text-input type="number" name="order" :value="old('order', $product->order)" class="w-full text-sm mt-1" />
                                     <p class="text-xs text-gray-500 mt-1">Lower number appears first.</p>
                                 </div>
@@ -424,4 +450,5 @@
     </div>
 
     @include('admin.plugins.ckeditor')
+
 </x-admin.app-layout>

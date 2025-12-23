@@ -1,23 +1,30 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="Careers">
+    
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('Careers') }}</h2>
-                <div class="mt-2"><x-admin.breadcrumb :links="['Careers' => '#']" /></div>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Careers
+                </h2>
+                <div class="mt-2">
+                    <x-admin.breadcrumb :links="[
+                        'Careers' => '#'
+                    ]" />
+                </div>
             </div>
-            <a href="{{ route('admin.careers.create') }}" class="px-4 py-2 bg-gray-800 rounded-md text-xs text-white uppercase hover:bg-gray-700 transition flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                Post Job
+
+            <a href="{{ route('admin.careers.create') }}" class="px-4 py-2 bg-gray-800 rounded-md text-xs text-white uppercase hover:bg-gray-700 transition flex items-center">
+                <x-admin.svg.plus />
+                Add Career
             </a>
         </div>
     </x-slot>
 
     <div class="pb-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <x-admin.flash-message />
 
             <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 flex flex-col">
-                
                 <div class="p-6 border-b border-gray-100">
                     <form method="GET" action="{{ route('admin.careers.index') }}" class="flex flex-col md:flex-row gap-4">
                         <input type="hidden" name="limit" value="{{ request('limit') }}">
@@ -36,10 +43,10 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="px-4 py-2 bg-gray-100 rounded-lg text-xs uppercase font-bold hover:bg-gray-200">Search</button>
+                        <button type="submit" class="px-4 py-2 bg-gray-100 rounded-lg text-xs font-semibold uppercase hover:bg-gray-200">Search</button>
                         
                         @if(request()->hasAny(['search', 'is_active', 'sort']))
-                            <a href="{{ route('admin.careers.index') }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-xs font-semibold text-red-500 uppercase hover:bg-red-50 flex items-center justify-center">Reset</a>
+                            <a href="{{ route('admin.careers.index') }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-xs font-semibold text-red-500 uppercase hover:bg-red-50">Clear</a>
                         @endif
                     </form>
                 </div>
@@ -104,12 +111,13 @@
                 </div>
                 
                 @if($careers->hasPages() || $careers->count() > 0)
-                <div class="bg-white px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div class="flex-1 flex justify-start">{{ $careers->appends(request()->all())->links() }}</div>
-                    <x-admin.limit-selector :per-page="$perPage" />
-                </div>
+                    <div class="bg-white px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex-1 flex justify-start">{{ $careers->appends(request()->all())->links() }}</div>
+                        <x-admin.limit-selector :per-page="$perPage" />
+                    </div>
                 @endif
             </div>
         </div>
     </div>
+
 </x-admin.app-layout>

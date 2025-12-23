@@ -24,4 +24,19 @@ class HeroBanner extends Model
         'subtitle' => 'array',
         'cta_text' => 'array',
     ];
+
+    public function scopeActiveAndScheduled($query)
+    {
+        $now = now();
+        
+        return $query->where('is_active', true)
+                     ->where(function ($q) use ($now) {
+                         $q->whereNull('start_date')
+                           ->orWhere('start_date', '<=', $now);
+                     })
+                     ->where(function ($q) use ($now) {
+                         $q->whereNull('end_date')
+                           ->orWhere('end_date', '>=', $now);
+                     });
+    }
 }

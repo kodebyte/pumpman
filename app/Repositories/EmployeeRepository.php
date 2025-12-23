@@ -39,7 +39,13 @@ class EmployeeRepository implements EmployeeRepositoryInterface
         // 4. Logic Sorting
         $sortColumn = $params['sort'] ?? 'created_at';
         $sortDirection = $params['direction'] ?? 'desc';
-        $allowedSorts = ['name', 'email', 'created_at', 'is_active'];
+
+        $allowedSorts = [
+            'name', 
+            'email', 
+            'created_at', 
+            'is_active'
+        ];
 
         if (in_array($sortColumn, $allowedSorts)) {
             $query->orderBy($sortColumn, $sortDirection)

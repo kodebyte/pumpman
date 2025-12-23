@@ -13,15 +13,29 @@ class UpdateProductRequest extends FormRequest
 
     public function rules(): array
     {
+        $product = $this->route('product');
+
+        // Cek: Jika object model, ambil ->id. Jika string, pakai langsung string-nya.
+        $productId = is_object($product) ? $product->id : $product;
+        
         return [
             // --- 1. General Info ---
             'name' => ['required', 'string', 'max:255'],
             'category_id' => ['required', 'exists:categories,id'],
+
+            'sku' => ['nullable', 'string', 'max:100', 'unique:products,sku,' . $productId],
+
+            // 3. Stock
+            'stock' => ['nullable', 'integer', 'min:0'],
             
             // Boolean Checks (Checkbox/Select)
             'is_active' => ['boolean'],
             'is_featured' => ['boolean'],
             'order' => ['nullable', 'integer'],
+
+            'short_description' => ['array'],
+            'short_description.en' => ['nullable', 'string'],
+            'short_description.id' => ['nullable', 'string'],
 
             // Description (Multi-language Array)
             'description' => ['nullable', 'array'],

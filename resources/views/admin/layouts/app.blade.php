@@ -1,10 +1,13 @@
+@props([
+    'pageTitle' => null
+])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }} Admin</title>
+    <title>{{ $pageTitle ?? 'Aiwa Indonesia' }} | CMS Aiwa</title>
 
     @vite(['resources/css/admin-app.css', 'resources/js/admin-app.js'])
 </head>
@@ -34,7 +37,7 @@
                 </header>
             @endif
 
-            <main class="flex-1 p-4 md:p-6">
+            <main class="flex-1">
                 {{ $slot }}
             </main>
 
@@ -62,9 +65,20 @@
 
     </div>
 
-    @stack('scripts')
-    
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
+        // Jalankan saat halaman pertama kali diload
+        document.addEventListener("DOMContentLoaded", function() {
+            lucide.createIcons();
+        });
+
+        // Jalankan ulang saat navigasi 'Back/Forward' (Fix untuk browser modern caching)
+        window.addEventListener("pageshow", function(event) {
+            if (event.persisted) {
+                lucide.createIcons();
+            }
+        });
+
         function updateLimit(limit) {
             const url = new URL(window.location.href);
             url.searchParams.set('limit', limit);
@@ -72,5 +86,7 @@
             window.location.href = url.toString();
         }
     </script>
+
+    @stack('scripts')
 </body>
 </html>

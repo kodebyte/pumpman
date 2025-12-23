@@ -1,20 +1,27 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="Marketplaces">
 
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('Marketplaces') }}</h2>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Marketplaces
+                </h2>
                 <div class="mt-2">
-                    <x-admin.breadcrumb :links="['Marketplaces' => '#']" />
+                    <x-admin.breadcrumb :links="[
+                        'Marketplaces' => '#'
+                    ]" />
                 </div>
             </div>
 
-            <a href="{{ route('admin.marketplaces.create') }}" class="px-4 py-2 bg-gray-800 rounded-md text-xs text-white uppercase hover:bg-gray-700 transition">+ Add Marketplace</a>
+            <a href="{{ route('admin.marketplaces.create') }}" class="px-4 py-2 bg-gray-800 rounded-md text-xs text-white uppercase hover:bg-gray-700 transition flex items-center">
+                <x-admin.svg.plus />
+                Add Marketplace
+            </a>
         </div>
     </x-slot>
 
     <div class="pb-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <x-admin.flash-message />
 
             <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 flex flex-col">

@@ -67,6 +67,10 @@
                                 {{ __('Banners') }}
                             </x-admin.dropdown-link>
 
+                            <x-admin.dropdown-link :href="route('admin.post-types.index')">
+                                {{ __('Post Types') }}
+                            </x-admin.dropdown-link>
+                        
                             <x-admin.dropdown-link :href="route('admin.posts.index')">
                                 {{ __('Posts') }}
                             </x-admin.dropdown-link>

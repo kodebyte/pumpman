@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 class WarrantyClaim extends Model
 {
@@ -16,6 +17,13 @@ class WarrantyClaim extends Model
         'purchase_date' => 'date',
         'evidence_photos' => 'array', // Penting agar otomatis jadi array
     ];
+
+    protected static function booted()
+    {
+        // Hapus cache klaim garansi
+        static::saved(fn () => Cache::forget('pending_warranty_count'));
+        static::deleted(fn () => Cache::forget('pending_warranty_count'));
+    }
 
     public function product()
     {

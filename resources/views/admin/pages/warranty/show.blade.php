@@ -1,9 +1,10 @@
-<x-admin.app-layout>
+<x-admin.app-layout pageTitle="Claim Details">
+
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Claim Details') }} #{{ $claim->claim_code }}
+                    Claim Details #{{ $claim->claim_code }}
                 </h2>
                 <div class="mt-2">
                     <x-admin.breadcrumb :links="[
@@ -16,7 +17,7 @@
     </x-slot>
 
     <div class="pb-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 space-y-6">
                     <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
@@ -42,11 +43,12 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Product Name</p>
-                                <p class="text-gray-900 font-bold text-lg">{{ $claim->product->name ?? 'Unknown Product' }}</p>
-                            </div>
+                        <div class="mb-5">
+                            <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Product Name</p>
+                            <p class="text-gray-900 font-bold text-lg">{{ $claim->product->name ?? 'Unknown Product' }}</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                             <div>
                                 <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Serial Number</p>
                                 <p class="text-gray-900 font-mono bg-gray-100 inline-block px-2 py-0.5 rounded border border-gray-200 text-sm">
@@ -58,13 +60,6 @@
                                 <div class="flex items-center gap-2">
                                     <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                     <p class="text-gray-700 font-medium">{{ $claim->purchase_date->format('d F Y') }}</p>
-                                </div>
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Store Location</p>
-                                <div class="flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                    <p class="text-gray-700 font-medium">{{ $claim->purchase_location ?? '-' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +74,6 @@
                     </div>
 
                     <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
-                        
                         <div class="flex items-center gap-2 mb-6 border-b pb-4">
                             <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                             <h3 class="font-bold text-gray-700">Evidence Photos</h3>
@@ -105,7 +99,6 @@
                 </div>
 
                 <div class="space-y-6">
-                    
                     <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
                         <div class="flex items-center gap-2 mb-6 border-b pb-4">
                             <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
@@ -117,9 +110,18 @@
                                 {{ substr($claim->customer_name ?? 'Unknown', 0, 2) }}
                             </div>
                             
-                            <div>
-                                <p class="font-bold text-gray-900 text-base">{{ $claim->customer_name }}</p>
-                                <p class="text-sm text-gray-500">{{ $claim->customer_phone }}</p>
+                            <div class="flex-1 min-w-0">
+                                <p class="font-bold text-gray-900 text-base truncate">{{ $claim->customer_name }}</p>
+                                
+                                @if($claim->customer_email)
+                                    <a href="mailto:{{ $claim->customer_email }}" class="text-sm text-indigo-600 hover:text-indigo-800 hover:underline block truncate" title="Send Email">
+                                        {{ $claim->customer_email }}
+                                    </a>
+                                @else
+                                    <p class="text-sm text-gray-400 italic">- No Email -</p>
+                                @endif
+
+                                <p class="text-sm text-gray-500 mt-0.5">{{ $claim->customer_phone }}</p>
                             </div>
                         </div>
 
@@ -155,25 +157,25 @@
 
                             <div>
                                 <x-admin.input-label for="admin_notes" :value="__('Admin Notes (Internal)')" />
-                                <textarea name="admin_notes" rows="4" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm placeholder-gray-400" placeholder="Catatan teknisi, alasan penolakan, atau detail perbaikan...">{{ $claim->admin_notes }}</textarea>
+                                <textarea name="admin_notes" rows="4" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm placeholder-gray-400">{{ $claim->admin_notes }}</textarea>
                             </div>
                             
                             <div x-data="{ show: '{{ $claim->status }}' === 'completed' }" x-init="$watch('$el.closest(\'form\').status.value', value => show = value === 'completed')">
-                                <x-admin.input-label for="admin_tracking_number" :value="__('Return Tracking No. (Resi)')" />
-                                <x-admin.text-input name="admin_tracking_number" :value="$claim->admin_tracking_number" class="w-full text-sm mt-1" placeholder="e.g. JNE-12345678" />
+                                <x-admin.input-label for="admin_tracking_number" value="Return Tracking No. (Resi)" />
+                                <x-admin.text-input name="admin_tracking_number" :value="$claim->admin_tracking_number" class="w-full text-sm mt-1" />
                             </div>
 
                             <div class="mt-6 flex flex-col gap-3">
                                 <x-admin.primary-button class="justify-center bg-gray-800 hover:bg-gray-700">
-                                    {{ __('Update status') }}
+                                    Update status
                                 </x-admin.primary-button>
                                 <a href="{{ route('admin.warranty-claims.index') }}" class="text-center text-sm text-gray-600 hover:text-gray-900 underline">Cancel</a>
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
+
 </x-admin.app-layout>

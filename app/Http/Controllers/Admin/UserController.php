@@ -7,6 +7,7 @@ use App\Contracts\UserRepositoryInterface;
 use App\Services\UserService;
 use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\Http\Requests\Admin\User\UpdateUserRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -20,13 +21,19 @@ class UserController extends Controller
     public function index(): View
     {
         $params = request()->only([
-            'search', 'sort', 'direction', 'is_active'
+            'search', 
+            'sort', 
+            'direction', 
+            'is_active'
         ]);
 
         $perPage = request('limit', 15);
         $users = $this->userRepo->getAll($params, $perPage);
         
-        return view('admin.pages.user.index', compact('users', 'perPage'));
+        return view('admin.pages.user.index', compact(
+            'users', 
+            'perPage'
+        ));
     }
 
     public function create(): View
@@ -44,43 +51,36 @@ class UserController extends Controller
             );
         } catch (\Exception $e) {
             \Log::error('Error creating user: ' . $e->getMessage());
-            \Log::error($e->getTraceAsString());
 
-            return back()
-                    ->withInput() // Form tidak kosong lagi
+            return back()->withInput() // Form tidak kosong lagi
                     ->with('error', 'Failed to create user. Please check your inputs or try again.');
         }
-
         
         return to_route('admin.users.index')
                 ->with('success', 'User created successfully');
     }
 
     public function edit(
-        string $id
+        User $user
     ): View
     {
-        $user = $this->userRepo->findById($id);
-
         return view('admin.pages.user.edit', compact('user'));
     }
 
     public function update(
         UpdateUserRequest $request, 
-        string $id
+        User $user
     ): RedirectResponse
     {
         try {
              $this->userService->update(
-                $id, 
+                $user->id, 
                 $request->validated()
             );
         } catch (\Exception $e) {
             \Log::error('Error update user: ' . $e->getMessage());
-            \Log::error($e->getTraceAsString());
 
-            return back()
-                    ->withInput() // Form tidak kosong lagi
+            return back()->withInput() // Form tidak kosong lagi
                     ->with('error', 'Failed to update user. Please try again.');
         }
         
@@ -89,16 +89,16 @@ class UserController extends Controller
     }
 
     public function destroy(
-        string $id
+        User $user
     ): RedirectResponse
     {
         try {
-            $this->userService->delete($id);
+            $this->userService->delete($user->id);
         } catch (\Exception $e) {
             \Log::error('Error delete user: ' . $e->getMessage());
-            \Log::error($e->getTraceAsString());
 
-            return back()->with('error', 'Failed to delete user. It might be linked to other data.');
+            return back()
+                    ->with('error', 'Failed to delete user. It might be linked to other data.');
         }
         
         return to_route('admin.users.index')

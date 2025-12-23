@@ -17,6 +17,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true); // Active = Subscribed, Inactive = Unsubscribed
             $table->timestamp('verified_at')->nullable(); // Opsional: jika nanti ada double opt-in
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

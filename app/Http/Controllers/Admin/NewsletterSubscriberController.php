@@ -18,13 +18,18 @@ class NewsletterSubscriberController extends Controller
 
     public function index()
     {
-        $params = request()->only(['search', 'is_active']);
+        $params = request()->only([
+            'search', 
+            'is_active'
+        ]);
+
         $perPage = request('limit', 10);
-        
         $subscribers = $this->repo->getAll($params, $perPage);
         
-        // Perhatikan nama folder view: 'newsletter_subscribers'
-        return view('admin.pages.subscriber.index', compact('subscribers', 'perPage'));
+        return view('admin.pages.subscriber.index', compact(
+            'subscribers', 
+            'perPage'
+        ));
     }
 
     public function create()
@@ -32,39 +37,69 @@ class NewsletterSubscriberController extends Controller
         return view('admin.pages.subscriber.create');
     }
 
-    public function store(StoreNewsletterSubscriberRequest $request)
+    public function store(
+        StoreNewsletterSubscriberRequest $request
+    )
     {
         try {
-            $this->service->create($request->validated());
-            return to_route('admin.newsletter-subscribers.index')->with('success', 'Subscriber added successfully');
+            $this->service->create(
+                $request->validated()
+            );
         } catch (Exception $e) {
-            return back()->withInput()->with('error', 'Failed to add subscriber.');
+            \Log::error('Error creating subscriber: ' . $e->getMessage());
+
+            return back()->withInput()
+                    ->with('error', 'Failed to add subscriber.');
         }
+
+        return to_route('admin.newsletter-subscribers.index')
+                ->with('success', 'Subscriber added successfully');
     }
 
-    public function edit(string $id)
+    public function edit(
+        string $id
+    )
     {
         $subscriber = $this->repo->findById($id);
+
         return view('admin.pages.subscriber.edit', compact('subscriber'));
     }
 
-    public function update(UpdateNewsletterSubscriberRequest $request, string $id)
+    public function update(
+        UpdateNewsletterSubscriberRequest $request, 
+        string $id
+    )
     {
         try {
-            $this->service->update($id, $request->validated());
-            return to_route('admin.newsletter-subscribers.index')->with('success', 'Subscriber updated successfully');
+            $this->service->update(
+                $id, 
+                $request->validated()
+            );
         } catch (Exception $e) {
-            return back()->withInput()->with('error', 'Failed to update subscriber.');
+            \Log::error('Error updating subscriber: ' . $e->getMessage());
+
+            return back()->withInput()
+                    ->with('error', 'Failed to update subscriber.');
         }
+
+        return to_route('admin.newsletter-subscribers.index')
+                ->with('success', 'Subscriber updated successfully');
     }
 
-    public function destroy(string $id)
+    public function destroy(
+        string $id
+    )
     {
         try {
             $this->service->delete($id);
-            return to_route('admin.newsletter-subscribers.index')->with('success', 'Subscriber deleted successfully');
         } catch (Exception $e) {
-            return back()->with('error', 'Failed to delete subscriber.');
+            \Log::error('Error deleting subscriber: ' . $e->getMessage());
+
+            return back()
+                    ->with('error', 'Failed to delete subscriber.');
         }
+
+        return to_route('admin.newsletter-subscribers.index')
+                ->with('success', 'Subscriber deleted successfully');
     }
 }

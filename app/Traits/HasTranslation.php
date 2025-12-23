@@ -2,18 +2,34 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\App;
+
 trait HasTranslation
 {
-    public function getTranslation(string $field): string
+    /**
+     * Ambil terjemahan berdasarkan locale aplikasi saat ini.
+     * Penggunaan: $model->getTranslation('title')
+     */
+    public function getTranslation($field, $locale = null)
     {
-        $locale = app()->getLocale(); // 'en' atau 'id'
-        $value = $this->$field;
+        // 1. Tentukan bahasa (dari parameter atau settingan aplikasi saat ini)
+        $locale = $locale ?? App::getLocale(); // 'en' atau 'id'
 
-        if (!is_array($value)) {
-            return (string) $value;
+        // 2. Ambil data mentah dari atribut model
+        $translations = $this->$field;
+
+        // 3. Jika null, kembalikan string kosong
+        if (!$translations) {
+            return '';
         }
 
-        // Cek bahasa aktif -> Inggris -> Indonesia -> Kosong
-        return $value[$locale] ?? $value['en'] ?? $value['id'] ?? '';
+        // 4. Jika formatnya sudah array (karena casts di model), langsung pakai
+        // Jika masih string JSON, decode dulu
+        if (is_string($translations)) {
+            $translations = json_decode($translations, true);
+        }
+
+        // 5. Ambil teks sesuai bahasa, fallback ke 'en' jika 'id' kosong (atau sebaliknya)
+        return $translations[$locale] ?? $translations['en'] ?? $translations['id'] ?? '';
     }
 }

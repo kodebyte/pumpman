@@ -10,18 +10,28 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            
+            // Relasi ke tabel post_types
+            // Pastikan tabel post_types sudah migrate duluan
+            $table->foreignId('post_type_id')->constrained('post_types')->cascadeOnDelete();
+            
             $table->foreignId('author_id')->nullable()->constrained('employees')->nullOnDelete();
             
             // Konten Multi-bahasa (JSON)
             $table->json('title');   // {"en": "...", "id": "..."}
-            $table->string('slug')->unique(); // Slug biasanya diambil dari Title EN
+            $table->string('slug')->unique(); 
             $table->json('content'); // WYSIWYG Content
+            
+            // SEO per Post (Optional Override)
             $table->json('meta_title')->nullable();
             $table->json('meta_description')->nullable();
             
             // Meta Data
             $table->string('thumbnail')->nullable();
-            $table->string('type')->default('news'); // news, article, promo
+            
+            // HAPUS kolom 'type' lama, ganti dengan relation di atas
+            // $table->string('type')->default('news'); 
+            
             $table->boolean('is_active')->default(true); // Draft / Published
             $table->timestamp('published_at')->nullable(); // Jadwal tayang
 

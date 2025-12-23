@@ -28,7 +28,12 @@ class MarketplaceRepository implements MarketplaceRepositoryInterface
         $sortColumn = $params['sort'] ?? 'order'; 
         $sortDirection = $params['direction'] ?? 'asc';
         
-        $allowedSorts = ['name', 'is_active', 'created_at', 'order'];
+        $allowedSorts = [
+            'name', 
+            'is_active', 
+            'created_at', 
+            'order'
+        ];
 
         if (in_array($sortColumn, $allowedSorts)) {
             $query->orderBy($sortColumn, $sortDirection)

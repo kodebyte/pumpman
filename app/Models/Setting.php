@@ -10,41 +10,10 @@ class Setting extends Model
 {
     use HasFactory;
 
-    /**
-     * Disable mass assignment restriction.
-     * Keamanan ditangani oleh Controller/Service.
-     */
     protected $guarded = ['id'];
 
     /**
-     * Helper Statis untuk mengambil value berdasarkan key.
-     * Sangat berguna di Blade View (Frontend).
-     * * Contoh Penggunaan:
-     * {{ \App\Models\Setting::getValue('site_name') }}
-     * {{ \App\Models\Setting::getValue('site_logo') }} (Otomatis return URL gambar)
-     */
-    public static function getValue($key, $default = null)
-    {
-        // Gunakan Cache agar tidak query DB setiap kali dipanggil (Performance Optimization)
-        // Cache akan disimpan selama 24 jam (60*24 menit)
-        $settings = Cache::remember('global_settings', 60 * 24, function () {
-            return self::pluck('value', 'key')->toArray();
-        });
-
-        $value = $settings[$key] ?? $default;
-
-        // Jika key mengandung kata 'image' atau 'logo' atau 'favicon', 
-        // dan value-nya ada, otomatis kembalikan Full URL Storage
-        if ($value && (str_contains($key, 'image') || str_contains($key, 'logo') || str_contains($key, 'favicon'))) {
-            return asset('storage/' . $value);
-        }
-
-        return $value;
-    }
-
-    /**
-     * Helper Statis untuk menghapus Cache saat ada update.
-     * Panggil ini di SettingService setelah update.
+     * Hapus cache 'global_settings' setiap kali ada perubahan data.
      */
     protected static function booted()
     {
@@ -55,5 +24,45 @@ class Setting extends Model
         static::deleted(function ($setting) {
             Cache::forget('global_settings');
         });
+    }
+    
+    /**
+     * Helper untuk mengambil value setting.
+     * Otomatis melakukan casting tipe data (integer/boolean) & handling Image URL.
+     */
+    public static function getValue($key, $default = null)
+    {
+        // 1. Ambil semua data setting (objek lengkap) dan simpan di cache
+        // Kita ganti 'pluck' dengan 'all()->keyBy' agar kolom 'type' ikut terambil
+        $settings = Cache::remember('global_settings', 60 * 24, function () {
+            return self::all()->keyBy('key');
+        });
+
+        // 2. Ambil object setting berdasarkan key
+        $setting = $settings->get($key);
+
+        // Jika setting tidak ditemukan, kembalikan nilai default
+        if (!$setting) {
+            return $default;
+        }
+
+        $value = $setting->value;
+
+        // 3. Casting Tipe Data (PENTING untuk Pajak & Ongkir)
+        // Jika di database type='integer', ubah string "50000" jadi angka 50000
+        if ($setting->type === 'integer') {
+            return intval($value);
+        }
+        
+        if ($setting->type === 'boolean') {
+            return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+        }
+
+        // 4. Logic khusus URL Gambar (Fitur lama Anda tetap jalan)
+        if ($value && (str_contains($key, 'image') || str_contains($key, 'logo') || str_contains($key, 'favicon'))) {
+            return asset('storage/' . $value);
+        }
+
+        return $value;
     }
 }
