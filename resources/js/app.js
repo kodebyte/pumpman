@@ -11,3 +11,4 @@ document.addEventListener("DOMContentLoaded", () => {
 window.Alpine = Alpine;
 Alpine.plugin(collapse);
 Alpine.start();
+

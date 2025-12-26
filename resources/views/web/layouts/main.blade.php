@@ -43,7 +43,7 @@
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-brand antialiased text-gray-900 bg-white selection:bg-aiwaRed selection:text-white">
+<body class="font-brand antialiased text-gray-900 bg-white selection:bg-yellow-400 selection:text-black">
 
     @include('web.layouts.partials.navbar')
 
@@ -139,5 +139,165 @@
     </div>
 
     @stack('scripts')
+
+    <script>
+        let lastScroll = 0;
+        const header = document.getElementById('navbar'); // Pastikan ID ini sesuai dengan di navbar.blade.php
+        const scrollThreshold = 15; // Batas toleransi scroll (px) agar tidak sensitif/flicker
+
+        if (header) {
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                
+                // 0. Abaikan jika scroll negatif (efek bounce di iOS/Mac)
+                if (currentScroll < 0) return;
+
+                // 1. Logic Delta: Hanya bereaksi jika selisih scroll > threshold
+                // Ini mencegah navbar naik-turun saat user hanya scroll sedikit
+                if (Math.abs(currentScroll - lastScroll) < scrollThreshold) {
+                    return;
+                }
+
+                // 2. Di paling atas: Selalu Tampilkan & Reset Posisi
+                if (currentScroll <= 50) { 
+                    header.style.transform = "translateY(0)";
+                }
+                // 3. Scroll ke Bawah: Sembunyikan (Naik ke atas -100%)
+                else if (currentScroll > lastScroll) {
+                    header.style.transform = "translateY(-100%)"; 
+                } 
+                // 4. Scroll ke Atas: Tampilkan (Turun ke posisi 0)
+                else {
+                    header.style.transform = "translateY(0)"; 
+                }
+                
+                lastScroll = currentScroll;
+            });
+        }
+
+        document.addEventListener('alpine:init', () => {
+           window.addToCart = async function(productId, qty = 1, variantId = null, imageId = null) {
+                return new Promise(async (resolve, reject) => {
+                    try {
+                        const response = await fetch('{{ route('cart.add') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                product_id: productId,
+                                variant_id: variantId,
+                                qty: qty
+                            })
+                        });
+
+                        // 1. Parse JSON terlebih dahulu
+                        const data = await response.json();
+
+                        // 2. Cek status sukses atau gagal
+                        if (!response.ok || !data.success) {
+                            // Gunakan pesan error dari server atau pesan default yang diterjemahkan
+                            throw new Error(data.message || "{{ __('Failed to add to cart.') }}");
+                        }
+
+                        // --- Jika Sukses ---
+                        
+                        // Animasi
+                        if (imageId) {
+                            const imgEl = document.getElementById(imageId);
+                            if (imgEl && window.runFlyAnimation) {
+                                window.runFlyAnimation(imgEl);
+                            }
+                        }
+
+                        // Update Navbar Cart Count
+                        if(Alpine.store('cart')) {
+                            Alpine.store('cart').updateCount(data.cart_count);
+                        }
+
+                        // Toast Sukses
+                        if (window.showToast) {
+                            window.showToast(data.message);
+                        }
+                        
+                        resolve(data);
+
+                    } catch (error) {
+                        console.error(error);
+                        
+                        if(error.message.includes('Unauthenticated') || error.status === 401) {
+                            window.location.href = '{{ route("login") }}';
+                        } else {
+                            alert(error.message); 
+                        }
+                        reject(error);
+                    }
+                });
+            };
+
+            // 2. HELPER ANIMASI
+            window.runFlyAnimation = function(sourceElement) {
+                const cartIcon = document.getElementById('cart-icon-target');
+                if (!sourceElement || !cartIcon) return;
+
+                const clone = sourceElement.cloneNode(true);
+                clone.setAttribute('x-ignore', '');
+                clone.removeAttribute('id');
+                clone.removeAttribute(':src');
+                clone.removeAttribute(':class');
+                clone.removeAttribute(':style');
+                clone.removeAttribute('x-ref');
+                
+                clone.src = sourceElement.src;
+                clone.className = 'fixed z-[9999] object-contain mix-blend-multiply rounded-full pointer-events-none opacity-100';
+                
+                const start = sourceElement.getBoundingClientRect();
+                const end = cartIcon.getBoundingClientRect();
+
+                clone.style.top = start.top + 'px';
+                clone.style.left = start.left + 'px';
+                clone.style.width = start.width + 'px';
+                clone.style.height = start.height + 'px';
+                clone.style.transition = 'all 1s cubic-bezier(0.25, 1, 0.5, 1)'; 
+
+                document.body.appendChild(clone);
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        clone.style.top = (end.top + 10) + 'px'; 
+                        clone.style.left = (end.left + 10) + 'px';
+                        clone.style.width = '20px'; 
+                        clone.style.height = '20px';
+                        clone.style.opacity = '0.5'; 
+                    });
+                });
+
+                setTimeout(() => {
+                    clone.remove();
+                    cartIcon.classList.remove('animate-rubber-pop');
+                    void cartIcon.offsetWidth; 
+                    cartIcon.classList.add('animate-rubber-pop');
+                    setTimeout(() => cartIcon.classList.remove('animate-rubber-pop'), 600);
+                }, 1000); 
+            };
+
+            // 3. HELPER TOAST
+            window.showToast = function(message) {
+                const toast = document.createElement('div');
+                toast.className = 'fixed top-24 right-6 bg-green-600 text-white px-6 py-4 rounded-xl shadow-2xl z-[9999] font-bold flex items-center gap-3 animate-fade-in-up transition-opacity duration-500';
+                toast.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14\"></path><polyline points=\"22 4 12 14.01 9 11.01\"></polyline></svg>
+                    <span>${message}</span>
+                `;
+                document.body.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 500);
+                }, 3000);
+            };
+        });
+    </script>
 </body>
 </html>

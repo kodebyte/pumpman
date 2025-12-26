@@ -1,7 +1,6 @@
 <x-web.main-layout> 
 
     <section id="hero-slider" class="relative h-[700px] w-full overflow-hidden bg-brand-dark group/slider">
-        
         <div id="slides-container" class="w-full h-full relative">
             @forelse($banners as $index => $banner)
                 <div class="slide {{ $index === 0 ? 'slide-active' : 'slide-hidden' }} absolute inset-0 w-full h-full">
@@ -242,104 +241,102 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                @foreach($featuredProducts as $product)
-                    <div class="group bg-white rounded-[2rem] p-5 border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative">
-                        
-                        {{-- Badges Logic --}}
-                        <div class="absolute top-5 left-5 z-20 flex flex-col gap-2">
-                            @if($product->created_at->diffInDays(now()) < 30)
-                                <span class="bg-brand-accent text-brand-dark text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-                                    {{ __('New') }}
-                                </span>
-                            @endif
-                            {{-- Contoh logika Best Seller (bisa disesuaikan dengan column di DB) --}}
-                            @if($product->is_best_seller ?? false) 
-                                <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-                                    {{ __('Best Seller') }}
-                                </span>
-                            @endif
-                        </div>
-
-                        {{-- Product Image --}}
-                        <a href="{{ route('products.show', $product->slug) }}" class="flex-1 w-full flex items-center justify-center mb-6 relative p-4 group-hover:scale-105 transition duration-500">
-                            {{-- Fallback image if thumbnail is missing --}}
-                            <img src="{{ $product->thumbnail ? Storage::url($product->thumbnail) : asset('assets/images/placeholder-pump.png') }}" 
-                                 alt="{{ $product->name }}"
-                                 class="w-full h-40 object-contain mix-blend-multiply">
-                        </a>
-
-                        <div class="mt-auto">
-                            <div class="mb-4">
-                                {{-- Category Name (Translated) --}}
-                                <p class="text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-1">
-                                    {{ $product->category ? $product->category->getTranslation('name') : __('Uncategorized') }}
-                                </p>
-                                
-                                {{-- Product Name --}}
-                                <h3 class="font-bold text-slate-900 text-lg leading-tight group-hover:text-brand-primary transition">
-                                    <a href="{{ route('products.show', $product->slug) }}">
-                                        {{ $product->name }}
-                                    </a>
-                                </h3>
-                            </div>
-
-                            <div class="flex items-center justify-between border-t border-gray-50 pt-4 gap-2">
-                                <div class="flex flex-col">
-                                    {{-- Strike-through price if discount exists (Optional logic) --}}
-                                    @if($product->discount_price)
-                                        <span class="text-[10px] text-gray-400 line-through">
-                                            Rp {{ number_format($product->price, 0, ',', '.') }}
-                                        </span>
-                                        <span class="text-slate-900 font-bold text-sm">
-                                            Rp {{ number_format($product->discount_price, 0, ',', '.') }}
-                                        </span>
-                                    @else
-                                        <span class="text-slate-900 font-bold text-sm">
-                                            Rp {{ number_format($product->price, 0, ',', '.') }}
-                                        </span>
-                                    @endif
-                                </div>
-
-                                <div class="flex items-center gap-4">
-                                    <a href="{{ route('products.show', $product->slug) }}" class="relative text-xs font-bold text-slate-500 hover:text-brand-primary transition-colors py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-brand-primary hover:after:w-full after:transition-all after:duration-300">
-                                        {{ __('Detail') }}
-                                    </a>
-                                    
-                                    {{-- Add to Cart Button (Bisa diintegrasikan dengan Livewire/Alpine nanti) --}}
-                                    <button class="bg-brand-primary text-white px-4 py-2 rounded-full font-bold text-xs hover:bg-brand-dark transition shadow-lg flex items-center gap-1.5 transform active:scale-95">
-                                        {{ __('Buy') }} 
-                                        <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                @forelse($featuredProducts as $product)
+                    <x-web.product-card :product="$product" />
+                @empty
+                    <div class="col-span-1 sm:col-span-2 lg:col-span-4 text-center py-20 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                        <p class="text-gray-500 font-bold mb-2">{{ __('No featured products available.') }}</p>
+                        <p class="text-xs text-gray-400">{{ __('Please check back later.') }}</p>
                     </div>
-                @endforeach
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex justify-between items-end mb-12">
+               <div>
+                   <span class="text-brand-primary font-bold tracking-widest uppercase text-xs mb-2 block">
+                       {{ __('Industry Insights') }}
+                   </span>
+                   <h2 class="text-3xl md:text-4xl font-display font-bold text-slate-900">
+                       {{ __('Latest News') }}
+                   </h2>
+               </div>
+               <a href="{{ route('posts.index') }}" class="group flex items-center gap-2 text-slate-500 hover:text-brand-primary transition font-medium pb-1 border-b border-transparent hover:border-brand-primary">
+                   {{ __('Read Blog') }} 
+                   <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+               </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+               @forelse($latestPosts as $post)
+                   <article class="group cursor-pointer flex flex-col h-full">
+                       {{-- Image --}}
+                       <div class="overflow-hidden rounded-[2rem] relative mb-5 aspect-[4/3]">
+                           @if($post->thumbnail)
+                                <img src="{{ asset('storage/' . $post->thumbnail) }}" 
+                                     alt="{{ $post->getTranslation('title') }}"
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                           @else
+                                <div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
+                                    <i data-lucide="image" class="w-12 h-12"></i>
+                                </div>
+                           @endif
+
+                           {{-- Date Badge --}}
+                           @if(!is_null($post->published_at))
+                               <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl shadow-sm">
+                                   <span class="block text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                       {{ $post->published_at->format('M') }}
+                                   </span>
+                                   <span class="block text-xl font-black text-slate-900 leading-none text-center">
+                                       {{ $post->published_at->format('d') }}
+                                   </span>
+                               </div>
+                           @endif
+                       </div>
+
+                       <div class="flex flex-col flex-1">
+                           {{-- Category / Type --}}
+                           <div class="flex items-center gap-2 text-brand-primary text-xs font-bold uppercase tracking-widest mb-2">
+                               <i data-lucide="tag" class="w-3 h-3"></i> 
+                               {{ $post->type ? ucfirst($post->type->getTranslation('name')) : __('General') }}
+                           </div>
+
+                           {{-- Title --}}
+                           <h3 class="text-2xl font-bold text-slate-900 leading-snug mb-4 group-hover:text-brand-primary transition-colors">
+                               <a href="{{ route('posts.show', $post->slug) }}">
+                                   {{ $post->getTranslation('title') }}
+                               </a>
+                           </h3>
+
+                           {{-- Excerpt (Optional) --}}
+                           <p class="text-gray-500 text-sm line-clamp-3 mb-4 flex-1">
+                                {{ Str::limit(strip_tags($post->getTranslation('content')), 100) }}
+                           </p>
+
+                           {{-- Read More --}}
+                           <div class="mt-auto">
+                               <span class="inline-flex items-center gap-2 text-sm font-bold text-slate-900 group-hover:text-brand-primary transition border-b-2 border-transparent group-hover:border-brand-primary pb-0.5">
+                                   {{ __('Read Article') }} 
+                                   <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                               </span>
+                           </div>
+                       </div>
+                   </article>
+               @empty
+                   <div class="col-span-3 text-center py-12 text-gray-400 border border-dashed rounded-xl">
+                       {{ __('No latest news available.') }}
+                   </div>
+               @endforelse
             </div>
         </div>
     </section>
 
     @push('scripts')
         <script>
-            // Sticky Header Logic
-            let lastScroll = 0;
-            const header = document.getElementById('sticky-header');
-            if (header) {
-                window.addEventListener('scroll', () => {
-                    const currentScroll = window.pageYOffset;
-                    if (currentScroll <= 40) { 
-                        header.style.transform = "translateY(0)";
-                        return;
-                    }
-                    if (currentScroll > lastScroll && currentScroll > 100) {
-                        header.style.transform = "translateY(-100%)"; // Hide on scroll down
-                    } else {
-                        header.style.transform = "translateY(0)"; // Show on scroll up
-                    }
-                    lastScroll = currentScroll;
-                });
-            }
-
             // Sliders Logic
             document.addEventListener('DOMContentLoaded', () => {
                 // Hero Slider

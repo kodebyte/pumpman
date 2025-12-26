@@ -102,10 +102,10 @@ class AppServiceProvider extends ServiceProvider
         }
         
         
-        $proxyHost = Request::header('X-Forwarded-Host') ?? Request::header('X-Original-Host');
-        if ($proxyHost && str_contains($proxyHost, 'ngrok')) {
-            URL::forceRootUrl("https://{$proxyHost}");
-            URL::forceScheme('https');
-        }
+        // $proxyHost = Request::header('X-Forwarded-Host') ?? Request::header('X-Original-Host');
+        // if ($proxyHost && str_contains($proxyHost, 'ngrok')) {
+        //     URL::forceRootUrl("https://{$proxyHost}");
+        //     URL::forceScheme('https');
+        // }
     }
 }

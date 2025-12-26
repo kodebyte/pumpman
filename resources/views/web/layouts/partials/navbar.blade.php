@@ -1,6 +1,5 @@
 <nav x-data="{ searchOpen: false, mobileOpen: false }" id="navbar" 
-     class="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-lg border-b border-white/20 shadow-sm transition-all duration-300 supports-[backdrop-filter]:bg-white/60"
-     
+     class="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-lg border-b border-white/20 shadow-sm transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] supports-[backdrop-filter]:bg-white/60"
      @keydown.escape.window="searchOpen = false; mobileOpen = false">
 
     <div class="bg-brand-dark text-white/90 text-xs py-3 px-4 hidden md:block font-medium tracking-wide relative z-[60]">

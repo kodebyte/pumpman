@@ -1,96 +1,110 @@
 @props(['product'])
 
-<div class="group flex flex-col" x-data="{ isLoading: false }"> 
-    <div class="relative mb-4 aspect-[5/4] flex items-center justify-center overflow-hidden bg-gray-50 rounded-xl border border-transparent group-hover:border-gray-200 transition-colors">
-        <div class="absolute top-3 left-3 flex flex-col gap-2 z-10 pointer-events-none">
-            @if($product->is_featured) 
-                <div class="bg-black text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Hot</div>
-            @endif
-            @if($product->has_discount)
-                <div class="bg-aiwaRed text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">
-                    {{ $product->discount_type == 'percent' ? '-' . (int)$product->discount_value . '%' : 'Sale' }}
-                </div>
-            @endif
-        </div>
-        
-        <a href="{{ route('products.show', $product->slug) }}" class="block w-full h-full">
-            @if($product->thumbnail)
-                <img src="{{ $product->thumbnail }}" 
-                    id="p-img-{{ $product->id }}"
-                    alt="{{ $product->name }}" 
-                    class="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 ease-out group-hover:scale-110">
-            @else
-                <div class="w-full h-full flex flex-col items-center justify-center text-gray-400">
-                    <i data-lucide="image" class="w-8 h-8 mb-2 opacity-50"></i>
-                    <span class="text-xs">No Image</span>
-                </div>
-            @endif
-        </a>
-        
-        {{-- Ganti bagian pembungkus tombol (Button Wrapper) --}}
-        <div class="absolute inset-x-0 bottom-4 flex justify-center 
-                    {{-- Mobile: Selalu muncul & posisi normal --}}
-                    opacity-100 translate-y-0 px-2
-                    {{-- Desktop: Sembunyi & efek hover --}}
-                    md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0 
-                    transition-all duration-500 ease-out z-20">
-            
-            @if($product->has_variants)
-                <a href="{{ route('products.show', $product->slug) }}" 
-                class="bg-black/90 backdrop-blur-sm text-white font-bold uppercase tracking-widest rounded-full shadow-xl hover:bg-aiwaRed transition-colors flex items-center gap-2 transform hover:scale-105 active:scale-95
-                        {{-- Ukuran lebih kecil di mobile agar tidak menutupi gambar --}}
-                        text-[9px] px-4 py-2.5 md:text-xs md:px-6 md:py-3">
-                    <i data-lucide="eye" class="w-3 h-3"></i> {{ __('Options') }}
-                </a>
-            @else
-                @if($product->stock > 0)
-                    <button @click.prevent="addToCart({{ $product->id }}, 1, null, 'p-img-{{ $product->id }}')" 
-                            :disabled="isLoading"
-                            class="bg-black/90 backdrop-blur-sm text-white font-bold uppercase tracking-widest rounded-full shadow-xl hover:bg-aiwaRed transition-colors flex items-center gap-2 transform hover:scale-105 active:scale-95 disabled:opacity-50
-                                {{-- Ukuran lebih kecil di mobile --}}
-                                text-[9px] px-4 py-2.5 md:text-xs md:px-6 md:py-3">
-                        
-                        <svg x-show="isLoading" class="animate-spin -ml-1 mr-1 h-3 w-3 text-white" ...>...</svg>
-                        <i x-show="!isLoading" data-lucide="plus" class="w-3 h-3"></i> 
-                        {{ __('Add to Cart') }}
-                    </button>
-                @else
-                    <button disabled
-                            class="bg-gray-400/90 backdrop-blur-sm text-white font-bold uppercase tracking-widest rounded-full shadow-xl cursor-not-allowed flex items-center gap-2
-                                text-[9px] px-4 py-2.5 md:text-xs md:px-6 md:py-3">
-                        <i data-lucide="x-circle" class="w-3 h-3"></i> {{ __('Sold Out') }}
-                    </button>
-                @endif
-            @endif
-        </div>
-    </div>
-
-    <div class="flex flex-col items-center text-center space-y-1.5 px-2">
-        @if($product->category)
-            <a href="{{ route('products.category', $product->category->slug) }}"
-               class="text-[10px] font-bold text-gray-400 uppercase tracking-widest hover:text-aiwaRed transition-colors relative z-10">
-                {{ $product->category->getTranslation('name') }}
-            </a>
-        @else
-            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Aiwa</span>
+{{-- PUMPMAN PRODUCT CARD --}}
+{{-- Logika Alpine.js "isLoading" dan "addToCart" diambil dari Aiwa --}}
+<div class="group bg-white rounded-[2rem] p-5 border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative"
+     x-data="{ isLoading: false }">
+    
+    {{-- Badges --}}
+    <div class="absolute top-5 left-5 z-20 flex flex-col gap-2">
+        @if($product->created_at->diffInDays(now()) < 30)
+            <span class="bg-brand-accent text-brand-dark text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
+                {{ __('New') }}
+            </span>
         @endif
         
-        <a href="{{ route('products.show', $product->slug) }}" class="group/info block w-full">
-            <h3 class="text-base font-bold text-black leading-tight group-hover/info:text-aiwaRed transition-colors line-clamp-2 min-h-[2.5rem] flex items-center justify-center">
-                {{ $product->name }}
-            </h3>
+        {{-- Logika Best Seller (Sesuaikan jika ada column is_best_seller) --}}
+        @if($product->is_featured)
+            <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
+                {{ __('Hot') }}
+            </span>
+        @endif
+
+        {{-- Logika Diskon dari Aiwa --}}
+        @if($product->has_discount)
+            <span class="bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
+                {{ $product->discount_type == 'percent' ? '-' . (int)$product->discount_value . '%' : 'Sale' }}
+            </span>
+        @endif
+    </div>
+
+    {{-- Product Image --}}
+    <a href="{{ route('products.show', $product->slug) }}" class="flex-1 w-full flex items-center justify-center mb-6 relative p-4 group-hover:scale-105 transition duration-500">
+        <img src="{{ $product->thumbnail ? asset($product->thumbnail) : asset('assets/images/placeholder-pump.png') }}" 
+             id="p-img-{{ $product->id }}"
+             alt="{{ $product->name }}"
+             class="w-full h-40 object-contain mix-blend-multiply">
+    </a>
+
+    <div class="mt-auto">
+        <div class="mb-4">
+            {{-- Category --}}
+            <p class="text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-1">
+                {{ $product->category ? $product->category->getTranslation('name') : __('Uncategorized') }}
+            </p>
             
-            <div class="flex items-center gap-2 justify-center mt-1">
-                <span class="text-sm font-bold {{ $product->has_discount ? 'text-aiwaRed' : 'text-black' }} flex items-baseline justify-center">
-                    {!! $product->price_label_html !!}
-                </span>
-                
-                @if($product->has_discount && !$product->has_variants)
-                    <span class="text-[10px] text-gray-400 line-through decoration-gray-400">
+            {{-- Title --}}
+            <h3 class="font-bold text-slate-900 text-lg leading-tight group-hover:text-brand-primary transition">
+                <a href="{{ route('products.show', $product->slug) }}">
+                    {{ $product->name }}
+                </a>
+            </h3>
+        </div>
+
+        <div class="flex items-center justify-between border-t border-gray-50 pt-4 gap-2">
+            {{-- Price Logic --}}
+            <div class="flex flex-col">
+                @if($product->has_discount)
+                    <span class="text-[10px] text-gray-400 line-through">
+                        Rp {{ number_format($product->price, 0, ',', '.') }}
+                    </span>
+                    <span class="text-slate-900 font-bold text-sm">
+                        {!! $product->price_label_html !!}
+                    </span>
+                @else
+                    <span class="text-slate-900 font-bold text-sm">
                         Rp {{ number_format($product->price, 0, ',', '.') }}
                     </span>
                 @endif
             </div>
-        </a>
+
+            <div class="flex items-center gap-4">
+                {{-- Detail Link --}}
+                <a href="{{ route('products.show', $product->slug) }}" class="relative text-xs font-bold text-slate-500 hover:text-brand-primary transition-colors py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-brand-primary hover:after:w-full after:transition-all after:duration-300">
+                    {{ __('Detail') }}
+                </a>
+                
+                {{-- Add To Cart Button (Logic from Aiwa) --}}
+                @if($product->has_variants)
+                    <a href="{{ route('products.show', $product->slug) }}" class="bg-brand-primary text-white px-4 py-2 rounded-full font-bold text-xs hover:bg-brand-dark transition shadow-lg flex items-center gap-1.5 transform active:scale-95">
+                        <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                        {{ __('View') }}
+                    </a>
+                @else
+                    @if($product->stock > 0)
+                        <button @click.prevent="addToCart({{ $product->id }}, 1, null, 'p-img-{{ $product->id }}')" 
+                                :disabled="isLoading"
+                                class="bg-brand-primary text-white px-4 py-2 rounded-full font-bold text-xs hover:bg-brand-dark transition shadow-lg flex items-center gap-1.5 transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+                            
+                            {{-- Loading Icon --}}
+                            <svg x-show="isLoading" class="animate-spin h-3.5 w-3.5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            
+                            {{-- Normal Icon --}}
+                            <i x-show="!isLoading" data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+                            
+                            {{ __('Buy') }}
+                        </button>
+                    @else
+                        <button disabled class="bg-gray-400 text-white px-4 py-2 rounded-full font-bold text-xs cursor-not-allowed flex items-center gap-1.5">
+                            <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
+                            {{ __('Sold') }}
+                        </button>
+                    @endif
+                @endif
+            </div>
+        </div>
     </div>
 </div>
