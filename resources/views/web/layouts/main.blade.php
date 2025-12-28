@@ -55,6 +55,7 @@
 
     <div x-data="{ isOpen: false }" class="fixed bottom-6 right-6 z-[9999] font-sans group">
         <div x-show="isOpen"
+            x-cloak
             x-transition:enter="transition ease-out duration-300 transform origin-bottom-right"
             x-transition:enter-start="opacity-0 scale-90 translate-y-2"
             x-transition:enter-end="opacity-100 scale-100 translate-y-0"

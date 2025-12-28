@@ -1,7 +1,7 @@
 <x-web.main-layout>
 
     {{-- HEADER / BREADCRUMB --}}
-    <div class="pt-14 pb-8 bg-brand-gray relative z-0">
+    <div class="pt-14 pb-10 bg-brand-gray relative z-0">
          <div class="container mx-auto px-4 md:px-6">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>

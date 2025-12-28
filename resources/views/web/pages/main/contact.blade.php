@@ -1,7 +1,7 @@
 <x-web.main-layout>
 
     {{-- 1. HEADER --}}
-    <div class="pt-14 pb-12 bg-brand-gray relative overflow-hidden">
+    <div class="pt-14 pb-10 bg-brand-gray relative overflow-hidden">
         {{-- Background Decor --}}
         <div class="absolute top-0 right-0 w-96 h-96 bg-brand-soft/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         

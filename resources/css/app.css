@@ -5,6 +5,8 @@
 @tailwind components;
 @tailwind utilities;
 
+[x-cloak] { display: none !important; }
+
 /* Efek Glass modern */
 #sticky-header {
     /* Pastikan backdrop filter jalan di Safari/Chrome */

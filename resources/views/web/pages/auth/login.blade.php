@@ -1,7 +1,7 @@
 <x-web.main-layout>
 
     {{-- Background Abu-abu Polos --}}
-    <div class="pt-24 flex items-center justify-center bg-brand-gray pb-24 px-4 sm:px-6 lg:px-8">
+    <div class="py-24 flex items-center justify-center bg-brand-gray px-4 sm:px-6 lg:px-8">
         {{-- Card: Rounded 2.5rem, Shadow, Border Halus --}}
         <div class="max-w-lg w-full bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 border border-gray-200/60 relative overflow-hidden">
             {{-- Aksen Garis Hijau di Atas (Opsional, pemanis) --}}

@@ -2,7 +2,7 @@
 
     {{-- 1. HEADER --}}
     {{-- CONSISTENCY: pt-32 pb-12, Uppercase 3XL Title --}}
-    <div class="pt-14 pb-12 bg-brand-gray relative overflow-hidden">
+    <div class="pt-14 pb-10  bg-brand-gray relative overflow-hidden">
         <div class="container mx-auto px-4 md:px-6 relative z-10">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>

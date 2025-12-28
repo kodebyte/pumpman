@@ -209,12 +209,6 @@
                                                     </a>
                                                 </li>
                                             @endforeach
-                                        @else
-                                            {{-- Fallback Links --}}
-                                            <li><a href="#" class="text-base font-bold text-gray-600 hover:text-brand-primary">Centrifugal Pumps</a></li>
-                                            <li><a href="#" class="text-base font-bold text-gray-600 hover:text-brand-primary">Submersible Pumps</a></li>
-                                            <li><a href="#" class="text-base font-bold text-gray-600 hover:text-brand-primary">Dosing Pumps</a></li>
-                                            <li><a href="#" class="text-base font-bold text-gray-600 hover:text-brand-primary">Spare Parts</a></li>
                                         @endif
                                     </ul>
                                     <div class="mt-6 pt-6 border-t border-gray-100">

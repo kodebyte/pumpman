@@ -1,7 +1,7 @@
 <x-web.main-layout>
 
     {{-- 2. SUCCESS CARD --}}
-    <section class="bg-brand-gray pt-14 pb-24 relative z-0">
+    <section class="pt-14 pb-10 bg-brand-gray relative z-0">
         <div class="container mx-auto px-4 md:px-6">
             <div class="max-w-7xl mx-auto bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-200/60">
                 
