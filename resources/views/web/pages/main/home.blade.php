@@ -402,45 +402,70 @@
         </div>
     </section>
 
-    <div class="bg-white">
-        <section class="py-20 border-b border-gray-100">
-            <div class="container mx-auto px-4 md:px-6 text-center">
-                <div class="max-w-2xl mx-auto">
-                    <span class="text-brand-primary font-bold tracking-widest uppercase text-xs mb-3 block">Stay Connected</span>
-                    <h2 class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-4">Don't Miss Special Promos</h2>
-                    <p class="text-slate-500 mb-10 text-lg font-light">Get the latest product info and exclusive discounts directly to your email.</p>
-                    <form class="relative max-w-lg mx-auto flex items-center group">
-                        <i data-lucide="mail" class="absolute left-6 w-5 h-5 text-gray-400 group-focus-within:text-brand-primary transition-colors"></i>
-                        <input type="email" placeholder="Enter your email address" class="w-full pl-14 pr-36 py-4 rounded-full border border-gray-200 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-primary/10 focus:border-brand-primary outline-none transition-all shadow-sm text-sm font-medium placeholder-gray-400">
-                        <button class="absolute right-2 top-2 bottom-2 bg-slate-900 text-white px-6 rounded-full font-bold hover:bg-brand-primary transition-colors shadow-md text-xs sm:text-sm">Subscribe</button>
-                    </form>
-                    <p class="text-[10px] text-gray-400 mt-4">We respect your privacy. No spam, ever.</p>
-                </div>
+    {{-- Tambahkan id="newsletter" agar fitur withFragment('newsletter') di controller berfungsi --}}
+    <section id="newsletter" class="py-20 border-b border-gray-100 bg-white relative overflow-hidden">
+        {{-- Optional: Background Pattern --}}
+        <div class="absolute inset-0 opacity-[0.03]" 
+                style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;">
+        </div>
+
+        <div class="container mx-auto px-4 md:px-6 text-center relative z-10">
+            <div class="max-w-2xl mx-auto">
+                <span class="text-brand-primary font-black tracking-widest uppercase text-xs mb-3 block">
+                    {{ __('Stay Connected') }}
+                </span>
+                <h2 class="text-3xl md:text-4xl font-display font-black text-slate-900 mb-4 uppercase tracking-tight">
+                    {{ __("Don't Miss Special Promos") }}
+                </h2>
+                <p class="text-slate-500 mb-10 text-sm md:text-base leading-relaxed">
+                    {{ __('Get the latest industrial pump updates, engineering case studies, and exclusive offers directly to your inbox.') }}
+                </p>
+                
+                {{-- START: Alert Messages --}}
+                @if(session('newsletter_success'))
+                    <div class="mb-8 p-4 bg-green-50 border border-green-200 text-green-700 rounded-2xl flex items-center justify-center gap-3 animate-fade-in-up shadow-sm">
+                        <div class="bg-green-100 p-1 rounded-full">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-600"></i>
+                        </div>
+                        <span class="text-sm font-bold">{{ session('newsletter_success') }}</span>
+                    </div>
+                @endif
+
+                @error('email')
+                    <div class="mb-8 p-4 bg-red-50 border border-red-200 text-red-700 rounded-2xl flex items-center justify-center gap-3 animate-fade-in-up shadow-sm">
+                        <div class="bg-red-100 p-1 rounded-full">
+                            <i data-lucide="alert-circle" class="w-4 h-4 text-red-600"></i>
+                        </div>
+                        <span class="text-sm font-bold">{{ $message }}</span>
+                    </div>
+                @enderror
+                {{-- END: Alert Messages --}}
+
+                <form action="{{ route('newsletter.subscribe') }}" method="POST" class="relative max-w-lg mx-auto flex items-center group">
+                    @csrf
+                    <div class="absolute left-6 text-gray-400 group-focus-within:text-brand-primary transition-colors z-10">
+                        <i data-lucide="mail" class="w-5 h-5"></i>
+                    </div>
+                    
+                    <input type="email" 
+                            name="email" 
+                            value="{{ old('email') }}"
+                            placeholder="{{ __('Enter your email address') }}" 
+                            required
+                            class="w-full pl-14 pr-36 py-4 rounded-2xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-primary/10 focus:border-brand-primary outline-none transition-all shadow-sm text-sm font-bold text-slate-900 placeholder-gray-400 relative z-0">
+                    
+                    <button type="submit" class="absolute right-2 top-2 bottom-2 bg-brand-dark text-white px-6 rounded-xl font-bold hover:bg-brand-primary transition-all duration-300 shadow-md text-xs uppercase tracking-widest z-10 flex items-center gap-2 group/btn hover:shadow-lg hover:-translate-y-0.5">
+                        {{ __('Subscribe') }}
+                        <i data-lucide="send" class="w-3 h-3 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform"></i>
+                    </button>
+                </form>
+                
+                <p class="text-[10px] text-gray-400 mt-6 font-medium">
+                    {{ __('We respect your privacy. No spam, ever.') }}
+                </p>
             </div>
-        </section>
-        <section class="py-12 bg-white">
-            <div class="container mx-auto px-4 md:px-6">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-x-0 md:divide-x divide-gray-100">
-                    <div class="flex items-center justify-center gap-4 px-2">
-                        <div class="w-12 h-12 bg-brand-soft rounded-full flex items-center justify-center text-brand-primary flex-shrink-0"><i data-lucide="truck" class="w-6 h-6"></i></div>
-                        <div><h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight">Fast Delivery</h4><p class="text-[10px] md:text-xs text-slate-500 mt-0.5">24h Jabodetabek*</p></div>
-                    </div>
-                    <div class="flex items-center justify-center gap-4 px-2">
-                        <div class="w-12 h-12 bg-brand-soft rounded-full flex items-center justify-center text-brand-primary flex-shrink-0"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
-                        <div><h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight">Official Warranty</h4><p class="text-[10px] md:text-xs text-slate-500 mt-0.5">100% Original</p></div>
-                    </div>
-                    <div class="flex items-center justify-center gap-4 px-2">
-                        <div class="w-12 h-12 bg-brand-soft rounded-full flex items-center justify-center text-brand-primary flex-shrink-0"><i data-lucide="headphones" class="w-6 h-6"></i></div>
-                        <div><h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight">24/7 Support</h4><p class="text-[10px] md:text-xs text-slate-500 mt-0.5">Expert Consultation</p></div>
-                    </div>
-                    <div class="flex items-center justify-center gap-4 px-2">
-                        <div class="w-12 h-12 bg-brand-soft rounded-full flex items-center justify-center text-brand-primary flex-shrink-0"><i data-lucide="credit-card" class="w-6 h-6"></i></div>
-                        <div><h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight">Secure Payment</h4><p class="text-[10px] md:text-xs text-slate-500 mt-0.5">100% Safe Transaction</p></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+        </div>
+    </section>
 
     @push('scripts')
         <script>
