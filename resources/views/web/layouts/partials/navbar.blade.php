@@ -283,7 +283,7 @@
                     <a href="{{ route('home') }}" class="hover:text-brand-primary transition uppercase">{{ __('Home') }}</a>
                     <a href="{{ route('pages.about') }}" class="hover:text-brand-primary transition uppercase">{{ __('About Us') }}</a>
                     <a href="{{ route('pages.contact') }}" class="hover:text-brand-primary transition uppercase">{{ __('Contact Us') }}</a>
-                    <a href="#" class="hover:text-brand-primary transition uppercase">{{ __('Find a Store') }}</a>
+                    <a href="{{ route('stores.index') }}" class="hover:text-brand-primary transition uppercase">{{ __('Find a Store') }}</a>
                     
                     {{-- Support Dropdown --}}
                     <div class="relative group h-14 flex items-center">
@@ -365,7 +365,7 @@
             </div>
 
             <div class="border-b border-gray-100 py-5">
-                <a href="#" class="block w-full text-2xl font-black uppercase tracking-tight hover:text-brand-primary transition-colors">{{ __('Find a Store') }}</a>
+                <a href="{{ route('stores.index') }}" class="block w-full text-2xl font-black uppercase tracking-tight hover:text-brand-primary transition-colors">{{ __('Find a Store') }}</a>
             </div>
 
             {{-- SUPPORT (Accordion) --}}

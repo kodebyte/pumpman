@@ -1,3 +1,7 @@
+@php
+    $_appLocale = app()->getLocale();
+@endphp
+
 <x-web.main-layout> 
 
     <section id="hero-slider" class="relative h-[700px] w-full overflow-hidden bg-brand-dark group/slider">
@@ -156,23 +160,8 @@
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] rounded-full border-2 border-dashed border-brand-primary/20 animate-[spin_20s_linear_infinite]"></div>
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full bg-brand-soft/50 blur-3xl"></div>
                         
-                        <img src="{{ Storage::url($productHighlight->image) }}" 
-                            alt="{{ $productHighlight->getTranslation('title') }}" 
+                        <img src="{{ Storage::url($productHighlight->image) }}" alt="{{ $productHighlight->getTranslation('title') }}" 
                             class="relative z-10 w-full h-auto object-contain drop-shadow-2xl hover:scale-105 transition duration-700 mix-blend-multiply">
-                        
-                        {{-- 
-                        <div class="absolute bottom-10 -right-4 md:right-10 bg-white p-4 rounded-2xl shadow-xl z-20 border border-gray-100 animate-bounce" style="animation-duration: 3s;">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-green-100 p-2 rounded-full text-green-600">
-                                    <i data-lucide="zap" class="w-6 h-6"></i>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] text-gray-500 font-bold uppercase">Energy Saving</p>
-                                    <p class="text-lg font-black text-slate-900">Up to 30%</p>
-                                </div>
-                            </div>
-                        </div>
-                        --}}
                     </div>
 
                     <div>
@@ -193,15 +182,14 @@
                                 @foreach($productHighlight->features as $feature)
                                     <div class="flex gap-5 group/item">
                                         <div class="flex-shrink-0 w-14 h-14 bg-white border border-gray-100 text-brand-primary rounded-2xl flex items-center justify-center shadow-md group-hover/item:bg-brand-primary group-hover/item:text-white transition duration-300">
-                                            {{-- Render icon dynamic dari nama icon (contoh: 'cpu', 'shield') --}}
                                             <i data-lucide="{{ $feature['icon'] ?? 'check-circle' }}" class="w-7 h-7"></i>
                                         </div>
                                         <div>
                                             <h4 class="text-xl font-bold text-slate-900 mb-2 group-hover/item:text-brand-primary transition">
-                                                {{ $feature['title'][app()->getLocale()] ?? '' }}
+                                                {{ $feature['title'][$_appLocale] ?? '' }}
                                             </h4>
                                             <p class="text-sm text-slate-500 leading-relaxed">
-                                                {{ $feature['description'][app()->getLocale()] ?? '' }}
+                                                {{ $feature['desc'][$_appLocale] ?? '' }}
                                             </p>
                                         </div>
                                     </div>
@@ -252,7 +240,56 @@
             </div>
         </div>
     </section>
+    
+    <section class="py-12 border-t border-gray-50 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <p class="text-center text-sm font-bold text-gray-400 uppercase tracking-widest mb-8">Trusted by 500+ Industries & Companies</p>
+            <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                <div class="flex items-center gap-2 group cursor-default">
+                    <div class="p-2 bg-gray-100 rounded-lg group-hover:bg-blue-50 transition"><i data-lucide="building-2" class="w-8 h-8 text-slate-400 group-hover:text-blue-600"></i></div>
+                    <span class="font-black text-xl text-slate-300 group-hover:text-slate-600">PDAM JAYA</span>
+                </div>
+                <div class="flex items-center gap-2 group cursor-default">
+                    <div class="p-2 bg-gray-100 rounded-lg group-hover:bg-orange-50 transition"><i data-lucide="factory" class="w-8 h-8 text-slate-400 group-hover:text-orange-600"></i></div>
+                    <span class="font-black text-xl text-slate-300 group-hover:text-slate-600">INDOFOOD</span>
+                </div>
+                <div class="flex items-center gap-2 group cursor-default">
+                    <div class="p-2 bg-gray-100 rounded-lg group-hover:bg-red-50 transition"><i data-lucide="hard-hat" class="w-8 h-8 text-slate-400 group-hover:text-red-600"></i></div>
+                    <span class="font-black text-xl text-slate-300 group-hover:text-slate-600">WIKA KARYA</span>
+                </div>
+                <div class="flex items-center gap-2 group cursor-default">
+                    <div class="p-2 bg-gray-100 rounded-lg group-hover:bg-green-50 transition"><i data-lucide="droplets" class="w-8 h-8 text-slate-400 group-hover:text-green-600"></i></div>
+                    <span class="font-black text-xl text-slate-300 group-hover:text-slate-600">UNILEVER</span>
+                </div>
+                 <div class="flex items-center gap-2 group cursor-default">
+                    <div class="p-2 bg-gray-100 rounded-lg group-hover:bg-purple-50 transition"><i data-lucide="hotel" class="w-8 h-8 text-slate-400 group-hover:text-purple-600"></i></div>
+                    <span class="font-black text-xl text-slate-300 group-hover:text-slate-600">ASTON HOTEL</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section class="py-10 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="bg-brand-dark rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 group">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-brand-accent/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
+                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
+                <div class="relative z-10 max-w-2xl text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-brand-accent text-xs font-bold uppercase tracking-wider mb-4">
+                        <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span> Online Support
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4 leading-tight">Confused about calculating <br><span class="text-brand-accent">Head & Flow?</span></h2>
+                    <p class="text-white/80 text-lg font-light leading-relaxed">Don't risk buying the wrong pump. Our certified engineers are ready to help you calculate the specifications for free.</p>
+                </div>
+                <div class="relative z-10 flex flex-col sm:flex-row gap-4">
+                    <a href="#" class="bg-white text-brand-dark px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition shadow-lg flex items-center justify-center gap-2 group/btn"><i data-lucide="message-circle" class="w-5 h-5"></i> Chat via WhatsApp</a>
+                    <a href="#" class="px-8 py-4 rounded-full font-bold text-white border border-white/30 hover:bg-white/10 transition flex items-center justify-center gap-2"><i data-lucide="phone" class="w-5 h-5"></i> Call Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <section class="py-24 bg-white">
         <div class="container mx-auto px-4 md:px-6">
             <div class="flex justify-between items-end mb-12">
@@ -334,6 +371,76 @@
             </div>
         </div>
     </section>
+
+    <section class="py-24 bg-brand-gray overflow-hidden">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex justify-between items-end mb-10">
+               <div><span class="text-brand-primary font-bold tracking-widest uppercase text-xs mb-2 block">Our Credibility</span><h2 class="text-3xl md:text-4xl font-display font-bold text-slate-900">Certifications & Awards</h2></div>
+               <div class="flex gap-3">
+                  <button id="cert-prev" class="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-slate-600 hover:bg-brand-primary hover:text-white hover:border-brand-primary transition focus:outline-none shadow-sm"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+                  <button id="cert-next" class="w-10 h-10 rounded-full border border-gray-200 bg-white flex items-center justify-center text-slate-600 hover:bg-brand-primary hover:text-white hover:border-brand-primary transition focus:outline-none shadow-sm"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+               </div>
+            </div>
+            <div id="certification-slider" class="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory pb-4">
+                 <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm hover:shadow-lg hover:border-brand-primary/30 transition-all duration-300 flex flex-col items-center text-center snap-start group cursor-default">
+                     <div class="w-20 h-20 bg-brand-soft rounded-2xl flex items-center justify-center mb-6 transition duration-300 group-hover:scale-110"><i data-lucide="award" class="w-10 h-10 text-brand-primary"></i></div>
+                     <h3 class="font-bold text-slate-900 text-xl mb-2 group-hover:text-brand-primary transition">ISO 9001:2015</h3><p class="text-sm text-slate-500 leading-relaxed">Certified Quality Management System.</p>
+                 </div>
+                 <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm hover:shadow-lg hover:border-brand-primary/30 transition-all duration-300 flex flex-col items-center text-center snap-start group cursor-default">
+                     <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 transition duration-300 group-hover:scale-110"><i data-lucide="shield-check" class="w-10 h-10 text-blue-600"></i></div>
+                     <h3 class="font-bold text-slate-900 text-xl mb-2 group-hover:text-brand-primary transition">SNI Certified</h3><p class="text-sm text-slate-500 leading-relaxed">Meets Indonesian National Standard.</p>
+                 </div>
+                 <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm hover:shadow-lg hover:border-brand-primary/30 transition-all duration-300 flex flex-col items-center text-center snap-start group cursor-default">
+                     <div class="w-20 h-20 bg-red-50 rounded-2xl flex items-center justify-center mb-6 transition duration-300 group-hover:scale-110"><i data-lucide="flag" class="w-10 h-10 text-red-600"></i></div>
+                     <h3 class="font-bold text-slate-900 text-xl mb-2 group-hover:text-brand-primary transition">TKDN > 40%</h3><p class="text-sm text-slate-500 leading-relaxed">High local content certification.</p>
+                 </div>
+                 <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm hover:shadow-lg hover:border-brand-primary/30 transition-all duration-300 flex flex-col items-center text-center snap-start group cursor-default">
+                     <div class="w-20 h-20 bg-green-50 rounded-2xl flex items-center justify-center mb-6 transition duration-300 group-hover:scale-110"><i data-lucide="leaf" class="w-10 h-10 text-green-600"></i></div>
+                     <h3 class="font-bold text-slate-900 text-xl mb-2 group-hover:text-brand-primary transition">Green Industry</h3><p class="text-sm text-slate-500 leading-relaxed">Eco-friendly operational standards.</p>
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="bg-white">
+        <section class="py-20 border-b border-gray-100">
+            <div class="container mx-auto px-4 md:px-6 text-center">
+                <div class="max-w-2xl mx-auto">
+                    <span class="text-brand-primary font-bold tracking-widest uppercase text-xs mb-3 block">Stay Connected</span>
+                    <h2 class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-4">Don't Miss Special Promos</h2>
+                    <p class="text-slate-500 mb-10 text-lg font-light">Get the latest product info and exclusive discounts directly to your email.</p>
+                    <form class="relative max-w-lg mx-auto flex items-center group">
+                        <i data-lucide="mail" class="absolute left-6 w-5 h-5 text-gray-400 group-focus-within:text-brand-primary transition-colors"></i>
+                        <input type="email" placeholder="Enter your email address" class="w-full pl-14 pr-36 py-4 rounded-full border border-gray-200 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-brand-primary/10 focus:border-brand-primary outline-none transition-all shadow-sm text-sm font-medium placeholder-gray-400">
+                        <button class="absolute right-2 top-2 bottom-2 bg-slate-900 text-white px-6 rounded-full font-bold hover:bg-brand-primary transition-colors shadow-md text-xs sm:text-sm">Subscribe</button>
+                    </form>
+                    <p class="text-[10px] text-gray-400 mt-4">We respect your privacy. No spam, ever.</p>
+                </div>
+            </div>
+        </section>
+        <section class="py-12 bg-white">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-x-0 md:divide-x divide-gray-100">
+                    <div class="flex items-center justify-center gap-4 px-2">
+                        <div class="w-12 h-12 bg-brand-soft rounded-full flex items-center justify-center text-brand-primary flex-shrink-0"><i data-lucide="truck" class="w-6 h-6"></i></div>
+                        <div><h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight">Fast Delivery</h4><p class="text-[10px] md:text-xs text-slate-500 mt-0.5">24h Jabodetabek*</p></div>
+                    </div>
+                    <div class="flex items-center justify-center gap-4 px-2">
+                        <div class="w-12 h-12 bg-brand-soft rounded-full flex items-center justify-center text-brand-primary flex-shrink-0"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
+                        <div><h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight">Official Warranty</h4><p class="text-[10px] md:text-xs text-slate-500 mt-0.5">100% Original</p></div>
+                    </div>
+                    <div class="flex items-center justify-center gap-4 px-2">
+                        <div class="w-12 h-12 bg-brand-soft rounded-full flex items-center justify-center text-brand-primary flex-shrink-0"><i data-lucide="headphones" class="w-6 h-6"></i></div>
+                        <div><h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight">24/7 Support</h4><p class="text-[10px] md:text-xs text-slate-500 mt-0.5">Expert Consultation</p></div>
+                    </div>
+                    <div class="flex items-center justify-center gap-4 px-2">
+                        <div class="w-12 h-12 bg-brand-soft rounded-full flex items-center justify-center text-brand-primary flex-shrink-0"><i data-lucide="credit-card" class="w-6 h-6"></i></div>
+                        <div><h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight">Secure Payment</h4><p class="text-[10px] md:text-xs text-slate-500 mt-0.5">100% Safe Transaction</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
     @push('scripts')
         <script>
