@@ -77,7 +77,7 @@
                                 @else
                                     <div class="px-4 py-3 text-center">
                                         <p class="text-xs text-gray-500 mb-3">{{ __('Login to access your account') }}</p>
-                                        <a href="{{ route('login') }}" class="block w-full bg-slate-900 text-white text-xs font-bold py-2 rounded hover:bg-brand-primary transition mb-2 text-center">{{ __('LOGIN') }}</a>
+                                        <a href="{{ route('login') }}" class="block w-full bg-brand-primary text-white text-xs font-bold py-2 rounded hover:bg-slate-900 transition mb-2 text-center">{{ __('LOGIN') }}</a>
                                         <a href="{{ route('register') }}" class="block w-full border border-gray-300 text-slate-900 text-xs font-bold py-2 rounded hover:border-slate-900 transition text-center">{{ __('REGISTER') }}</a>
                                     </div>
                                 @endauth
@@ -294,6 +294,7 @@
                             <div class="bg-white text-slate-800 shadow-xl rounded-lg border border-gray-100 overflow-hidden py-2 mt-0">
                                 <a href="{{ route('faqs.index') }}" class="flex items-center gap-3 px-6 py-3 text-sm font-bold hover:bg-gray-50 hover:text-brand-primary transition group/item"><i data-lucide="help-circle" class="w-4 h-4 text-gray-400 group-hover/item:text-brand-primary"></i> {{ __('FAQ') }}</a>
                                 <a href="{{ route('warranty-claim') }}" class="flex items-center gap-3 px-6 py-3 text-sm font-bold hover:bg-gray-50 hover:text-brand-primary transition group/item"><i data-lucide="shield-check" class="w-4 h-4 text-gray-400 group-hover/item:text-brand-primary"></i> {{ __('Warranty Claim') }}</a>
+                                <a href="{{ route('warranty-claim.check') }}" class="flex items-center gap-3 px-6 py-3 text-sm font-bold hover:bg-gray-50 hover:text-aiwaRed transition group/item"><i data-lucide="search" class="w-4 h-4 text-gray-400 group-hover/item:text-aiwaRed"></i> {{ __('Claim Status') }}</a>
                             </div>
                         </div>
                     </div>
