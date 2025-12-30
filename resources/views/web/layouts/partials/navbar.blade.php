@@ -218,36 +218,64 @@
                                     </div>
                                 </div>
 
-                                {{-- COL 2: NEW ARRIVAL (Static Fallback / Dynamic Check) --}}
                                 <div class="col-span-3">
-                                    <h3 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">{{ __('New Arrival') }}</h3>
-                                    {{-- Cek jika variable ada (Optional), jika tidak tampilkan static --}}
-                                    <a href="#" class="group/card block h-full">
-                                        <div class="bg-gray-50 rounded-2xl p-6 h-48 flex items-center justify-center relative overflow-hidden mb-4 border border-gray-100 group-hover/card:border-brand-primary/30 transition">
-                                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white rounded-full shadow-sm z-0"></div>
-                                            <img src="https://images.unsplash.com/photo-1563823251954-c81b2195dfa6?q=80&w=2072&auto=format&fit=crop" class="w-40 max-h-40 object-contain relative z-10 drop-shadow-xl transform group-hover/card:scale-110 transition duration-500" alt="New Arrival">
-                                            <div class="absolute top-4 left-4 bg-black text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">{{ __('New') }}</div>
+                                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">{{ __('New Arrival') }}</h3>
+                                    
+                                    @if(isset($newArrivalProduct) && $newArrivalProduct)
+                                        <a href="{{ route('products.show', $newArrivalProduct->slug) }}" class="group/card block h-full">
+                                            <div class="bg-gray-50 rounded-2xl p-6 h-64 flex items-center justify-center relative overflow-hidden mb-4 border border-gray-100 group-hover/card:border-brand-primary/30 transition">
+                                                {{-- Circle Decor --}}
+                                                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-white rounded-full shadow-sm z-0"></div>
+                                                
+                                                <img src="{{ $newArrivalProduct->thumbnail ? asset('storage/'.$newArrivalProduct->thumbnail) : asset('assets/images/placeholder.png') }}" 
+                                                     class="w-48 max-h-48 object-contain relative z-10 drop-shadow-xl transform group-hover/card:scale-110 transition duration-500 mix-blend-multiply" 
+                                                     alt="{{ $newArrivalProduct->name }}">
+                                                
+                                                <div class="absolute top-4 left-4 bg-brand-primary text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">{{ __('New') }}</div>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-bold text-slate-900 group-hover/card:text-brand-primary transition line-clamp-1">
+                                                    {{ $newArrivalProduct->name }}
+                                                </h4>
+                                                <p class="text-sm text-slate-500 mt-1 line-clamp-1">
+                                                    {{ $newArrivalProduct->category ? $newArrivalProduct->category->getTranslation('name') : __('Product') }}
+                                                </p>
+                                            </div>
+                                        </a>
+                                    @else
+                                        <div class="h-64 bg-gray-50 rounded-2xl flex items-center justify-center border border-dashed border-gray-200">
+                                            <p class="text-xs text-slate-400 font-bold">{{ __('Coming Soon') }}</p>
                                         </div>
-                                        <div>
-                                            <h4 class="text-lg font-bold text-gray-900 group-hover/card:text-brand-primary transition line-clamp-1">Submersible Pro X1</h4>
-                                            <p class="text-sm text-gray-500 mt-1 line-clamp-1">Industrial Series</p>
-                                        </div>
-                                    </a>
+                                    @endif
                                 </div>
 
-                                {{-- COL 3: BEST SELLER --}}
+                                {{-- KOLOM 3: BEST SELLER (col-span-3) --}}
                                 <div class="col-span-3">
-                                    <h3 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">{{ __('Best Seller') }}</h3>
-                                    <a href="#" class="group/card block h-full">
-                                        <div class="bg-gray-50 rounded-2xl p-6 h-48 flex items-center justify-center relative overflow-hidden mb-4 border border-gray-100 group-hover/card:border-brand-primary/30 transition">
-                                            <img src="https://images.unsplash.com/photo-1574360778004-946766d61665?q=80&w=1974&auto=format&fit=crop" class="w-full h-full object-cover relative z-10 drop-shadow-xl transform group-hover/card:scale-105 transition duration-500 rounded-lg" alt="Best Seller">
-                                            <div class="absolute top-4 left-4 bg-brand-primary text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">{{ __('Hot') }}</div>
+                                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">{{ __('Best Seller') }}</h3>
+                                    
+                                    @if(isset($bestSellerProduct) && $bestSellerProduct)
+                                        <a href="{{ route('products.show', $bestSellerProduct->slug) }}" class="group/card block h-full">
+                                            <div class="bg-gray-50 rounded-2xl p-6 h-64 flex items-center justify-center relative overflow-hidden mb-4 border border-gray-100 group-hover/card:border-brand-primary/30 transition">
+                                                <img src="{{ $bestSellerProduct->thumbnail ? asset('storage/'.$bestSellerProduct->thumbnail) : asset('assets/images/placeholder.png') }}" 
+                                                     class="w-full h-full object-contain relative z-10 drop-shadow-xl transform group-hover/card:scale-105 transition duration-500 mix-blend-multiply" 
+                                                     alt="{{ $bestSellerProduct->name }}">
+                                                
+                                                <div class="absolute top-4 left-4 bg-brand-dark text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">{{ __('Hot') }}</div>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-bold text-slate-900 group-hover/card:text-brand-primary transition line-clamp-1">
+                                                    {{ $bestSellerProduct->name }}
+                                                </h4>
+                                                <p class="text-sm text-slate-500 mt-1 line-clamp-1">
+                                                    {{ $bestSellerProduct->category ? $bestSellerProduct->category->getTranslation('name') : __('Product') }}
+                                                </p>
+                                            </div>
+                                        </a>
+                                    @else
+                                        <div class="h-64 bg-gray-50 rounded-2xl flex items-center justify-center border border-dashed border-gray-200">
+                                            <p class="text-xs text-slate-400 font-bold">{{ __('Coming Soon') }}</p>
                                         </div>
-                                        <div>
-                                            <h4 class="text-lg font-bold text-gray-900 group-hover/card:text-brand-primary transition line-clamp-1">Centrifugal Heavy Duty</h4>
-                                            <p class="text-sm text-gray-500 mt-1 line-clamp-1">Water Supply</p>
-                                        </div>
-                                    </a>
+                                    @endif
                                 </div>
 
                                 {{-- COL 4: PROMO BANNER --}}

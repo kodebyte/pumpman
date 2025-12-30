@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Client;
 use App\Models\HeroBanner;
 use App\Models\Post;
 use App\Models\Product;
@@ -40,14 +41,20 @@ class HomeController extends Controller
                         ->get();
 
         $productHighlight = ProductHighlight::isActive()
-                                ->latest()->first();
+                                ->latest()
+                                ->first();
+
+        $trustedClients = Client::active()
+                                ->sortByOrder()
+                                ->get();
 
         return view('web.pages.main.home', compact(
             'banners', 
             'featuredCategories',
             'featuredProducts', 
             'latestPosts',
-            'productHighlight'
+            'productHighlight',
+            'trustedClients'
         ));
     }
 }

@@ -99,8 +99,8 @@
         <div class="container mx-auto px-4 md:px-6">
             <div class="flex justify-between items-end mb-10">
                 <div>
-                    <span class="text-brand-primary font-bold tracking-widest uppercase text-xs mb-2 block">Browse Collections</span>
-                    <h2 class="text-2xl md:text-3xl font-display font-bold text-slate-900">Popular Categories</h2>
+                    <span class="text-brand-primary font-bold tracking-widest uppercase text-xs mb-2 block">{{ __('Browse Collections') }}</span>
+                    <h2 class="text-2xl md:text-3xl font-display font-bold text-slate-900">{{ __('Popular Categories') }}</h2>
                 </div>
                 
                 <div class="flex gap-3">
@@ -241,33 +241,41 @@
         </div>
     </section>
     
-    <section class="py-12 border-t border-gray-50 bg-white">
-        <div class="container mx-auto px-4 md:px-6">
-            <p class="text-center text-sm font-bold text-gray-400 uppercase tracking-widest mb-8">Trusted by 500+ Industries & Companies</p>
-            <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-                <div class="flex items-center gap-2 group cursor-default">
-                    <div class="p-2 bg-gray-100 rounded-lg group-hover:bg-blue-50 transition"><i data-lucide="building-2" class="w-8 h-8 text-slate-400 group-hover:text-blue-600"></i></div>
-                    <span class="font-black text-xl text-slate-300 group-hover:text-slate-600">PDAM JAYA</span>
-                </div>
-                <div class="flex items-center gap-2 group cursor-default">
-                    <div class="p-2 bg-gray-100 rounded-lg group-hover:bg-orange-50 transition"><i data-lucide="factory" class="w-8 h-8 text-slate-400 group-hover:text-orange-600"></i></div>
-                    <span class="font-black text-xl text-slate-300 group-hover:text-slate-600">INDOFOOD</span>
-                </div>
-                <div class="flex items-center gap-2 group cursor-default">
-                    <div class="p-2 bg-gray-100 rounded-lg group-hover:bg-red-50 transition"><i data-lucide="hard-hat" class="w-8 h-8 text-slate-400 group-hover:text-red-600"></i></div>
-                    <span class="font-black text-xl text-slate-300 group-hover:text-slate-600">WIKA KARYA</span>
-                </div>
-                <div class="flex items-center gap-2 group cursor-default">
-                    <div class="p-2 bg-gray-100 rounded-lg group-hover:bg-green-50 transition"><i data-lucide="droplets" class="w-8 h-8 text-slate-400 group-hover:text-green-600"></i></div>
-                    <span class="font-black text-xl text-slate-300 group-hover:text-slate-600">UNILEVER</span>
-                </div>
-                 <div class="flex items-center gap-2 group cursor-default">
-                    <div class="p-2 bg-gray-100 rounded-lg group-hover:bg-purple-50 transition"><i data-lucide="hotel" class="w-8 h-8 text-slate-400 group-hover:text-purple-600"></i></div>
-                    <span class="font-black text-xl text-slate-300 group-hover:text-slate-600">ASTON HOTEL</span>
+    {{-- TRUSTED BY SECTION --}}
+    @if(isset($trustedClients) && $trustedClients->count() > 0)
+        <section class="py-16 border-t border-gray-50 bg-white">
+            <div class="container mx-auto px-4 md:px-6">
+                <p class="text-center text-sm font-bold text-gray-400 uppercase tracking-widest mb-12">
+                    {{ __('Trusted by Leading Industries & Companies') }}
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-x-10 gap-y-8">
+                    @foreach($trustedClients as $client)
+                        {{-- Logika Wrapper: Gunakan <a> jika ada URL, gunakan <div> jika tidak --}}
+                        @if($client->url)
+                            <a href="{{ $client->url }}" target="_blank" rel="nofollow" class="flex items-center gap-3 group cursor-pointer opacity-70 hover:opacity-100 transition-all duration-300">
+                        @else
+                            <div class="flex items-center gap-3 group cursor-default opacity-70 hover:opacity-100 transition-all duration-300">
+                        @endif
+
+                            {{-- 1. Container Gambar (Kotak) --}}
+                            <div class="p-2.5 bg-gray-50 rounded-xl border border-gray-100 group-hover:bg-white group-hover:shadow-sm group-hover:border-brand-primary/30 transition-all duration-300">
+                                <img src="{{ $client->logo_url }}" 
+                                     alt="{{ $client->name }}" 
+                                     class="w-8 h-8 md:w-10 md:h-10 object-contain mix-blend-multiply grayscale group-hover:grayscale-0 transition-all duration-300">
+                            </div>
+
+                            {{-- 2. Teks Nama --}}
+                            <span class="font-black text-lg md:text-xl text-slate-300 uppercase tracking-tight group-hover:text-slate-700 transition-colors duration-300">
+                                {{ $client->name }}
+                            </span>
+
+                        @if($client->url) </a> @else </div> @endif
+                    @endforeach
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <section class="py-10 bg-white">
         <div class="container mx-auto px-4 md:px-6">

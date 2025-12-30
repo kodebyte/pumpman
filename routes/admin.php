@@ -63,7 +63,9 @@ Route::prefix('internal')->name('admin.')->group(function () {
             'careers' => Admin\CareerController::class,
             'faqs' => Admin\FaqController::class,
             'orders' => Admin\OrderController::class,
-            'couriers' => Admin\CourierController::class
+            'couriers' => Admin\CourierController::class,
+            'clients' => Admin\ClientController::class,
+            'whatsapp' => Admin\WhatsappContactController::class,
         ]);
     });
 });

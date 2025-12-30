@@ -33,6 +33,13 @@
                 <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg> Marketplaces
             </x-admin.nav-link>
 
+            <x-admin.nav-link :href="route('admin.clients.index')" :active="request()->routeIs('admin.clients.*')">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+                {{ __('Clients') }}
+            </x-admin.nav-link>
+
             <div class="pt-4 pb-1">
                 <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Sales & Transactions</p>
             </div>
@@ -109,6 +116,13 @@
 
             <x-admin.nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                 <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg> Customers
+            </x-admin.nav-link>
+
+            <x-admin.nav-link :href="route('admin.whatsapp.index')" :active="request()->routeIs('admin.whatsapp.*')">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                WhatsApp Contact
             </x-admin.nav-link>
 
             <x-admin.nav-link :href="route('admin.warranty-claims.index')" :active="request()->routeIs('admin.warranty-claims.*')">

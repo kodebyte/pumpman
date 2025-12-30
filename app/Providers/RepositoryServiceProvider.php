@@ -106,6 +106,16 @@ class RepositoryServiceProvider extends ServiceProvider
         \App\Contracts\SeoSettingRepositoryInterface::class,
         \App\Repositories\SeoSettingRepository::class
         );
+
+        $this->app->bind(
+        \App\Contracts\ClientRepositoryInterface::class, 
+        \App\Repositories\ClientRepository::class
+        );
+
+        $this->app->bind(
+        \App\Contracts\WhatsappContactRepositoryInterface::class, 
+        \App\Repositories\WhatsappContactRepository::class
+        );
     }
 
     /**

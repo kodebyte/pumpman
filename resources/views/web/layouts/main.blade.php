@@ -63,7 +63,7 @@
             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
             x-transition:leave-end="opacity-0 scale-90 translate-y-2"
             @click.outside="isOpen = false"
-            class="absolute bottom-20 right-0 w-[300px] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+            class="absolute bottom-20 right-0 w-[300px] bg-white rounded-2xl shadow-2xl overflow-hidden">
             
             <div class="bg-brand-dark p-5 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
@@ -72,48 +72,35 @@
             </div>
 
             <div class="p-4 space-y-3">
-                
-                <a href="https://wa.me/6281234567890?text=Halo%20Sales%20Pumpman" target="_blank" class="flex items-center gap-4 p-3 rounded-xl hover:bg-brand-soft/50 transition-colors group/item">
-                    <div class="relative">
-                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-                            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                        </div>
-                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+                @if(isset($whatsappContacts) && $whatsappContacts->count() > 0)
+                    @foreach($whatsappContacts as $contact)
+                        <a href="{{ $contact->whatsapp_url }}" target="_blank" class="flex items-center gap-4 p-3 rounded-xl hover:bg-brand-soft/50 transition-colors group/item">
+                            <div class="relative">
+                                {{-- Dynamic Color & Icon --}}
+                                {{-- Pastikan class warna seperti bg-green-100, text-blue-600 ter-generate oleh Tailwind --}}
+                                <div class="w-10 h-10 rounded-full bg-{{ $contact->color }}-100 flex items-center justify-center text-{{ $contact->color }}-600">
+                                    <i data-lucide="{{ $contact->icon }}" class="w-5 h-5"></i>
+                                </div>
+                                {{-- Online Indicator (Selalu hijau untuk memberi kesan aktif) --}}
+                                <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm group-hover/item:text-brand-primary transition">
+                                    {{ $contact->title }}
+                                </h4>
+                                @if($contact->subtitle)
+                                    <p class="text-xs text-slate-500">{{ $contact->subtitle }}</p>
+                                @endif
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 ml-auto group-hover/item:text-brand-primary"></i>
+                        </a>
+                    @endforeach
+                @else
+                    {{-- Fallback jika belum ada data --}}
+                    <div class="text-center py-4">
+                        <p class="text-xs text-gray-400">{{ __('No contacts available yet.') }}</p>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 text-sm group-hover/item:text-brand-primary transition">Sales Support</h4>
-                        <p class="text-xs text-slate-500">Order & Price Inquiry</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 ml-auto group-hover/item:text-brand-primary"></i>
-                </a>
-
-                <a href="https://wa.me/6281234567891?text=Halo%20Engineer%20Pumpman" target="_blank" class="flex items-center gap-4 p-3 rounded-xl hover:bg-brand-soft/50 transition-colors group/item">
-                    <div class="relative">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                            <i data-lucide="wrench" class="w-5 h-5"></i>
-                        </div>
-                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 text-sm group-hover/item:text-brand-primary transition">Technical Engineer</h4>
-                        <p class="text-xs text-slate-500">Spec Calculation</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 ml-auto group-hover/item:text-brand-primary"></i>
-                </a>
-
-                <a href="https://wa.me/6281234567892?text=Halo%20Admin" target="_blank" class="flex items-center gap-4 p-3 rounded-xl hover:bg-brand-soft/50 transition-colors group/item">
-                    <div class="relative">
-                        <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
-                            <i data-lucide="shield-check" class="w-5 h-5"></i>
-                        </div>
-                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-gray-400 border-2 border-white rounded-full"></div>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 text-sm group-hover/item:text-brand-primary transition">After Sales</h4>
-                        <p class="text-xs text-slate-500">Warranty & Spareparts</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 ml-auto group-hover/item:text-brand-primary"></i>
-                </a>
+                @endif
             </div>
 
             <div class="bg-gray-50 p-3 text-center border-t border-gray-100">
@@ -143,31 +130,35 @@
 
     <script>
         let lastScroll = 0;
-        const header = document.getElementById('navbar'); // Pastikan ID ini sesuai dengan di navbar.blade.php
-        const scrollThreshold = 15; // Batas toleransi scroll (px) agar tidak sensitif/flicker
+        const header = document.getElementById('navbar'); // ID navbar
+        const scrollThreshold = 10; // Toleransi sensitivitas
 
         if (header) {
             window.addEventListener('scroll', () => {
                 const currentScroll = window.pageYOffset;
-                
-                // 0. Abaikan jika scroll negatif (efek bounce di iOS/Mac)
+                // Ambil tinggi navbar secara dinamis (termasuk top bar jika ada)
+                const headerHeight = header.offsetHeight; 
+
+                // 0. Abaikan scroll negatif (bounce effect iOS)
                 if (currentScroll < 0) return;
 
-                // 1. Logic Delta: Hanya bereaksi jika selisih scroll > threshold
-                // Ini mencegah navbar naik-turun saat user hanya scroll sedikit
+                // 1. Logic Delta: Abaikan jika scroll terlalu sedikit (micro-scroll)
                 if (Math.abs(currentScroll - lastScroll) < scrollThreshold) {
                     return;
                 }
 
-                // 2. Di paling atas: Selalu Tampilkan & Reset Posisi
-                if (currentScroll <= 50) { 
+                // 2. LOGIC BARU: BUFFER ZONE
+                // Jika posisi scroll masih kurang dari tinggi navbar (plus buffer sedikit),
+                // PAKSA navbar tetap terlihat (translateY 0).
+                // Ini mencegah navbar hilang saat user masih di area paling atas (Top Header).
+                if (currentScroll <= (headerHeight + 20)) { 
                     header.style.transform = "translateY(0)";
                 }
-                // 3. Scroll ke Bawah: Sembunyikan (Naik ke atas -100%)
+                // 3. Scroll ke Bawah DAN sudah melewati tinggi navbar: Sembunyikan
                 else if (currentScroll > lastScroll) {
                     header.style.transform = "translateY(-100%)"; 
                 } 
-                // 4. Scroll ke Atas: Tampilkan (Turun ke posisi 0)
+                // 4. Scroll ke Atas: Tampilkan
                 else {
                     header.style.transform = "translateY(0)"; 
                 }

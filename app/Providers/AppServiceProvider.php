@@ -8,11 +8,10 @@ use App\Models\Marketplace;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\WarrantyClaim;
+use App\Models\WhatsappContact;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
@@ -100,7 +99,11 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('unreadMessagesCount', app(ContactMessageRepositoryInterface::class)->getUnreadCount());
             });
         }
-        
+
+        if (Schema::hasTable('whatsapp_contacts')) {
+            $whatsappContacts = WhatsappContact::active()->get();
+            View::share('whatsappContacts', $whatsappContacts);
+        }
         
         // $proxyHost = Request::header('X-Forwarded-Host') ?? Request::header('X-Original-Host');
         // if ($proxyHost && str_contains($proxyHost, 'ngrok')) {
