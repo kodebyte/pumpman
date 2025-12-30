@@ -74,31 +74,6 @@
                     </div>
 
                     <div class="space-y-6">
-                        <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6 sticky top-6">
-                            <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Status</h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <x-admin.input-label for="is_active" value="Visibility" />
-                                    <select name="is_active" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">
-                                        <option value="1" {{ old('is_active', $career->is_active) == true ? 'selected' : '' }}>Open</option>
-                                        <option value="0" {{ old('is_active', $career->is_active) == false ? 'selected' : '' }}>Closed</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <x-admin.input-label for="closing_date" value="Closing Date" />
-                                    <input type="date" name="closing_date" value="{{ old('closing_date', $career->closing_date ? $career->closing_date->format('Y-m-d') : '') }}" class="block w-full border-gray-300 rounded-lg shadow-sm mt-1 text-sm">
-                                </div>
-                                <div>
-                                    <x-admin.input-label for="order" value="Sort Order" />
-                                    <x-admin.text-input type="number" name="order" :value="old('order', $career->order)" class="w-full" />
-                                </div>
-                            </div>
-                            <div class="mt-6 flex flex-col gap-3">
-                                <x-admin.primary-button class="justify-center bg-gray-800 hover:bg-gray-700">Update Job</x-admin.primary-button>
-                                <a href="{{ route('admin.careers.index') }}" class="text-center text-sm text-gray-600 hover:text-gray-900 underline">Cancel</a>
-                            </div>
-                        </div>
-
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
                             <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Job Details</h3>
                             <div class="space-y-4">
@@ -119,6 +94,31 @@
                                     <x-admin.input-label for="salary_range" value="Salary Range" />
                                     <x-admin.text-input name="salary_range" :value="old('salary_range', $career->salary_range)" class="w-full text-sm" />
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6 sticky top-6">
+                            <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Publishing</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <x-admin.input-label for="is_active" value="Visibility" />
+                                    <select name="is_active" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">
+                                        <option value="1" {{ old('is_active', $career->is_active) == true ? 'selected' : '' }}>Open</option>
+                                        <option value="0" {{ old('is_active', $career->is_active) == false ? 'selected' : '' }}>Closed</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <x-admin.input-label for="closing_date" value="Closing Date" />
+                                    <input type="date" name="closing_date" value="{{ old('closing_date', $career->closing_date ? $career->closing_date->format('Y-m-d') : '') }}" class="block w-full border-gray-300 rounded-lg shadow-sm mt-1 text-sm">
+                                </div>
+                                <div>
+                                    <x-admin.input-label for="order" value="Sort Order" />
+                                    <x-admin.text-input type="number" name="order" :value="old('order', $career->order)" class="w-full" />
+                                </div>
+                            </div>
+                            <div class="mt-6 flex flex-col gap-3">
+                                <x-admin.primary-button class="justify-center bg-gray-800 hover:bg-gray-700">Update Job</x-admin.primary-button>
+                                <a href="{{ route('admin.careers.index') }}" class="text-center text-sm text-gray-600 hover:text-gray-900 underline">Cancel</a>
                             </div>
                         </div>
                     </div>

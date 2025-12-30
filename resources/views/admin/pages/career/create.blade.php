@@ -76,8 +76,32 @@
                     </div>
 
                     <div class="space-y-6">
+                        <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
+                            <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Job Details</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <x-admin.input-label for="location" value="Location" />
+                                    <x-admin.text-input name="location" :value="old('location')" required class="w-full text-sm" />
+                                    <x-admin.input-error :messages="$errors->get('location')" />
+                                </div>
+                                <div>
+                                    <x-admin.input-label for="type" value="Employment Type" />
+                                    <select name="type" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">
+                                        <option value="Full-time">Full-time</option>
+                                        <option value="Part-time">Part-time</option>
+                                        <option value="Contract">Contract</option>
+                                        <option value="Internship">Internship</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <x-admin.input-label for="salary_range" value="Salary Range (Optional)" />
+                                    <x-admin.text-input name="salary_range" :value="old('salary_range')" class="w-full text-sm" />
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6 sticky top-6">
-                            <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Status</h3>
+                            <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Publishing</h3>
                             <div class="space-y-4">
                                 <div>
                                     <x-admin.input-label for="is_active" value="Visibility" />
@@ -102,32 +126,7 @@
                                 <a href="{{ route('admin.careers.index') }}" class="text-center text-sm text-gray-600 hover:text-gray-900 underline">Cancel</a>
                             </div>
                         </div>
-
-                        <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6">
-                            <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Job Details</h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <x-admin.input-label for="location" value="Location" />
-                                    <x-admin.text-input name="location" :value="old('location')" required class="w-full text-sm" />
-                                    <x-admin.input-error :messages="$errors->get('location')" />
-                                </div>
-                                <div>
-                                    <x-admin.input-label for="type" value="Employment Type" />
-                                    <select name="type" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 mt-1 text-sm">
-                                        <option value="Full-time">Full-time</option>
-                                        <option value="Part-time">Part-time</option>
-                                        <option value="Contract">Contract</option>
-                                        <option value="Internship">Internship</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <x-admin.input-label for="salary_range" value="Salary Range (Optional)" />
-                                    <x-admin.text-input name="salary_range" :value="old('salary_range')" class="w-full text-sm" />
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
                 </div>
             </form>
         </div>

@@ -77,7 +77,7 @@
 
                     <div class="space-y-6">
                         <div class="bg-white shadow-sm sm:rounded-xl border border-gray-100 p-6 sticky top-6">
-                            <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Control</h3>
+                            <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Settings</h3>
                             
                             <div class="space-y-4">
                                 <div>
