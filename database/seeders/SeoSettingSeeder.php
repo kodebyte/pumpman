@@ -15,12 +15,12 @@ class SeoSettingSeeder extends Seeder
                 'page'       => 'Halaman Utama',
                 'page_route' => 'home',
                 'meta_title' => [
-                    'id' => 'Home - Official Aiwa Indonesia',
-                    'en' => 'Home - Official Aiwa Indonesia',
+                    'id' => 'Home - Official Pumpman Indonesia',
+                    'en' => 'Home - Official Pumpman Indonesia',
                 ],
                 'meta_description' => [
-                    'id' => 'Pusat belanja elektronik Aiwa resmi. Temukan audio, TV, dan perlengkapan elektronik berkualitas.',
-                    'en' => 'Official Aiwa Indonesia electronics store. Discover quality audio, TV, and electronic appliances.',
+                    'id' => 'Solusi pompa air terpercaya untuk industri dan rumah tangga. Temukan berbagai jenis pompa berkualitas tinggi dari Pumpman Indonesia.',
+                    'en' => 'Trusted water pump solutions for industrial and residential use. Discover high-quality pumps from Pumpman Indonesia.',
                 ],
             ],
 
@@ -29,12 +29,12 @@ class SeoSettingSeeder extends Seeder
                 'page'       => 'FAQ / Bantuan',
                 'page_route' => 'faqs.index',
                 'meta_title' => [
-                    'id' => 'Pertanyaan Umum (FAQ) - Aiwa Indonesia',
-                    'en' => 'Frequently Asked Questions (FAQ) - Aiwa Indonesia',
+                    'id' => 'Pertanyaan Umum (FAQ) - Pumpman Indonesia',
+                    'en' => 'Frequently Asked Questions (FAQ) - Pumpman Indonesia',
                 ],
                 'meta_description' => [
-                    'id' => 'Temukan jawaban atas pertanyaan umum mengenai produk, garansi, dan layanan Aiwa.',
-                    'en' => 'Find answers to common questions regarding Aiwa products, warranties, and services.',
+                    'id' => 'Temukan jawaban atas pertanyaan umum mengenai spesifikasi pompa, instalasi, garansi, dan layanan Pumpman.',
+                    'en' => 'Find answers to common questions regarding pump specifications, installation, warranties, and Pumpman services.',
                 ],
             ],
 
@@ -43,12 +43,12 @@ class SeoSettingSeeder extends Seeder
                 'page'       => 'Lokasi Toko',
                 'page_route' => 'stores.index',
                 'meta_title' => [
-                    'id' => 'Lokasi Toko & Distributor - Aiwa Indonesia',
-                    'en' => 'Store Locator & Distributors - Aiwa Indonesia',
+                    'id' => 'Lokasi Toko & Distributor - Pumpman Indonesia',
+                    'en' => 'Store Locator & Distributors - Pumpman Indonesia',
                 ],
                 'meta_description' => [
-                    'id' => 'Cari toko dan distributor resmi Aiwa terdekat di kota Anda.',
-                    'en' => 'Find the nearest official Aiwa stores and distributors in your city.',
+                    'id' => 'Cari dealer dan distributor resmi pompa Pumpman terdekat di kota Anda.',
+                    'en' => 'Find the nearest official Pumpman dealers and distributors in your city.',
                 ],
             ],
 
@@ -57,12 +57,12 @@ class SeoSettingSeeder extends Seeder
                 'page'       => 'Tentang Kami',
                 'page_route' => 'pages.about',
                 'meta_title' => [
-                    'id' => 'Tentang Kami - Sejarah Aiwa Indonesia',
-                    'en' => 'About Us - Aiwa Indonesia History',
+                    'id' => 'Tentang Kami - Sejarah Pumpman Indonesia',
+                    'en' => 'About Us - Pumpman Indonesia History',
                 ],
                 'meta_description' => [
-                    'id' => 'Mengenal lebih dekat sejarah, visi, dan misi Aiwa dalam menghadirkan teknologi audio terbaik.',
-                    'en' => 'Get to know the history, vision, and mission of Aiwa in delivering the best audio technology.',
+                    'id' => 'Mengenal lebih dekat visi dan misi Pumpman dalam menghadirkan solusi teknologi pemompaan air terbaik dan efisien.',
+                    'en' => 'Get to know Pumpman\'s vision and mission in delivering the best and efficient water pumping technology solutions.',
                 ],
             ],
 
@@ -71,12 +71,12 @@ class SeoSettingSeeder extends Seeder
                 'page'       => 'Hubungi Kami',
                 'page_route' => 'pages.contact',
                 'meta_title' => [
-                    'id' => 'Hubungi Kami - Layanan Pelanggan Aiwa',
-                    'en' => 'Contact Us - Aiwa Customer Service',
+                    'id' => 'Hubungi Kami - Layanan Pelanggan Pumpman',
+                    'en' => 'Contact Us - Pumpman Customer Service',
                 ],
                 'meta_description' => [
-                    'id' => 'Butuh bantuan? Hubungi layanan pelanggan Aiwa Indonesia melalui email atau WhatsApp.',
-                    'en' => 'Need help? Contact Aiwa Indonesia customer service via email or WhatsApp.',
+                    'id' => 'Butuh konsultasi spesifikasi pompa? Hubungi engineer dan layanan pelanggan Pumpman Indonesia melalui email atau WhatsApp.',
+                    'en' => 'Need pump specification consultation? Contact Pumpman Indonesia engineers and customer service via email or WhatsApp.',
                 ],
             ],
 
@@ -85,26 +85,26 @@ class SeoSettingSeeder extends Seeder
                 'page'       => 'Cek Status Garansi',
                 'page_route' => 'warranty-claim.check',
                 'meta_title' => [
-                    'id' => 'Cek Status Klaim Garansi - Aiwa Service',
-                    'en' => 'Check Warranty Claim Status - Aiwa Service',
+                    'id' => 'Cek Status Klaim Garansi - Pumpman Service',
+                    'en' => 'Check Warranty Claim Status - Pumpman Service',
                 ],
                 'meta_description' => [
-                    'id' => 'Pantau status perbaikan dan klaim garansi produk Aiwa Anda di sini.',
-                    'en' => 'Track your Aiwa product repair and warranty claim status here.',
+                    'id' => 'Pantau status perbaikan dan klaim garansi produk pompa Pumpman Anda di sini.',
+                    'en' => 'Track your Pumpman pump repair and warranty claim status here.',
                 ],
             ],
 
             // 7. WARRANTY CLAIM FORM (Route: warranty-claim)
             [
                 'page'       => 'Form Klaim Garansi',
-                'page_route' => 'warranty-claim', // route name asli (bukan URL)
+                'page_route' => 'warranty-claim',
                 'meta_title' => [
-                    'id' => 'Formulir Klaim Garansi - Aiwa Indonesia',
-                    'en' => 'Warranty Claim Form - Aiwa Indonesia',
+                    'id' => 'Formulir Klaim Garansi - Pumpman Indonesia',
+                    'en' => 'Warranty Claim Form - Pumpman Indonesia',
                 ],
                 'meta_description' => [
-                    'id' => 'Ajukan klaim garansi produk Aiwa Anda secara online dengan mudah.',
-                    'en' => 'Submit your Aiwa product warranty claim online easily.',
+                    'id' => 'Ajukan klaim garansi produk pompa Pumpman Anda secara online dengan mudah.',
+                    'en' => 'Submit your Pumpman pump warranty claim online easily.',
                 ],
             ],
 
@@ -113,8 +113,8 @@ class SeoSettingSeeder extends Seeder
                 'page'       => 'Klaim Garansi Berhasil',
                 'page_route' => 'warranty-claim.success',
                 'meta_title' => [
-                    'id' => 'Pengajuan Berhasil - Aiwa Service Center',
-                    'en' => 'Submission Successful - Aiwa Service Center',
+                    'id' => 'Pengajuan Berhasil - Pumpman Service Center',
+                    'en' => 'Submission Successful - Pumpman Service Center',
                 ],
                 'meta_description' => [
                     'id' => 'Terima kasih, pengajuan klaim garansi Anda telah kami terima.',
@@ -127,12 +127,12 @@ class SeoSettingSeeder extends Seeder
                 'page'       => 'Keranjang Belanja',
                 'page_route' => 'cart.index',
                 'meta_title' => [
-                    'id' => 'Keranjang Belanja - Aiwa Store',
-                    'en' => 'Shopping Cart - Aiwa Store',
+                    'id' => 'Keranjang Belanja - Pumpman Store',
+                    'en' => 'Shopping Cart - Pumpman Store',
                 ],
                 'meta_description' => [
-                    'id' => 'Lihat daftar produk di keranjang belanja Anda sebelum checkout.',
-                    'en' => 'View items in your shopping cart before checkout.',
+                    'id' => 'Lihat daftar pompa dan sparepart di keranjang belanja Anda sebelum checkout.',
+                    'en' => 'View pumps and spare parts in your shopping cart before checkout.',
                 ],
             ],
 
@@ -141,17 +141,16 @@ class SeoSettingSeeder extends Seeder
                 'page'       => 'Halaman Checkout',
                 'page_route' => 'cart.checkout',
                 'meta_title' => [
-                    'id' => 'Checkout Aman - Aiwa Indonesia',
-                    'en' => 'Secure Checkout - Aiwa Indonesia',
+                    'id' => 'Checkout Aman - Pumpman Indonesia',
+                    'en' => 'Secure Checkout - Pumpman Indonesia',
                 ],
                 'meta_description' => [
-                    'id' => 'Selesaikan pembayaran pesanan Anda dengan aman dan cepat.',
-                    'en' => 'Complete your order payment securely and quickly.',
+                    'id' => 'Selesaikan pembayaran pesanan pompa Anda dengan aman dan cepat.',
+                    'en' => 'Complete your pump order payment securely and quickly.',
                 ],
             ],
 
             // 11. CHECKOUT SUCCESS (Route: checkout.success)
-            // Halaman "Terima Kasih" setelah order dibuat (tapi belum bayar/midtrans)
             [
                 'page'       => 'Order Berhasil Dibuat',
                 'page_route' => 'checkout.success',
@@ -166,7 +165,6 @@ class SeoSettingSeeder extends Seeder
             ],
 
             // 12. PAYMENT SUCCESS FINAL (Route: payment.success)
-            // Halaman setelah sukses bayar
             [
                 'page'       => 'Pembayaran Berhasil',
                 'page_route' => 'payment.success',
@@ -175,49 +173,50 @@ class SeoSettingSeeder extends Seeder
                     'en' => 'Payment Successful - Thank You',
                 ],
                 'meta_description' => [
-                    'id' => 'Pembayaran Anda telah dikonfirmasi. Kami akan segera memproses pesanan Anda.',
-                    'en' => 'Your payment has been confirmed. We will process your order immediately.',
+                    'id' => 'Pembayaran Anda telah dikonfirmasi. Kami akan segera memproses pengiriman unit Anda.',
+                    'en' => 'Your payment has been confirmed. We will process your unit shipment immediately.',
                 ],
             ],
 
+            // 13. NEWS / POSTS (Route: posts.index)
             [
                 'page'       => 'Berita & Artikel',
                 'page_route' => 'posts.index',
                 'meta_title' => [
-                    'id' => 'Berita & Artikel - Aiwa Indonesia',
-                    'en' => 'News & Article - Aiwa Indonesia',
+                    'id' => 'Berita & Artikel Engineering - Pumpman Indonesia',
+                    'en' => 'Engineering News & Articles - Pumpman Indonesia',
                 ],
                 'meta_description' => [
-                    'id' => 'Baca berita terbaru, tips teknologi, dan artikel menarik seputar produk elektronik dan gaya hidup dari Aiwa Indonesia.',
-                    'en' => 'Read the latest news, tech tips, and interesting articles about electronic products and lifestyle from Aiwa Indonesia.',
+                    'id' => 'Baca berita terbaru, tips instalasi pompa, studi kasus engineering, dan artikel menarik seputar manajemen air dari Pumpman Indonesia.',
+                    'en' => 'Read the latest news, pump installation tips, engineering case studies, and interesting articles about water management from Pumpman Indonesia.',
                 ],
             ],
 
-            // 14. CAREERS (Route: careers)
+            // 14. CAREERS (Route: careers.index)
             [
                 'page'       => 'Karir',
                 'page_route' => 'careers.index',
                 'meta_title' => [
-                    'id' => 'Karir - Aiwa Indonesia',
-                    'en' => 'Careers - Aiwa Indonesia',
+                    'id' => 'Karir - Pumpman Indonesia',
+                    'en' => 'Careers - Pumpman Indonesia',
                 ],
                 'meta_description' => [
-                    'id' => 'Bergabunglah dengan tim Aiwa Indonesia. Temukan peluang karir menarik dan kembangkan potensi Anda bersama kami.',
-                    'en' => 'Join the Aiwa Indonesia team. Find exciting career opportunities and develop your potential with us.',
+                    'id' => 'Bergabunglah dengan tim Pumpman Indonesia. Temukan peluang karir di bidang teknik dan manajemen bersama kami.',
+                    'en' => 'Join the Pumpman Indonesia team. Find career opportunities in engineering and management with us.',
                 ],
             ],
 
-            // 15. PRODUCT CATALOG (Route: products)
+            // 15. PRODUCT CATALOG (Route: products.index)
             [
                 'page'       => 'Katalog Produk',
                 'page_route' => 'products.index',
                 'meta_title' => [
-                    'id' => 'Katalog Produk Aiwa - Aiwa Indonesia',
-                    'en' => 'Aiwa Product Catalog - Aiwa Indonesia',
+                    'id' => 'Katalog Pompa Industri - Pumpman Indonesia',
+                    'en' => 'Industrial Pump Catalog - Pumpman Indonesia',
                 ],
                 'meta_description' => [
-                    'id' => 'Jelajahi koleksi lengkap produk elektronik Aiwa mulai dari audio, TV, hingga peralatan rumah tangga berkualitas tinggi.',
-                    'en' => 'Explore the full collection of Aiwa electronic products ranging from high-quality audio, TV, to home appliances.',
+                    'id' => 'Jelajahi koleksi lengkap pompa Pumpman mulai dari pompa sentrifugal, submersible, booster, hingga pompa limbah berkualitas tinggi.',
+                    'en' => 'Explore the full collection of Pumpman pumps ranging from centrifugal, submersible, booster, to high-quality sewage pumps.',
                 ],
             ],
         ];
