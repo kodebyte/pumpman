@@ -12,7 +12,7 @@
                         <span class="text-brand-primary">{{ __('FAQ') }}</span>
                     </div>
                     <h1 class="text-3xl font-display font-bold text-slate-900 uppercase tracking-tight leading-tight">
-                        {{ __('Frequently Asked Questions') }}
+                        {{ __('FAQ') }}
                     </h1>
                 </div>
                 <p class="text-slate-500 text-sm max-w-md text-left md:text-right leading-relaxed border-l-4 border-brand-primary pl-4 md:border-l-0 md:border-r-4 md:pr-4">
@@ -42,7 +42,7 @@
                     <div class="p-8 border-b border-gray-200 bg-gray-50">
                         <h3 class="font-black text-slate-900 uppercase tracking-widest text-sm flex items-center gap-2">
                             <i data-lucide="grid" class="w-4 h-4 text-brand-primary"></i>
-                            {{ __('Topic Categories') }}
+                            {{ __('Categories') }}
                         </h3>
                     </div>
                     
@@ -71,7 +71,7 @@
                     </div>
 
                     {{-- Contact Support Teaser --}}
-                    <div class="p-6 mt-auto border-t border-gray-200 bg-white">
+                    {{-- <div class="p-6 mt-auto border-t border-gray-200 bg-white">
                         <p class="text-xs text-gray-400 mb-3 font-bold uppercase tracking-wider">{{ __('Still need help?') }}</p>
                         <a href="{{ route('pages.contact') }}" class="flex items-center gap-3 text-sm font-bold text-slate-900 hover:text-brand-primary transition group">
                             <div class="w-8 h-8 rounded-full bg-brand-dark flex items-center justify-center text-white group-hover:bg-brand-primary transition">
@@ -79,7 +79,7 @@
                             </div>
                             {{ __('Contact Support') }}
                         </a>
-                    </div>
+                    </div> --}}
                 </aside>
 
                 {{-- RIGHT: ACCORDION CONTENT --}}

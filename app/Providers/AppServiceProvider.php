@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -115,10 +117,10 @@ class AppServiceProvider extends ServiceProvider
             View::share('paymentMethods', $paymentMethods);
         }
         
-        // $proxyHost = Request::header('X-Forwarded-Host') ?? Request::header('X-Original-Host');
-        // if ($proxyHost && str_contains($proxyHost, 'ngrok')) {
-        //     URL::forceRootUrl("https://{$proxyHost}");
-        //     URL::forceScheme('https');
-        // }
+        $proxyHost = Request::header('X-Forwarded-Host') ?? Request::header('X-Original-Host');
+        if ($proxyHost && str_contains($proxyHost, 'ngrok')) {
+            URL::forceRootUrl("https://{$proxyHost}");
+            URL::forceScheme('https');
+        }
     }
 }

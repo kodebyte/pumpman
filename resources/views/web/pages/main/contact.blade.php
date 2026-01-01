@@ -15,7 +15,7 @@
                     </div>
                     {{-- STANDARDIZED TITLE --}}
                     <h1 class="text-3xl font-display font-bold text-slate-900 uppercase tracking-tight leading-tight">
-                        {{ __('Get In Touch') }}
+                        {{ __('Contact Us') }}
                     </h1>
                 </div>
                 <p class="text-slate-500 text-sm max-w-md text-left md:text-right leading-relaxed border-l-4 border-brand-primary pl-4 md:border-l-0 md:border-r-4 md:pr-4">
@@ -55,7 +55,7 @@
                         {{-- Top Info --}}
                         <div class="space-y-10">
                             <div>
-                                <h3 class="text-xs font-bold uppercase tracking-[0.2em] text-white/80 mb-2">{{ __('Headquarters') }}</h3>
+                                <h3 class="text-xs font-bold uppercase tracking-[0.2em] text-white/80 mb-2">{{ __('Head Office') }}</h3>
                                 <h2 class="text-2xl font-black uppercase leading-tight tracking-tight">
                                     {{ $contact['contact_company_name'] ?? 'PT. Pumpman Indonesia' }}
                                 </h2>
@@ -75,7 +75,7 @@
                                         <i data-lucide="phone" class="w-5 h-5"></i>
                                     </div>
                                     <div>
-                                        <span class="text-[10px] font-bold text-white/60 uppercase tracking-widest block mb-1">{{ __('Call Us') }}</span>
+                                        <span class="text-[10px] font-bold text-white/60 uppercase tracking-widest block mb-1">{{ __('Telephone') }}</span>
                                         <a href="tel:{{ $contact['contact_phone'] }}" class="text-white font-bold text-lg tracking-wide hover:underline decoration-2 underline-offset-4">
                                             {{ $contact['contact_phone'] }}
                                         </a>
@@ -117,7 +117,7 @@
                 <div class="lg:col-span-7 bg-white p-10 md:p-14">
                     <div class="mb-10">
                         <span class="text-brand-primary font-bold tracking-widest uppercase text-xs mb-2 block">{{ __('Discussion') }}</span>
-                        <h3 class="text-3xl font-black text-slate-900 mb-4">{{ __('Start a Conversation') }}</h3>
+                        <h3 class="text-3xl font-black text-slate-900 mb-4">{{ __('Send Message') }}</h3>
                         <p class="text-slate-500 text-sm leading-relaxed max-w-lg">
                             {{ __('Need a custom pump solution or a quotation? Fill out the form below and our engineering team will respond within 24 hours.') }}
                         </p>
@@ -128,16 +128,16 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label class="text-xs font-bold text-slate-900 uppercase tracking-wider">{{ __('Your Name') }} <span class="text-red-500">*</span></label>
-                                <input type="text" name="name" value="{{ old('name') }}" placeholder="Ex: Budi Santoso" 
+                                <label class="text-xs font-bold text-slate-900 uppercase tracking-wider">{{ __('Name') }} <span class="text-red-500">*</span></label>
+                                <input type="text" name="name" value="{{ old('name') }}"
                                     class="w-full bg-gray-50 border rounded-lg px-4 py-3.5 text-sm font-bold text-slate-900 focus:outline-none focus:border-brand-primary focus:bg-white focus:ring-0 transition placeholder-gray-400 {{ $errors->has('name') ? 'border-red-500' : 'border-gray-200' }}">
                                 @error('name')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="space-y-2">
-                                <label class="text-xs font-bold text-slate-900 uppercase tracking-wider">{{ __('Email Address') }} <span class="text-red-500">*</span></label>
-                                <input type="email" name="email" value="{{ old('email') }}" placeholder="Ex: budi@company.com" 
+                                <label class="text-xs font-bold text-slate-900 uppercase tracking-wider">{{ __('Email') }} <span class="text-red-500">*</span></label>
+                                <input type="email" name="email" value="{{ old('email') }}"
                                     class="w-full bg-gray-50 border rounded-lg px-4 py-3.5 text-sm font-bold text-slate-900 focus:outline-none focus:border-brand-primary focus:bg-white focus:ring-0 transition placeholder-gray-400 {{ $errors->has('email') ? 'border-red-500' : 'border-gray-200' }}">
                                 @error('email')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -146,7 +146,7 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-xs font-bold text-slate-900 uppercase tracking-wider">{{ __('Subject / Topic') }} <span class="text-red-500">*</span></label>
+                            <label class="text-xs font-bold text-slate-900 uppercase tracking-wider">{{ __('Topic') }} <span class="text-red-500">*</span></label>
                             <div class="relative">
                                 <select name="topic" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3.5 text-sm font-bold text-slate-900 focus:outline-none focus:border-brand-primary focus:bg-white focus:ring-0 transition appearance-none cursor-pointer">
                                     <option value="" disabled selected>{{ __('Select Inquiry Type...') }}</option>
@@ -156,7 +156,6 @@
                                     <option value="Partnership" {{ old('topic') == 'Partnership' ? 'selected' : '' }}>{{ __('Partnership / Distributor') }}</option>
                                     <option value="Other" {{ old('topic') == 'Other' ? 'selected' : '' }}>{{ __('Other') }}</option>
                                 </select>
-                                <i data-lucide="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"></i>
                             </div>
                             @error('topic')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -165,7 +164,7 @@
 
                         <div class="space-y-2">
                             <label class="text-xs font-bold text-slate-900 uppercase tracking-wider">{{ __('Message') }} <span class="text-red-500">*</span></label>
-                            <textarea name="message" rows="5" placeholder="{{ __('Describe your project requirements or questions here...') }}" 
+                            <textarea name="message" rows="5"
                                     class="w-full bg-gray-50 border rounded-lg px-4 py-3.5 text-sm font-bold text-slate-900 focus:outline-none focus:border-brand-primary focus:bg-white focus:ring-0 transition placeholder-gray-400 {{ $errors->has('message') ? 'border-red-500' : 'border-gray-200' }}">{{ old('message') }}</textarea>
                             @error('message')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -174,13 +173,14 @@
 
                         <div>
                             <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
+                            
                             @error('g-recaptcha-response')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <button type="submit" class="w-full bg-slate-900 text-white font-bold py-4 rounded-xl hover:bg-brand-primary transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group">
-                            {{ __('Send Inquiry') }} 
+                            {{ __('Send Message') }} 
                             <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                         </button>
                     </form>

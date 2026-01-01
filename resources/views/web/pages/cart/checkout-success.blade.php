@@ -1,6 +1,6 @@
 <x-web.main-layout>
 
-    <div class="pt-14 pb-10 flex flex-col items-center justify-center bg-brand-gray px-4">
+    <div class="py-14 flex flex-col items-center justify-center bg-brand-gray px-4">
         {{-- SUCCESS CARD --}}
         <div class="w-full max-w-2xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-200/60 relative">
             

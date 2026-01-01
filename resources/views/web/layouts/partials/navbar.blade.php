@@ -17,8 +17,8 @@
             </div>
             {{-- Right: Utility Links --}}
             <div class="flex items-center gap-6">
-                <a href="#" class="hover:text-white transition">{{ __('Track Order') }}</a>
-                <a href="#" class="hover:text-white transition">{{ __('Help Center') }}</a>
+                <a href="{{ route('order-tracking') }}" class="hover:text-white transition">{{ __('Track Order') }}</a>
+                {{-- <a href="#" class="hover:text-white transition">{{ __('Help Center') }}</a> --}}
                 @guest
                     <a href="{{ route('login') }}" class="text-white font-bold">{{ __('Login / Register') }}</a>
                 @endguest
@@ -70,6 +70,8 @@
                                         <p class="text-sm font-bold truncate">{{ Auth::user()->name }}</p>
                                     </div>
                                     <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm hover:bg-gray-50 hover:text-brand-primary">{{ __('Dashboard') }}</a>
+                                    <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-sm hover:bg-gray-50 hover:text-brand-primary">{{ __('My Orders') }}</a>
+                                    <a href="{{ route('account.index') }}" class="block px-4 py-2 text-sm hover:bg-gray-50 hover:text-brand-primary">{{ __('My Account') }}</a>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-bold">{{ __('Logout') }}</button>
@@ -116,7 +118,10 @@
                                     <template x-if="$store.cart.items.length === 0 && !$store.cart.loading">
                                         <div class="p-8 text-center">
                                             <div class="mx-auto w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
-                                                <i data-lucide="shopping-cart" class="w-6 h-6 text-gray-400"></i>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-gray-400">
+                                                    <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>
+                                                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+                                                </svg>
                                             </div>
                                             <p class="text-sm text-gray-500 font-medium mb-4">{{ __('Your cart is empty') }}</p>
                                             <a href="{{ route('products.index') }}" class="text-xs font-bold text-brand-primary hover:underline">{{ __('Start Shopping') }} &rarr;</a>
@@ -227,8 +232,8 @@
                                                 {{-- Circle Decor --}}
                                                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-white rounded-full shadow-sm z-0"></div>
                                                 
-                                                <img src="{{ $newArrivalProduct->thumbnail ? asset('storage/'.$newArrivalProduct->thumbnail) : asset('assets/images/placeholder.png') }}" 
-                                                     class="w-48 max-h-48 object-contain relative z-10 drop-shadow-xl transform group-hover/card:scale-110 transition duration-500 mix-blend-multiply" 
+                                                <img src="{{ $newArrivalProduct->thumbnail ? $newArrivalProduct->thumbnail : asset('assets/images/placeholder.png') }}" 
+                                                     class="w-48 max-h-48 object-contain relative z-10 transform group-hover/card:scale-110 transition duration-500 mix-blend-multiply" 
                                                      alt="{{ $newArrivalProduct->name }}">
                                                 
                                                 <div class="absolute top-4 left-4 bg-brand-primary text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">{{ __('New') }}</div>
@@ -256,8 +261,8 @@
                                     @if(isset($bestSellerProduct) && $bestSellerProduct)
                                         <a href="{{ route('products.show', $bestSellerProduct->slug) }}" class="group/card block h-full">
                                             <div class="bg-gray-50 rounded-2xl p-6 h-64 flex items-center justify-center relative overflow-hidden mb-4 border border-gray-100 group-hover/card:border-brand-primary/30 transition">
-                                                <img src="{{ $bestSellerProduct->thumbnail ? asset('storage/'.$bestSellerProduct->thumbnail) : asset('assets/images/placeholder.png') }}" 
-                                                     class="w-full h-full object-contain relative z-10 drop-shadow-xl transform group-hover/card:scale-105 transition duration-500 mix-blend-multiply" 
+                                                <img src="{{ $bestSellerProduct->thumbnail ? $bestSellerProduct->thumbnail : asset('assets/images/placeholder.png') }}" 
+                                                     class="w-full h-full object-contain relative z-10 transform group-hover/card:scale-105 transition duration-500 mix-blend-multiply" 
                                                      alt="{{ $bestSellerProduct->name }}">
                                                 
                                                 <div class="absolute top-4 left-4 bg-brand-dark text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">{{ __('Hot') }}</div>
@@ -416,6 +421,8 @@
             <div class="pt-8 grid grid-cols-2 gap-4">
                 @auth
                     <a href="{{ route('dashboard') }}" class="col-span-2 text-center bg-brand-dark text-white font-bold py-4 rounded-xl shadow-lg hover:bg-brand-primary transition-colors">{{ __('My Dashboard') }}</a>
+                    <a href="{{ route('orders.index') }}" class="col-span-2 text-center bg-brand-dark text-white font-bold py-4 rounded-xl shadow-lg hover:bg-brand-primary transition-colors">{{ __('My Orders') }}</a>
+                    <a href="{{ route('account.index') }}" class="col-span-2 text-center bg-brand-dark text-white font-bold py-4 rounded-xl shadow-lg hover:bg-brand-primary transition-colors">{{ __('My Account') }}</a>
                 @else
                     <a href="{{ route('login') }}" class="text-center border-2 border-slate-900 text-slate-900 font-bold py-3 rounded-xl hover:bg-gray-50 transition-colors">{{ __('Login') }}</a>
                     <a href="{{ route('register') }}" class="text-center bg-brand-dark text-white font-bold py-3 rounded-xl shadow-lg hover:bg-brand-primary transition-colors">{{ __('Register') }}</a>

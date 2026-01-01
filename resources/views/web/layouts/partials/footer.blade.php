@@ -47,11 +47,13 @@
                     <li><a href="{{ route('products.index') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Products') }}</a></li>
                     <li><a href="{{ route('pages.about') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('About Us') }}</a></li>
                     <li><a href="{{ route('pages.contact') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Contact Us') }}</a></li>
+                    <li><a href="{{ route('posts.index') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('News') }}</a></li>
+                    <li><a href="{{ route('careers.index') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Careers') }}</a></li>
                     <li><a href="{{ route('pages.contact') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Find a Store') }}</a></li>
-                    <li><a href="{{ route('posts.index') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('News & Promos') }}</a></li>
-                    <li><a href="{{ route('faqs.index') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('FAQs') }}</a></li>
+                    <li><a href="{{ route('faqs.index') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('FAQ') }}</a></li>
                     <li><a href="{{ route('warranty-claim') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Warranty Claim') }}</a></li>
                     <li><a href="{{ route('warranty-claim.check') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Claim Status') }}</a></li>
+                    <li><a href="{{ route('order-tracking') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Track Order') }}</a></li>
                 </ul>
             </div>
 

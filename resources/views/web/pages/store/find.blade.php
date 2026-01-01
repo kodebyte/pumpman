@@ -12,7 +12,7 @@
                         <span class="text-brand-primary">{{ __('Store Locator') }}</span>
                     </div>
                     <h1 class="text-3xl font-display font-bold text-slate-900 uppercase tracking-tight leading-tight">
-                        {{ __('Find A Partner') }}
+                        {{ __('Find a Store') }}
                     </h1>
                 </div>
                 <p class="text-slate-500 text-sm max-w-md text-left md:text-right leading-relaxed border-l-4 border-brand-primary pl-4 md:border-l-0 md:border-r-4 md:pr-4">

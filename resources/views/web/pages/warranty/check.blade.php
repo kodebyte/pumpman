@@ -45,7 +45,7 @@
                         <input type="text" 
                                name="ticket"
                                value="{{ request('ticket') }}"
-                               placeholder="{{ __('Enter Ticket Number (Ex: WCA-23...)') }}" 
+                               placeholder="{{ __('Enter Ticket Number (Ex: WCP-23...)') }}" 
                                class="w-full border-none focus:ring-0 text-lg font-bold placeholder-gray-300 py-4 text-slate-900 bg-transparent uppercase tracking-wider"
                                required>
                         <button type="submit" class="bg-brand-dark text-white px-8 py-3.5 rounded-xl font-bold hover:bg-brand-primary transition flex-shrink-0 uppercase tracking-wider text-sm shadow-lg">

@@ -32,7 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'payment/notification', // URL yang akan kita buat nanti
         ]);
 
-        // $middleware->trustProxies(at: '*');
+        $middleware->trustProxies(at: '*');
     })
     ->withSchedule(function (Schedule $schedule) {
         // --- DAFTARKAN SCHEDULE DI SINI ---

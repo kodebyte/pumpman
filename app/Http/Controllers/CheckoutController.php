@@ -135,7 +135,7 @@ class CheckoutController extends Controller
                 // Jika ID sudah 10000, str_pad tidak akan memotongnya, tetap jadi 10000.
                 $idCounter = str_pad($order->id, 4, '0', STR_PAD_LEFT);
 
-                $orderNumber = "ODA-{$date}-{$randomStr}-{$idCounter}";
+                $orderNumber = "ODP-{$date}-{$randomStr}-{$idCounter}";
 
                 $order->update([
                     'order_number' => $orderNumber

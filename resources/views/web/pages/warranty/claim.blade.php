@@ -69,12 +69,12 @@
                         </li>
                     </ul>
 
-                    <div class="mt-10 pt-8 border-t border-gray-200">
+                    {{-- <div class="mt-10 pt-8 border-t border-gray-200">
                         <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-4">{{ __('Need Help?') }}</p>
                         <a href="{{ route('pages.contact') }}" class="flex items-center gap-3 w-full bg-white border border-gray-300 text-slate-700 font-bold px-4 py-3 rounded-xl hover:border-brand-primary hover:text-brand-primary transition shadow-sm justify-center text-sm">
                             <i data-lucide="message-circle" class="w-4 h-4"></i> {{ __('Contact Support') }}
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
 
                 {{-- RIGHT: FORM AREA --}}
@@ -106,8 +106,7 @@
                                     <label class="block text-xs font-bold uppercase text-slate-500 mb-2">{{ __('Full Name') }} <span class="text-red-500">*</span></label>
                                     <input type="text" name="name" value="{{ old('name', auth()->user()->name ?? '') }}" 
                                         class="w-full px-4 py-3.5 rounded-xl focus:outline-none focus:ring-1 transition bg-gray-50 focus:bg-white border text-sm font-bold text-slate-900
-                                        {{ $errors->has('name') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-brand-primary focus:ring-brand-primary' }}" 
-                                        placeholder="Ex: Budi Santoso">
+                                        {{ $errors->has('name') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-brand-primary focus:ring-brand-primary' }}">
                                     @error('name')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror
@@ -117,19 +116,17 @@
                                     <label class="block text-xs font-bold uppercase text-slate-500 mb-2">{{ __('Phone / WhatsApp') }} <span class="text-red-500">*</span></label>
                                     <input type="tel" name="phone" value="{{ old('phone') }}" 
                                         class="w-full px-4 py-3.5 rounded-xl focus:outline-none focus:ring-1 transition bg-gray-50 focus:bg-white border text-sm font-bold text-slate-900
-                                        {{ $errors->has('phone') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-brand-primary focus:ring-brand-primary' }}" 
-                                        placeholder="0812...">
+                                        {{ $errors->has('phone') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-brand-primary focus:ring-brand-primary' }}">
                                     @error('phone')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label class="block text-xs font-bold uppercase text-slate-500 mb-2">{{ __('Email Address') }} <span class="text-red-500">*</span></label>
+                                    <label class="block text-xs font-bold uppercase text-slate-500 mb-2">{{ __('Email') }} <span class="text-red-500">*</span></label>
                                     <input type="email" name="email" value="{{ old('email', auth()->user()->email ?? '') }}" 
                                         class="w-full px-4 py-3.5 rounded-xl focus:outline-none focus:ring-1 transition bg-gray-50 focus:bg-white border text-sm font-bold text-slate-900
-                                        {{ $errors->has('email') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-brand-primary focus:ring-brand-primary' }}" 
-                                        placeholder="email@company.com">
+                                        {{ $errors->has('email') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-brand-primary focus:ring-brand-primary' }}">
                                     @error('email')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror
@@ -250,11 +247,10 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-xs font-bold uppercase text-slate-500 mb-2">{{ __('Serial Number (SN)') }} <span class="text-red-500">*</span></label>
+                                    <label class="block text-xs font-bold uppercase text-slate-500 mb-2">{{ __('Serial Number') }} <span class="text-red-500">*</span></label>
                                     <input type="text" name="serial_number" value="{{ old('serial_number') }}" 
                                         class="w-full px-4 py-3.5 rounded-xl focus:outline-none focus:ring-1 transition bg-gray-50 focus:bg-white border text-sm font-bold text-slate-900
-                                        {{ $errors->has('serial_number') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-brand-primary focus:ring-brand-primary' }}" 
-                                        placeholder="{{ __('Check the product label') }}">
+                                        {{ $errors->has('serial_number') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-brand-primary focus:ring-brand-primary' }}">
                                     @error('serial_number')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror
@@ -274,8 +270,7 @@
                                     <label class="block text-xs font-bold uppercase text-slate-500 mb-2">{{ __('Damage / Issue Details') }} <span class="text-red-500">*</span></label>
                                     <textarea name="issue" rows="4" 
                                             class="w-full px-4 py-3.5 rounded-xl focus:outline-none focus:ring-1 transition resize-none bg-gray-50 focus:bg-white border text-sm font-bold text-slate-900
-                                            {{ $errors->has('issue') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-brand-primary focus:ring-brand-primary' }}" 
-                                            placeholder="{{ __('Describe the problem precisely...') }}">{{ old('issue') }}</textarea>
+                                            {{ $errors->has('issue') ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-200 focus:border-brand-primary focus:ring-brand-primary' }}">{{ old('issue') }}</textarea>
                                     @error('issue')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror

@@ -47,7 +47,7 @@
         }
     </style>
 
-    <section class="bg-brand-gray pt-40 pb-24 min-h-screen">
+    <section class="bg-brand-gray py-14">
         <div class="container mx-auto px-4 md:px-6">
 
             {{-- Action Bar --}}
