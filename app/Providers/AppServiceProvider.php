@@ -6,6 +6,7 @@ use App\Contracts\ContactMessageRepositoryInterface;
 use App\Models\Category;
 use App\Models\Marketplace;
 use App\Models\Order;
+use App\Models\PaymentMethod;
 use App\Models\Product;
 use App\Models\WarrantyClaim;
 use App\Models\WhatsappContact;
@@ -101,8 +102,17 @@ class AppServiceProvider extends ServiceProvider
         }
 
         if (Schema::hasTable('whatsapp_contacts')) {
-            $whatsappContacts = WhatsappContact::active()->get();
+            $whatsappContacts = WhatsappContact::active()
+                                ->get();
+                                
             View::share('whatsappContacts', $whatsappContacts);
+        }
+
+        if (Schema::hasTable('payment_methods')) {
+            $paymentMethods = PaymentMethod::active()
+                                ->get();
+                                
+            View::share('paymentMethods', $paymentMethods);
         }
         
         // $proxyHost = Request::header('X-Forwarded-Host') ?? Request::header('X-Original-Host');

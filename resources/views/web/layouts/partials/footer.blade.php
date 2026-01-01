@@ -44,10 +44,14 @@
                 </h4>
                 <ul class="space-y-4 text-sm text-white/80">
                     <li><a href="{{ route('home') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Home') }}</a></li>
-                    <li><a href="{{ route('products.index') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('All Products') }}</a></li>
+                    <li><a href="{{ route('products.index') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Products') }}</a></li>
                     <li><a href="{{ route('pages.about') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('About Us') }}</a></li>
-                    <li><a href="{{ route('posts.index') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Latest News') }}</a></li>
-                    <li><a href="{{ route('pages.contact') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Contact Support') }}</a></li>
+                    <li><a href="{{ route('pages.contact') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Contact Us') }}</a></li>
+                    <li><a href="{{ route('pages.contact') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Find a Store') }}</a></li>
+                    <li><a href="{{ route('posts.index') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('News & Promos') }}</a></li>
+                    <li><a href="{{ route('faqs.index') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('FAQs') }}</a></li>
+                    <li><a href="{{ route('warranty-claim') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Warranty Claim') }}</a></li>
+                    <li><a href="{{ route('warranty-claim.check') }}" class="hover:text-brand-accent hover:pl-2 transition-all duration-300 inline-block">{{ __('Claim Status') }}</a></li>
                 </ul>
             </div>
 
@@ -97,23 +101,16 @@
                 
                 {{-- Payment Grid --}}
                 <div class="grid grid-cols-4 gap-2">
-                    @php
-                        $payments = [
-                            ['name' => 'BCA', 'url' => 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg'],
-                            ['name' => 'Mandiri', 'url' => 'https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg'],
-                            ['name' => 'BNI', 'url' => 'https://upload.wikimedia.org/wikipedia/id/5/55/BNI_logo.svg'],
-                            ['name' => 'BRI', 'url' => 'https://upload.wikimedia.org/wikipedia/commons/6/68/BANK_BRI_logo.svg'],
-                            ['name' => 'Visa', 'url' => 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg'],
-                            ['name' => 'Mastercard', 'url' => 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg'],
-                            ['name' => 'QRIS', 'url' => 'https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg', 'col_span' => 2],
-                        ];
-                    @endphp
-
-                    @foreach($payments as $pay)
-                        <div class="{{ isset($pay['col_span']) ? 'col-span-2' : '' }} bg-white rounded-md h-9 p-1 flex items-center justify-center shadow-sm hover:scale-105 transition overflow-hidden">
-                            <img src="{{ $pay['url'] }}" alt="{{ $pay['name'] }}" class="h-full object-contain">
-                        </div>
-                    @endforeach
+                    @if(isset($paymentMethods) && $paymentMethods->count() > 0)
+                        @foreach($paymentMethods as $pay)
+                            <div class="bg-white rounded-md h-9 p-1 flex items-center justify-center shadow-sm hover:scale-105 transition overflow-hidden" title="{{ $pay->name }}">
+                                <img src="{{ $pay->image_url }}" alt="{{ $pay->name }}" class="h-full object-contain">
+                            </div>
+                        @endforeach
+                    @else
+                        {{-- Fallback text jika database kosong --}}
+                        <p class="text-xs text-white/30 col-span-4 italic">No payment methods configured.</p>
+                    @endif
                 </div>
 
                 <div class="mt-6 flex items-center gap-2 text-xs text-white/50 bg-white/5 p-3 rounded-lg border border-white/5">

@@ -116,6 +116,11 @@ class RepositoryServiceProvider extends ServiceProvider
         \App\Contracts\WhatsappContactRepositoryInterface::class, 
         \App\Repositories\WhatsappContactRepository::class
         );
+
+        $this->app->bind(
+        \App\Contracts\PaymentMethodRepositoryInterface::class, 
+        \App\Repositories\PaymentMethodRepository::class
+        );
     }
 
     /**

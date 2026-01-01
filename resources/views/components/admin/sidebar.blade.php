@@ -181,6 +181,11 @@
                 Couriers
             </x-admin.nav-link>
 
+            <x-admin.nav-link :href="route('admin.payment-methods.index')" :active="request()->routeIs('admin.payment-methods.*')">
+                <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                Payment Methods
+            </x-admin.nav-link>
+
             <x-admin.nav-link :href="route('admin.seo.index')" :active="request()->routeIs('admin.seo.*')">
                 <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg> SEO Config
             </x-admin.nav-link>
