@@ -24,7 +24,8 @@ class UpdateMarketplaceRequest extends FormRequest
         $id = $this->route('marketplace');
         
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:marketplaces,name,' . $id],
+            'name' => ['required', 'string', 'max:255'],
+            'url' => ['nullable', 'string', 'max:255'],
             'icon' => ['nullable', 'image', 'max:1024'],
             'is_active' => ['required', 'boolean'],
             'order' => ['nullable', 'integer', 'min:0'],

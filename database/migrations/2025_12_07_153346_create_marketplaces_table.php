@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name'); // Tokopedia, Shopee
             $table->string('slug')->unique();
             $table->string('icon')->nullable(); // Logo (disimpan di storage)
+            $table->string('url')->nullable(); // URL Marketplace
             $table->integer('order')->default(0);
             $table->boolean('is_active')->default(true);
             $table->timestamps();

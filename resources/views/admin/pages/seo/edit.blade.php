@@ -109,22 +109,12 @@
 
                     <div class="space-y-6">
                         <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm sticky top-6">
-                            {{-- Header Actions dengan Ikon --}}
-                            <div class="flex items-center gap-2 mb-4 border-b border-gray-100 pb-2">
-                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <h3 class="font-bold text-gray-700 text-lg">Actions</h3>
-                            </div>
-
-                            <x-admin.primary-button class="w-full justify-center bg-gray-800 hover:bg-gray-700">Update SEO</x-admin.primary-button>
-                            <a href="{{ route('admin.seo.index') }}" class="block mt-4 text-center text-sm text-gray-600 hover:text-gray-900 underline">Cancel</a>
+                            <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">Actions</h3>
                             
-                            <div class="mt-8 pt-6 border-t border-gray-100">
+                            <div class="py-3 border-t border-gray-100">
                                 <x-admin.input-label value="OG Image (Social Share)" />
                                 
-                                <div class="mt-2 border-2 border-dashed border-gray-200 rounded-xl p-2 h-40 flex items-center justify-center overflow-hidden cursor-pointer hover:bg-gray-50 transition" 
+                                <div class="mb-4 border-2 border-dashed border-gray-200 rounded-xl p-2 h-40 flex items-center justify-center overflow-hidden cursor-pointer hover:bg-gray-50 transition" 
                                      onclick="document.getElementById('og_image').click()">
                                     
                                     <template x-if="imgPreview">
@@ -145,13 +135,15 @@
                                     </template>
                                 </div>
 
+                                <x-admin.primary-button class="w-full justify-center">Update SEO</x-admin.primary-button>
+                                <a href="{{ route('admin.seo.index') }}" class="block mt-4 text-center text-sm text-gray-600 hover:text-gray-900 underline">Cancel</a>
+
                                 <input type="file" id="og_image" name="og_image" class="hidden" accept="image/*" @change="previewImage">
                                 <p class="text-[10px] text-gray-400 mt-2 italic">Recommended: 1200x630px</p>
                                 <x-admin.input-error :messages="$errors->get('og_image')" class="mt-1" />
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </form>
         </div>

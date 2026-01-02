@@ -23,6 +23,7 @@ class StoreMarketplaceRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255', 'unique:marketplaces,name'],
+            'url' => ['nullable', 'string', 'max:255'],
             'icon' => ['required', 'image', 'max:1024'], // Wajib ada logo
             'is_active' => ['required', 'boolean'],
             'order' => ['nullable', 'integer', 'min:0'],

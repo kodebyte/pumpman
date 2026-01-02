@@ -47,6 +47,12 @@
                                     <x-admin.text-input name="name" :value="old('name', $marketplace->name)" required class="w-full text-lg font-semibold" />
                                     <x-admin.input-error :messages="$errors->get('name')" />
                                 </div>
+
+                                <div class="md:col-span-3">
+                                    <x-admin.input-label for="url" value="Url" />
+                                    <x-admin.text-input name="url" :value="old('url', $marketplace->url)" class="w-full text-lg font-semibold" />
+                                    <x-admin.input-error :messages="$errors->get('url')" />
+                                </div>
                                 
                                 <div class="md:col-span-3">
                                     <x-admin.input-label for="icon" value="Logo / Icon" />
