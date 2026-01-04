@@ -4,12 +4,12 @@
     <x-slot name="description">{{ $description }}</x-slot>
     <x-slot name="image">{{ $image }}</x-slot>
 
-    {{-- 1. HEADER & HERO --}}
+    {{-- 1. HEADER & HERO (CENTERED) --}}
     <div class="pt-14 pb-10 bg-brand-gray relative">
-        <div class="container mx-auto px-4 md:px-6">
+        <div class="container mx-auto px-4 md:px-6 flex flex-col items-center text-center">
             
-            {{-- Breadcrumb / Meta --}}
-            <div class="flex flex-wrap items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-6">
+            {{-- Breadcrumb / Meta (Centered) --}}
+            <div class="flex flex-wrap items-center justify-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-6">
                 <a href="{{ route('posts.index') }}" class="hover:text-brand-primary transition">{{ __('News') }}</a>
                 <i data-lucide="chevron-right" class="w-3 h-3"></i>
                 @if($post->type)
@@ -17,23 +17,22 @@
                     <span class="w-1 h-1 rounded-full bg-slate-300"></span>
                 @endif
                 
-                {{-- PERBAIKAN: Cek apakah published_at ada isinya --}}
                 @if($post->published_at)
                     <span>{{ $post->published_at->format('d M Y') }}</span>
                 @endif
             </div>
 
-            {{-- Title --}}
-            <h1 class="text-3xl md:text-5xl font-display font-bold text-slate-900 leading-tight mb-8 max-w-4xl">
+            {{-- Title (Centered) --}}
+            <h1 class="text-3xl md:text-5xl font-display font-bold text-slate-900 leading-tight mb-8 max-w-4xl mx-auto">
                 {{ $post->getTranslation('title') }}
             </h1>
 
-            {{-- Author Info --}}
-            <div class="flex items-center gap-4 pb-8 border-b border-gray-200">
+            {{-- Author Info (Centered) --}}
+            <div class="flex items-center justify-center gap-4 pb-8 border-b border-gray-200 w-full max-w-2xl mx-auto">
                 <div class="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
                     <span class="font-black text-brand-dark">{{ substr($post->author->name ?? 'A', 0, 1) }}</span>
                 </div>
-                <div>
+                <div class="text-left"> {{-- Text tetap left align relatif terhadap avatar, tapi satu blok ini di tengah --}}
                     <p class="text-xs font-bold text-slate-900 uppercase tracking-wider">{{ $post->author->name ?? 'Pumpman Team' }}</p>
                     <p class="text-[10px] text-slate-500 font-medium">{{ ceil(str_word_count(strip_tags($post->getTranslation('content'))) / 200) }} {{ __('min read') }}</p>
                 </div>
@@ -46,9 +45,9 @@
     <article class="bg-brand-gray pb-24 relative z-0">
         <div class="container mx-auto px-4 md:px-6">
             
-            {{-- Main Image --}}
+            {{-- Main Image (Centered) --}}
             @if($post->thumbnail)
-                <div class="max-w-5xl mb-12 rounded-[2.5rem] overflow-hidden shadow-xl border border-gray-200/60 bg-white">
+                <div class="max-w-5xl mx-auto mb-12 rounded-[2.5rem] overflow-hidden shadow-xl border border-gray-200/60 bg-white">
                     <img src="{{ asset('storage/' . $post->thumbnail) }}" 
                          alt="{{ $post->getTranslation('title') }}" 
                          class="w-full h-auto object-cover">
@@ -57,6 +56,7 @@
 
             {{-- Content Body --}}
             <div class="max-w-3xl mx-auto">
+                {{-- Body Text tetap Rata Kiri (Standar Readability) tapi containernya di tengah --}}
                 <div class="prose prose-lg prose-slate max-w-none 
                             prose-headings:font-display prose-headings:font-bold prose-headings:text-slate-900 
                             prose-a:text-brand-primary prose-a:no-underline hover:prose-a:underline
@@ -116,7 +116,6 @@
                     </div>
                     <div class="space-y-2 px-2">
                         <div class="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                            {{-- PERBAIKAN: Cek published_at pada related post --}}
                             @if($related->published_at)
                                 <span>{{ $related->published_at->format('d M Y') }}</span>
                                 <span class="w-1 h-1 bg-slate-300 rounded-full"></span>

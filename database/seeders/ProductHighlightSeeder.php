@@ -10,67 +10,68 @@ class ProductHighlightSeeder extends Seeder
     public function run(): void
     {
         ProductHighlight::create([
-            'image' => 'assets/web/images/ik.jpg', // Path gambar dari home.blade.php
+            // Pastikan Anda mengganti path gambar ini dengan gambar pompa yang sesuai di folder public
+            'image' => 'assets/web/images/pump-highlight.jpg', 
             'tagline' => [
-                'en' => 'Legendary Japanese Engineer', //
-                'id' => 'Teknologi Jepang Legendaris',
+                'en' => 'Industrial Grade Reliability', //
+                'id' => 'Keandalan Kelas Industri',
             ],
             'title' => [
-                'en' => 'Instant Cooling. <br> Lifetime Savings.', //
-                'id' => 'Dingin Seketika. <br> Hemat Selamanya.',
+                'en' => 'Powerful Flow. <br> Maximum Durability.', //
+                'id' => 'Aliran Kuat. <br> Daya Tahan Maksimal.',
             ],
             'description' => [
-                'en' => 'Experience premium comfort and healthier air for your family, every day.', //
-                'id' => 'Rasakan kenyamanan premium dan udara lebih sehat untuk keluarga Anda, setiap hari.',
+                'en' => 'Ensure stable water pressure for industrial and residential needs with our high-efficiency heavy duty pumps.', //
+                'id' => 'Pastikan tekanan air stabil untuk kebutuhan industri dan rumah tangga dengan pompa heavy duty efisiensi tinggi kami.',
             ],
             'button_text' => [
-                'en' => 'Explore Aiwa Series', //
-                'id' => 'Jelajahi Seri Aiwa',
+                'en' => 'Explore Pumpman Series', //
+                'id' => 'Jelajahi Seri Pumpman',
             ],
             'button_url' => '/products',
             'features' => [
                 [
-                    'icon' => 'wind',
+                    'icon' => 'activity', // Icon Lucide untuk performa/tekanan
                     'title' => [
-                        'en' => 'Turbo Cool Technology', //
-                        'id' => 'Teknologi Turbo Cool',
+                        'en' => 'High Pressure Output', //
+                        'id' => 'Output Tekanan Tinggi',
                     ],
                     'desc' => [
-                        'en' => 'Cools the room 30% faster in just minutes after activation.', //
-                        'id' => 'Mendinginkan ruangan 30% lebih cepat hanya dalam hitungan menit.',
+                        'en' => 'Consistent strong water flow suitable for high-rise buildings and industrial use.', //
+                        'id' => 'Aliran air kuat yang konsisten, cocok untuk gedung bertingkat dan penggunaan industri.',
                     ],
                 ],
                 [
-                    'icon' => 'zap',
+                    'icon' => 'zap', // Icon Lucide untuk listrik
                     'title' => [
-                        'en' => 'Eco-Friendly & Low Watt', //
-                        'id' => 'Ramah Lingkungan & Low Watt',
+                        'en' => 'Energy Saving Motor', //
+                        'id' => 'Motor Hemat Energi',
                     ],
                     'desc' => [
-                        'en' => 'Maximum energy efficiency that keeps electricity bills low.', //
-                        'id' => 'Efisiensi energi maksimal yang menjaga tagihan listrik tetap rendah.',
+                        'en' => 'Advanced coil technology that delivers high power with lower electricity consumption.', //
+                        'id' => 'Teknologi kumparan canggih yang menghasilkan tenaga besar dengan konsumsi listrik lebih rendah.',
                     ],
                 ],
                 [
-                    'icon' => 'shield-check',
+                    'icon' => 'shield-check', // Icon Lucide untuk ketahanan
                     'title' => [
-                        'en' => 'Gold Fin Protection', //
-                        'id' => 'Perlindungan Gold Fin',
+                        'en' => 'Anti-Rust Components', //
+                        'id' => 'Komponen Anti Karat',
                     ],
                     'desc' => [
-                        'en' => 'Anti-corrosion coating on the condenser ensures durability.', //
-                        'id' => 'Lapisan anti-korosi pada kondensor memastikan daya tahan lama.',
+                        'en' => 'Stainless steel impeller and casing designed to resist corrosion and wear.', //
+                        'id' => 'Impeller dan casing stainless steel yang dirancang untuk tahan korosi dan keausan.',
                     ],
                 ],
                 [
-                    'icon' => 'volume-x',
+                    'icon' => 'volume-1', // Icon Lucide untuk suara pelan (volume-1 atau volume-x)
                     'title' => [
-                        'en' => 'Ultra Silent Mode', //
-                        'id' => 'Mode Ultra Sunyi',
+                        'en' => 'Low Noise Operation', //
+                        'id' => 'Operasi Suara Halus',
                     ],
                     'desc' => [
-                        'en' => 'Whisper-quiet operation that won\'t disturb your relaxation.', //
-                        'id' => 'Operasi sangat tenang yang tidak akan mengganggu istirahat Anda.',
+                        'en' => 'Precision engineering ensures smooth operation with minimal noise and vibration.', //
+                        'id' => 'Teknik presisi memastikan operasi yang halus dengan kebisingan dan getaran minimal.',
                     ],
                 ],
             ],

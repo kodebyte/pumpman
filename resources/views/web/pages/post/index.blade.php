@@ -94,7 +94,7 @@
                             
                             {{-- Date Badge --}}
                             <div class="absolute top-4 right-4 bg-white/90 backdrop-blur text-slate-900 text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest shadow-sm">
-                                {{ $post->published_at->format('d M Y') }}
+                                {{ is_null($post->published_at) ?: $post->published_at->format('d M Y') }}
                             </div>
                         </a>
 
