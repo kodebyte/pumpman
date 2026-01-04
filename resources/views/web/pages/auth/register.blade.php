@@ -20,8 +20,7 @@
                     <div class="relative group">
                         <i data-lucide="user" class="absolute left-4 top-3.5 w-5 h-5 text-slate-400 group-focus-within:text-brand-primary transition"></i>
                         <input type="text" name="name" :value="old('name')" required autofocus
-                               class="w-full bg-gray-50 border border-gray-200 text-slate-900 text-sm font-bold rounded-xl focus:ring-brand-primary focus:border-brand-primary block pl-12 p-3.5 transition placeholder-gray-400 focus:bg-white" 
-                               placeholder="Budi Santoso">
+                               class="w-full bg-gray-50 border border-gray-200 text-slate-900 text-sm font-bold rounded-xl focus:ring-brand-primary focus:border-brand-primary block pl-12 p-3.5 transition placeholder-gray-400 focus:bg-white">
                     </div>
                     <x-web.input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
@@ -31,8 +30,7 @@
                     <div class="relative group">
                         <i data-lucide="mail" class="absolute left-4 top-3.5 w-5 h-5 text-slate-400 group-focus-within:text-brand-primary transition"></i>
                         <input type="email" name="email" :value="old('email')" required
-                               class="w-full bg-gray-50 border border-gray-200 text-slate-900 text-sm font-bold rounded-xl focus:ring-brand-primary focus:border-brand-primary block pl-12 p-3.5 transition placeholder-gray-400 focus:bg-white" 
-                               placeholder="name@company.com">
+                               class="w-full bg-gray-50 border border-gray-200 text-slate-900 text-sm font-bold rounded-xl focus:ring-brand-primary focus:border-brand-primary block pl-12 p-3.5 transition placeholder-gray-400 focus:bg-white">
                     </div>
                     <x-web.input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
@@ -42,8 +40,7 @@
                     <div class="relative group">
                         <i data-lucide="lock" class="absolute left-4 top-3.5 w-5 h-5 text-slate-400 group-focus-within:text-brand-primary transition"></i>
                         <input type="password" name="password" required autocomplete="new-password"
-                               class="w-full bg-gray-50 border border-gray-200 text-slate-900 text-sm font-bold rounded-xl focus:ring-brand-primary focus:border-brand-primary block pl-12 p-3.5 transition placeholder-gray-400 focus:bg-white" 
-                               placeholder="{{ __('Min. 8 characters') }}">
+                               class="w-full bg-gray-50 border border-gray-200 text-slate-900 text-sm font-bold rounded-xl focus:ring-brand-primary focus:border-brand-primary block pl-12 p-3.5 transition placeholder-gray-400 focus:bg-white">
                     </div>
                     <x-web.input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
@@ -53,8 +50,7 @@
                     <div class="relative group">
                         <i data-lucide="check-circle" class="absolute left-4 top-3.5 w-5 h-5 text-slate-400 group-focus-within:text-brand-primary transition"></i>
                         <input type="password" name="password_confirmation" required
-                               class="w-full bg-gray-50 border border-gray-200 text-slate-900 text-sm font-bold rounded-xl focus:ring-brand-primary focus:border-brand-primary block pl-12 p-3.5 transition placeholder-gray-400 focus:bg-white" 
-                               placeholder="{{ __('Retype password') }}">
+                               class="w-full bg-gray-50 border border-gray-200 text-slate-900 text-sm font-bold rounded-xl focus:ring-brand-primary focus:border-brand-primary block pl-12 p-3.5 transition placeholder-gray-400 focus:bg-white">
                     </div>
                     <x-web.input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                 </div>

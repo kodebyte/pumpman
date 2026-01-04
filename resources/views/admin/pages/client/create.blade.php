@@ -38,7 +38,7 @@
                                 {{-- Name Input --}}
                                 <div>
                                     <x-admin.input-label for="name" value="Client Name" />
-                                    <x-admin.text-input id="name" name="name" :value="old('name')" class="w-full mt-1" placeholder="e.g., PT. Maju Mundur" required />
+                                    <x-admin.text-input id="name" name="name" :value="old('name')" class="w-full mt-1" required />
                                     <x-admin.input-error :messages="$errors->get('name')" class="mt-1" />
                                 </div>
 
@@ -99,8 +99,8 @@
                                 <div>
                                     <x-admin.input-label for="is_active" value="Status" />
                                     <select name="is_active" id="is_active" class="block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 text-sm">
-                                        <option value="1" {{ old('is_active', 1) == 1 ? 'selected' : '' }}>Active</option>
-                                        <option value="0" {{ old('is_active') == 0 ? 'selected' : '' }}>Inactive</option>
+                                        <option value="1" {{ old('is_active', 1) == '1' ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ old('is_active') == '0' ? 'selected' : '' }}>Inactive</option>
                                     </select>
                                     <x-admin.input-error :messages="$errors->get('is_active')" class="mt-1" />
                                 </div>

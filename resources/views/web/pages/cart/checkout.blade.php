@@ -63,7 +63,7 @@
                                             name="email" 
                                             value="{{ auth()->user()->email ?? old('email') }}" 
                                             class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 text-sm font-bold text-slate-900 focus:outline-none focus:border-brand-primary focus:bg-white focus:ring-1 focus:ring-brand-primary transition placeholder-gray-400 {{ $errors->has('email') ? 'border-red-500' : 'border-gray-200' }}"
-                                            placeholder="procurement@company.com" required>
+                                            required>
                                     @error('email')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror
@@ -100,7 +100,7 @@
                                     <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">{{ __('Full Address') }} <span class="text-red-500">*</span></label>
                                     <input type="text" name="address" value="{{ old('address', auth()->user()->address ?? '') }}" 
                                         class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-900 focus:outline-none focus:border-brand-primary focus:bg-white focus:ring-1 focus:ring-brand-primary transition placeholder-gray-400" 
-                                        placeholder="{{ __('Street Name, Factory/Office Name, Unit No...') }}" required>
+                                        required>
                                 </div>
 
                                 <div class="md:col-span-1">
