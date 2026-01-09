@@ -30,7 +30,7 @@ class EmployeeSeeder extends Seeder
         Employee::create([
             'employee_role_id' => $adminRole->id,
             'name' => 'Super Admin',
-            'email' => 'admin@kodebyte.com',
+            'email' => 'admin@pumpman.id',
             'password' => Hash::make('password'),
         ]);
     }

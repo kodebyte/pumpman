@@ -18,7 +18,7 @@ class UpdateHeroBannerRequest extends FormRequest
             
             // Saat update, gambar boleh kosong (pakai yg lama)
             'image_desktop' => ['nullable', 'image', 'max:2048'], 
-            'image_mobile'  => ['nullable', 'image', 'max:2048'],
+            'image_mobile'  => ['nullable'],
 
             'video' => [
                 'nullable',

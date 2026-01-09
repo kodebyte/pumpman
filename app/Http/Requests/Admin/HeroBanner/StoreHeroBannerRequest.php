@@ -18,7 +18,7 @@ class StoreHeroBannerRequest extends FormRequest
             
             // Gambar Desktop & Mobile Wajib (Sebagai fallback video)
             'image_desktop' => ['required', 'image', 'max:2048'], 
-            'image_mobile'  => ['required', 'image', 'max:2048'],
+            'image_mobile'  => ['nullable'],
 
             // Video wajib jika tipe video dipilih
             'video' => [

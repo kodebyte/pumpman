@@ -31,8 +31,8 @@ class HomeController extends Controller
         $featuredProducts = Product::with(['category', 'images'])
                                 ->where('is_active', true)
                                 ->where('is_featured', true)
-                                ->latest()
                                 ->take(8)
+                                ->orderBy('order', 'asc')
                                 ->get();
 
         $latestPosts = Post::published()

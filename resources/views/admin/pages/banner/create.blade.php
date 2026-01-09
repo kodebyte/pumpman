@@ -87,7 +87,7 @@
                                         <x-admin.input-error :messages="$errors->get('image_desktop')" />
                                     </div>
 
-                                    <div>
+                                    {{-- <div>
                                         <x-admin.input-label for="image_mobile" value="Mobile Image (600x600)" />
                                         <div class="mt-2 relative group cursor-pointer border-2 border-dashed border-gray-300 rounded-lg p-2 hover:bg-gray-50 transition h-40 flex items-center justify-center overflow-hidden" onclick="document.getElementById('image_mobile').click()">
                                             <template x-if="!imgPreviewMobile">
@@ -102,7 +102,7 @@
                                             <input id="image_mobile" type="file" name="image_mobile" class="hidden" accept="image/*" @change="previewImage($event, 'mobile')">
                                         </div>
                                         <x-admin.input-error :messages="$errors->get('image_mobile')" />
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 
                                 <div x-show="bgType === 'video'" x-transition class="pt-4 border-t border-gray-100">
