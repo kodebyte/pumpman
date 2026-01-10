@@ -1,2 +1,52 @@
+# SITEMAP REFERENCE
+# Memberitahu Google lokasi peta situs yang baru saja kita buat
+# Sitemap: https://aiwa.test/sitemap.xml
+
+# GLOBAL RULES
 User-agent: *
-Disallow:
+# Jangan indeks folder sistem Laravel
+Disallow: /vendor/
+Disallow: /storage/framework/
+Disallow: /storage/logs/
+
+# PROTECT ADMIN AREA
+# Mengamankan jalur masuk admin agar tidak muncul di Google
+Disallow: /internal/
+Disallow: /internal/*
+
+# PROTECT TRANSACTIONAL PATHS
+# Mencegah bot mengindeks halaman keranjang atau proses checkout
+Disallow: /cart
+Disallow: /checkout
+Disallow: /checkout/*
+
+# OPTIMIZE CRAWL BUDGET
+# Mencegah bot mengindeks hasil pencarian atau sortir yang duplikat
+Disallow: /*?search=
+Disallow: /*?sort=
+Disallow: /*?direction=
+Disallow: /*?limit=
+
+# BLOCK AGGRESSIVE BOTS (Resource Savers)
+# Memblokir bot SEO yang sering memakan CPU/RAM server secara berlebihan
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# ALLOW GOOGLE & BING
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
